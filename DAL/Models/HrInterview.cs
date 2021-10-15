@@ -2,7 +2,7 @@
 
 namespace DAL
 {
-    public class HrInterviews
+    public class HrInterview
     {
         public int ID { get; set; }
         public DateTime Date { get; set; }

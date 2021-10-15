@@ -13,7 +13,7 @@ namespace DAL
         public string Specialisation { get; set; }
         public string Location { get; set; }
         public string EnglishLevel { get; set; }
-        public DateTime RegDate { get; set; }
+        public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }
     }
 }

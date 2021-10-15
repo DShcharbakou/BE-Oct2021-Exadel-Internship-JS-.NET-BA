@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI.csproj", "{425FB59F-0804-47DC-867B-A52F50E338E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{425FB59F-0804-47DC-867B-A52F50E338E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "..\BLL\BLL.csproj", "{D09FF7A9-1423-414C-8710-2B904400711F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{D09FF7A9-1423-414C-8710-2B904400711F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "..\DAL\DAL.csproj", "{2D377F02-882D-4A85-A3A9-41FFA1A2A816}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{2D377F02-882D-4A85-A3A9-41FFA1A2A816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,10 +4,10 @@ namespace DAL
 {
     public class HrInterview
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int ScaleScore { get; set; }
-        public string FeedBack { get; set; }
+        public string Feedback { get; set; }
         public int EnglishLevel { get; set; }
 
         //public List<Candidates> CandidateId 

@@ -2,13 +2,12 @@
 
 namespace DAL
 {
-    public class HrInterview
+    public class Interview
     {
-        public int Id { get; set; }
+        public int InterviewID { get; set; }
+        public int CandidateID { get; set; }
+        public int EmployeeID { get; set; }
         public DateTime Date { get; set; }
-        public int ScaleScore { get; set; }
-        public string Feedback { get; set; }
-        public int EnglishLevel { get; set; }
 
         //public List<Candidates> CandidateId 
         //public List<Employees> EmployeeId 

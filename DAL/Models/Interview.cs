@@ -9,7 +9,6 @@ namespace DAL
         public int EmployeeID { get; set; }
         public DateTimeOffset Date { get; set; }
 
-        //public List<Candidates> CandidateId 
-        //public List<Employees> EmployeeId 
+        public Candidate Candidate { get; set; }
     }
 }

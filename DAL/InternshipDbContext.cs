@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class InternsipDbContext : DbContext
+    class InternshipDbContext : DbContext
     {
-        public InternsipDbContext(DbContextOptions options) : base(options) { }
+        public InternshipDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Candidate> Candidates { get; set; }
 

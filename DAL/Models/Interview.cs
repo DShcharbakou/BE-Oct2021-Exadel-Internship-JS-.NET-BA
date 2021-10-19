@@ -2,7 +2,7 @@
 
 namespace DAL.Models
 {
-    public class Interview
+    public class Interview : BaseModel
     {
         public int InterviewID { get; set; }
         public int CandidateID { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class InterviewResult
+    public class InterviewResult : BaseModel
     {
         public int InterviewID {get; set;}
         public int TopicID {get; set;}

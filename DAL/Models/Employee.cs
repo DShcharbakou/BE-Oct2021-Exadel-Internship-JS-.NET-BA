@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace DAL
 {
     public class Employee
     {
@@ -16,5 +16,9 @@ namespace DAL.Models
         public string Skype { get; set; }
         public int RoleId { get; set; }
 
+        public ICollection<Interview> Interviews { get; set; }
+        public EmployeeStack EmployeeStack { get; set; }
+
+        //public ICollection<TeamMentor> TeamMentors { get; set; }
     }
 }

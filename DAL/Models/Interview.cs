@@ -10,5 +10,6 @@ namespace DAL
         public DateTimeOffset Date { get; set; }
 
         public Candidate Candidate { get; set; }
+        public Employee Employee{ get; set; }
     }
 }

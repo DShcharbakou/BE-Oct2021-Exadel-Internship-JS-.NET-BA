@@ -17,6 +17,7 @@ namespace DAL
         public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }
 
-        public virtual ICollection<Interview> Interviews { get; set; }
+        public ICollection<Interview> Interviews { get; set; }
+        public CandidateTeam CandidateTeam { get; set; }
     }
 }

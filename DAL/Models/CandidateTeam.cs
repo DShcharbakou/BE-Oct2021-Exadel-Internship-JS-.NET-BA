@@ -10,5 +10,7 @@ namespace DAL
     {
         public int TeamID { get; set; }
         public int CandidateID { get; set; }
+
+        public ICollection<Candidate> Candidates { get; set; }
     }
 }

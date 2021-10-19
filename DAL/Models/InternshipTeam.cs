@@ -8,7 +8,6 @@ namespace DAL.Models
 {
     public class InternshipTeam : BaseModel
     {
-        public int ID { get; set; }
         public int TeamNumber { get; set; }
     }
 }

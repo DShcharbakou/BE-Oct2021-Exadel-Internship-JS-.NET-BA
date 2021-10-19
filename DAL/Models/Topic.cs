@@ -8,7 +8,6 @@ namespace DAL.Models
 {
     public class Topic : BaseModel
     {
-        public int TopicID {get; set;}
         public string Description {get; set;}
     }
 }

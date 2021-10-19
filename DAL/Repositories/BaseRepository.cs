@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    /*public*/ abstract class BaseRepository<T> where T : BaseModel
+    internal abstract class BaseRepository<T> where T : BaseModel
     {
-        protected InternshipDbContext _internshipDbContext;
-        protected DbSet<T> _dbSet;
+        private InternshipDbContext _internshipDbContext;
+        private DbSet<T> _dbSet;
 
         public BaseRepository(InternshipDbContext internshipDbContext)
         {

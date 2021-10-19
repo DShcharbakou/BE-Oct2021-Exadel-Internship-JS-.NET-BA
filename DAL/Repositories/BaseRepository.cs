@@ -9,5 +9,6 @@ namespace DAL.Repositories
 {
     public abstract class BaseRepository<T> where T : BaseModel
     {
+
     }
 }

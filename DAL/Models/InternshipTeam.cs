@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class IntershipTeam
+    public class InternshipTeam
     {
         public int ID { get; set; }
         public int TeamNumber { get; set; }

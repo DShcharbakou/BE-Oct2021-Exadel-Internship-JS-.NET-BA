@@ -1,0 +1,18 @@
+﻿Candidate HasMany Interview//Interviews HasOne Candiddate
+Candidate HasOne CandidateTeam//CandidateTeam HasMany Candidate
+
+Employees HasMany Intervies//Intervies HasOne Employees
+Employees HasMany Teams Mentors//Teams Mentor HasMany Employees
+Employees HasOne EmployeeStack//EmployeeStack HasMany Employees??
+
+EmployeeStack HasMany Stack//Stack HasMany EmployeeStack??
+
+Stack HasMany TopicStack// TopicsStack HasOne Stack
+
+InterviewResult HasOne Interview// Interview HasOne InterviewResult??
+InterviewResult HasMany Topic// Topic HasMany InterviewResult??
+
+TopicStack HasMany Topic//Topic HasOne TopicStack  ??
+
+IntershipTeams HasMany CandidatesTeam//CandidatesTeam HasMany IntershipTeams
+IntershipTeams HasMany TeamsMentor // TeamsMentors HasOne IntershipTeams ??

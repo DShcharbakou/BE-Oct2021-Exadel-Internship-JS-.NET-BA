@@ -9,10 +9,13 @@ namespace DAL
 
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasOne(x => x.EmployeeStack)
-                .WithMany(x => x.Employee);
+            builder.HasMany(x => x.EmployeeStack)
+                .WithOne(x => x.Employee);
 
             builder.HasMany(x => x.Interviews)
+                .WithOne(x => x.Employee);
+
+            builder.HasMany(x => x.TeamMentors)
                 .WithOne(x => x.Employee);
         }
     }

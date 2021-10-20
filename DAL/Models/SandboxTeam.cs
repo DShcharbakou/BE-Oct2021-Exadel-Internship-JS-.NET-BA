@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class CandidateTeam
+    public class SandboxTeam
     {
         public int TeamID { get; set; }
-        public int CandidateID { get; set; }
+        public int CandidateSandboxID { get; set; }
 
-        public ICollection<Candidate> Candidates { get; set; }
+        public CandidateSandbox CandidateSandbox { get; set; }
     }
 }

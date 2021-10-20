@@ -12,8 +12,8 @@ namespace DAL
             builder.HasMany(x => x.Interviews)
                 .WithOne(x => x.Candidate);
 
-            builder.HasOne(x => x.CandidateTeam)
-                .WithMany(x => x.Candidates);
+            builder.HasMany(x => x.CandidateSandbox)
+                .WithOne(x => x.Candidates);
         }
     }
 }

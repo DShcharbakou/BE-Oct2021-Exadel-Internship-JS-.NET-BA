@@ -10,5 +10,7 @@ namespace DAL
     {
         public int TeamID { get; set; }
         public int EmployeeID { get; set; }
+
+        public Employee Employee { get; set; }
     }
 }

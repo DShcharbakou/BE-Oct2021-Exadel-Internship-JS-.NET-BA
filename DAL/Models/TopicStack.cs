@@ -10,5 +10,8 @@ namespace DAL
     {
         public int TopicID {get; set;}
         public int StackID {get; set;}
+
+        public Stack Stack { get; set; }
+        public Topic Topic { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace DAL
         public bool IsArchived { get; set; }
 
         public ICollection<Interview> Interviews { get; set; }
-        public CandidateTeam CandidateTeam { get; set; }
+
+        public ICollection<CandidateSandbox> CandidateSandbox { get; set; }
     }
 }

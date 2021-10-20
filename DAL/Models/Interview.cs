@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DAL
 {
@@ -11,5 +12,7 @@ namespace DAL
 
         public Candidate Candidate { get; set; }
         public Employee Employee{ get; set; }
+
+        public ICollection<InterviewResult> InterviewResults { get; set; }
     }
 }

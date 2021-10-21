@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class EmployeeStack
+    public class EmployeeStack : BaseModel
     {
         public int EmployeeID { get; set;}
         public int StackID {get; set;}

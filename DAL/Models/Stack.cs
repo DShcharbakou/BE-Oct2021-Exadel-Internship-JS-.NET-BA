@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-   public class Stack
+   public class Stack : BaseModel
     {
-        public int StackID { get; set; }
         public string Description { get; set; }
 
         public ICollection<EmployeeStack> EmployeeStacks { get; set; }

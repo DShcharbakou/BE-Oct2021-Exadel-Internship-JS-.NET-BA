@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class IntershipTeam
+    public class InternshipTeam : BaseModel
     {
-        public int ID { get; set; }
         public int TeamNumber { get; set; }
 
         public SandboxTeam SandboxTeam { get; set; }

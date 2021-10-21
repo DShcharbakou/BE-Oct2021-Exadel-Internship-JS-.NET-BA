@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class Topic
+    public class Topic : BaseModel
     {
-        public int TopicID {get; set;}
         public string Description {get; set;}
 
         public ICollection<InterviewResult> InterviewResults { get; set; }

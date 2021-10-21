@@ -5,7 +5,7 @@ namespace DAL.Repositories
 {
     public class UnitOfWork : IDisposable
     {
-        private InternshipDbContext context;
+        private InternshipDbContext internshipDbContext;
 
         private BaseRepository<Candidate> candidateRep;
         private BaseRepository<CandidateTeam> candidateTeamsRep;
@@ -22,7 +22,7 @@ namespace DAL.Repositories
 
         public UnitOfWork(DbContextOptions options)
         {
-            context = new InternshipDbContext(options);
+            internshipDbContext = new InternshipDbContext(options);
         }
 
         public BaseRepository<Candidate> CandidateRep
@@ -32,7 +32,7 @@ namespace DAL.Repositories
 
                 if (this.candidateRep == null)
                 {
-                    this.candidateRep = new CandidateRepository(context);
+                    this.candidateRep = new CandidateRepository(internshipDbContext);
                 }
                 return candidateRep;
             }
@@ -44,7 +44,7 @@ namespace DAL.Repositories
 
                 if (this.candidateTeamsRep == null)
                 {
-                    this.candidateTeamsRep = new CandidateTeamRepository(context);
+                    this.candidateTeamsRep = new CandidateTeamRepository(internshipDbContext);
                 }
                 return candidateTeamsRep;
             }
@@ -55,7 +55,7 @@ namespace DAL.Repositories
             {
                 if (this.employeeRep == null)
                 {
-                    this.employeeRep = new EmployeeRepository(context);
+                    this.employeeRep = new EmployeeRepository(internshipDbContext);
                 }
                 return employeeRep;
             }
@@ -67,7 +67,7 @@ namespace DAL.Repositories
 
                 if (this.employeeStacksRep == null)
                 {
-                    this.employeeStacksRep = new EmployeeStackRepository(context);
+                    this.employeeStacksRep = new EmployeeStackRepository(internshipDbContext);
                 }
                 return employeeStacksRep;
             }
@@ -78,7 +78,7 @@ namespace DAL.Repositories
             {
                 if (this.internshipTeamsRep == null)
                 {
-                    this.internshipTeamsRep = new InternshipTeamRepository(context);
+                    this.internshipTeamsRep = new InternshipTeamRepository(internshipDbContext);
                 }
                 return internshipTeamsRep;
             }
@@ -90,7 +90,7 @@ namespace DAL.Repositories
 
                 if (this.interviewRep == null)
                 {
-                    this.interviewRep = new InterviewRepository(context);
+                    this.interviewRep = new InterviewRepository(internshipDbContext);
                 }
                 return interviewRep;
             }
@@ -102,7 +102,7 @@ namespace DAL.Repositories
 
                 if (this.interviewResultRep == null)
                 {
-                    this.interviewResultRep = new InterviewResultsRepository(context);
+                    this.interviewResultRep = new InterviewResultsRepository(internshipDbContext);
                 }
                 return interviewResultRep;
             }
@@ -114,7 +114,7 @@ namespace DAL.Repositories
 
                 if (this.stackRep == null)
                 {
-                    this.stackRep = new StackRepository(context);
+                    this.stackRep = new StackRepository(internshipDbContext);
                 }
                 return stackRep;
             }
@@ -126,7 +126,7 @@ namespace DAL.Repositories
 
                 if (this.teamMentorRep == null)
                 {
-                    this.teamMentorRep = new TeamMentorRepository(context);
+                    this.teamMentorRep = new TeamMentorRepository(internshipDbContext);
                 }
                 return teamMentorRep;
             }
@@ -138,7 +138,7 @@ namespace DAL.Repositories
 
                 if (this.topicRep == null)
                 {
-                    this.topicRep = new TopicRepository(context);
+                    this.topicRep = new TopicRepository(internshipDbContext);
                 }
                 return topicRep;
             }
@@ -150,14 +150,14 @@ namespace DAL.Repositories
 
                 if (this.topicStackRep == null)
                 {
-                    this.topicStackRep = new TopicStackRepository(context);
+                    this.topicStackRep = new TopicStackRepository(internshipDbContext);
                 }
                 return topicStackRep;
             }
         }
         public void Save()
         {
-            context.SaveChanges();
+            internshipDbContext.SaveChanges();
         }
 
         private bool disposed = false;
@@ -168,7 +168,7 @@ namespace DAL.Repositories
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    internshipDbContext.Dispose();
                 }
             }
             this.disposed = true;
@@ -177,7 +177,6 @@ namespace DAL.Repositories
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

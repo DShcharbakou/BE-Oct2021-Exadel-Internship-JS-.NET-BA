@@ -8,7 +8,7 @@ using DAL.Models;
 
 namespace DAL
 {
-    class InternshipDbContext : DbContext
+    public class InternshipDbContext : DbContext
     {
         public InternshipDbContext(DbContextOptions options) : base(options) { }
 

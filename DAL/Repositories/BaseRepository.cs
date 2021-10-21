@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    internal abstract class BaseRepository<T> where T : BaseModel
+    public abstract class BaseRepository<T> where T : BaseModel
     {
         private InternshipDbContext _internshipDbContext;
         private DbSet<T> _dbSet;
@@ -39,13 +39,11 @@ namespace DAL.Repositories
             {
                 _dbSet.Add(model);
             }
-            _internshipDbContext.SaveChanges();
         }
 
         public virtual void Remove(T model)
         {
             _internshipDbContext.Remove(model);
-            _internshipDbContext.SaveChanges();
         }
 
         public virtual void Remove(long id)
@@ -54,12 +52,12 @@ namespace DAL.Repositories
             Remove(model);
         }
 
-        public virtual void Remove(List<long> ids)
-        {
-            foreach (var id in ids)
-            {
-                Remove(id);
-            }
-        }
+        //public virtual void Remove(List<long> ids)
+        //{
+        //    foreach (var id in ids)
+        //    {
+        //        Remove(id);
+        //    }
+        //}
     }
 }

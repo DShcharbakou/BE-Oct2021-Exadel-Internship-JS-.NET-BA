@@ -14,7 +14,6 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         private UnitOfWork _unitOfWork;
-        private InternshipDbContext _internshipDbContext;
 
         public HomeController(DbContextOptions options)
         {
@@ -23,6 +22,7 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
     }

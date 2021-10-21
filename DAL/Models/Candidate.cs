@@ -19,6 +19,6 @@ namespace DAL
 
         public ICollection<Interview> Interviews { get; set; }
 
-        public ICollection<CandidateSandbox> CandidateSandbox { get; set; }
+        public ICollection<CandidateSandbox> CandidateSandboxes { get; set; }
     }
 }

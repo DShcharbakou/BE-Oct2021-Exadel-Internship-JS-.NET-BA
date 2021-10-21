@@ -13,7 +13,7 @@ namespace DAL
         public int SandboxID { get; set; }
         public bool IsActive { get; set; }
 
-        public Candidate Candidates { get; set; }
+        public Candidate Candidate { get; set; }
         public Sandbox Sandbox { get; set; }
 
         public ICollection<SandboxTeam> SandboxTeams { get; set; }

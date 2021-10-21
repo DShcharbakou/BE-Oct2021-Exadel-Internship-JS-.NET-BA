@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class InterviewResult
+    public class InterviewResult : BaseModel
     {
         public int InterviewID {get; set;}
         public int TopicID {get; set;}
         public int Level {get; set;}
         public string Comment {get; set;}
+
+        public Interview Interview { get; set; }
+        public Topic Topics { get; set; }
     }
 }

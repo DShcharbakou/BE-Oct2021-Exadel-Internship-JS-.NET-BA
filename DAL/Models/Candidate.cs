@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class Candidate
+    public class Candidate : BaseModel
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -15,5 +15,9 @@ namespace DAL
         public string EnglishLevel { get; set; }
         public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }
+
+        public ICollection<Interview> Interviews { get; set; }
+
+        public ICollection<CandidateSandbox> CandidateSandboxes { get; set; }
     }
 }

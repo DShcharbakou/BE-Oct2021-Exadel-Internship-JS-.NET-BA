@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class Interview
+    public class Interview : BaseModel
     {
-        public int InterviewID { get; set; }
         public int CandidateID { get; set; }
         public int EmployeeID { get; set; }
         public DateTimeOffset Date { get; set; }
 
-        //public List<Candidates> CandidateId 
-        //public List<Employees> EmployeeId 
+        public Candidate Candidate { get; set; }
+        public Employee Employee{ get; set; }
+
+        public ICollection<InterviewResult> InterviewResults { get; set; }
     }
 }

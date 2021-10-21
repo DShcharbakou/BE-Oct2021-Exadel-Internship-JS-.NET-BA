@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class CandidateTeam
+    public abstract class BaseModel
     {
-        public int TeamID { get; set; }
-        public int CandidateID { get; set; }
+        public long Id { get; set; }
     }
 }

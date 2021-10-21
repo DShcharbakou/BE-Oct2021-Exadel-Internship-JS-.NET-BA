@@ -9,5 +9,8 @@ namespace DAL.Models
     public class InternshipTeam : BaseModel
     {
         public int TeamNumber { get; set; }
+
+        public SandboxTeam SandboxTeam { get; set; }
+        public TeamMentor TeamMentor { get; set; }
     }
 }

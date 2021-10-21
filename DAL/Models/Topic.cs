@@ -9,5 +9,8 @@ namespace DAL.Models
     public class Topic : BaseModel
     {
         public string Description {get; set;}
+
+        public ICollection<InterviewResult> InterviewResults { get; set; }
+        public ICollection<TopicStack> TopicStacks { get; set; }
     }
 }

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace DAL
 {
-   public class TeamMentor : BaseModel
+    public class SandboxTeam
     {
         public int TeamID { get; set; }
-        public int EmployeeID { get; set; }
+        public int CandidateSandboxID { get; set; }
 
-        public Employee Employee { get; set; }
+        public CandidateSandbox CandidateSandbox { get; set; }
         public IntershipTeam IntershipTeam { get; set; }
     }
 }

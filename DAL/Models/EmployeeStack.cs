@@ -10,5 +10,8 @@ namespace DAL.Models
     {
         public int EmployeeID { get; set;}
         public int StackID {get; set;}
+
+        public Employee Employee { get; set; }
+        public Stack Stack { get; set; }
     }
 }

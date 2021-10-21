@@ -10,10 +10,12 @@ namespace DAL
         public void Configure(EntityTypeBuilder<InterviewResult> builder)
         {
             builder.HasOne(x => x.Interview)
-                .WithMany(x => x.InterviewResults);
+                .WithMany(x => x.InterviewResults)
+                .HasForeignKey(x => x.InterviewID);
 
-            builder.HasMany(x => x.Topics)
-                .WithMany(x => x.InterviewResults);
+            builder.HasOne(x => x.Topics)
+                .WithMany(x => x.InterviewResults)
+                .HasForeignKey( x => x.TopicID);
         }
     }
 }

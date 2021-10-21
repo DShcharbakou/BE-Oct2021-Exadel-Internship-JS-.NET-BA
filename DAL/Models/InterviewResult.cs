@@ -14,6 +14,6 @@ namespace DAL
         public string Comment {get; set;}
 
         public Interview Interview { get; set; }
-        public ICollection<Topic> Topics { get; set; }
+        public Topic Topics { get; set; }
     }
 }

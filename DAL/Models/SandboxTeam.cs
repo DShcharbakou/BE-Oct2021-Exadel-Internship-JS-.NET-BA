@@ -12,5 +12,6 @@ namespace DAL
         public int CandidateSandboxID { get; set; }
 
         public CandidateSandbox CandidateSandbox { get; set; }
+        public IntershipTeam IntershipTeam { get; set; }
     }
 }

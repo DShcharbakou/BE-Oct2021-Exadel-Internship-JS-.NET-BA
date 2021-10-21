@@ -10,7 +10,8 @@ namespace DAL
         public void Configure(EntityTypeBuilder<Stack> builder)
         {
             builder.HasMany(x => x.TopicStacks)
-                .WithOne(x => x.Stack);
+                .WithOne(x => x.Stack)
+                .HasForeignKey(x => x.StackID);
         }
     }
 }

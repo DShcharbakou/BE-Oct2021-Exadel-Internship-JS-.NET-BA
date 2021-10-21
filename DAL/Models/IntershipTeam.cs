@@ -10,5 +10,8 @@ namespace DAL
     {
         public int ID { get; set; }
         public int TeamNumber { get; set; }
+
+        public SandboxTeam SandboxTeam { get; set; }
+        public TeamMentor TeamMentor { get; set; }
     }
 }

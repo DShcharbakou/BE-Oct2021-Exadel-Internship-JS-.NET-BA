@@ -10,5 +10,8 @@ namespace DAL
     {
         public int TopicID {get; set;}
         public string Description {get; set;}
+
+        public ICollection<InterviewResult> InterviewResults { get; set; }
+        public ICollection<TopicStack> TopicStacks { get; set; }
     }
 }

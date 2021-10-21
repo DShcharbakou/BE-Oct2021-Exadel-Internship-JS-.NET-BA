@@ -12,5 +12,8 @@ namespace DAL
         public int TopicID {get; set;}
         public int Level {get; set;}
         public string Comment {get; set;}
+
+        public Interview Interview { get; set; }
+        public Topic Topics { get; set; }
     }
 }

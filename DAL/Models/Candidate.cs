@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DAL
 {
@@ -15,5 +16,9 @@ namespace DAL
         public string EnglishLevel { get; set; }
         public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }
+
+        public ICollection<Interview> Interviews { get; set; }
+
+        public ICollection<CandidateSandbox> CandidateSandboxes { get; set; }
     }
 }

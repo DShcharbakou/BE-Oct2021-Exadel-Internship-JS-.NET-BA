@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace DAL
         public int CandidateSandboxID { get; set; }
 
         public CandidateSandbox CandidateSandbox { get; set; }
-        public IntershipTeam IntershipTeam { get; set; }
+        public InternshipTeam InternshipTeam { get; set; }
     }
 }

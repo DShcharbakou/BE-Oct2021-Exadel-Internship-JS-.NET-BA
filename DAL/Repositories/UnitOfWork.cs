@@ -5,10 +5,10 @@ namespace DAL.Repositories
 {
     public class UnitOfWork : IDisposable
     {
-        private InternshipDbContext internshipDbContext;
+        private readonly InternshipDbContext internshipDbContext;
 
         private BaseRepository<Candidate> candidateRep;
-        private BaseRepository<CandidateTeam> candidateTeamsRep;
+        private BaseRepository<CandidateSandbox> candidateSandboxRep;
         private BaseRepository<Employee> employeeRep;
         private BaseRepository<EmployeeStack> employeeStacksRep;
         private BaseRepository<InternshipTeam> internshipTeamsRep;
@@ -37,16 +37,16 @@ namespace DAL.Repositories
                 return candidateRep;
             }
         }
-        public BaseRepository<CandidateTeam> CandidateTeamsRep
+        public BaseRepository<CandidateSandbox> CandidateTeamsRep
         {
             get
             {
 
-                if (this.candidateTeamsRep == null)
+                if (this.candidateSandboxRep == null)
                 {
-                    this.candidateTeamsRep = new CandidateTeamRepository(internshipDbContext);
+                    this.candidateSandboxRep = new CandidateSandboxRepository(internshipDbContext);
                 }
-                return candidateTeamsRep;
+                return candidateSandboxRep;
             }
         }
         public BaseRepository<Employee> EmployeeRep

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DAL
+namespace DAL.Configurations
 {
     class SandboxTeamsConfigurations : IEntityTypeConfiguration<SandboxTeam>
     {
@@ -13,7 +13,7 @@ namespace DAL
                 .WithMany(x => x.SandboxTeams)
                 .HasForeignKey(x => x.CandidateSandboxID);
 
-            builder.HasOne(x => x.IntershipTeam)
+            builder.HasOne(x => x.InternshipTeam)
                 .WithOne(x => x.SandboxTeam);
         }
     }

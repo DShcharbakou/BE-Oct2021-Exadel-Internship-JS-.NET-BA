@@ -12,6 +12,6 @@ namespace DAL.Models
         public int EmployeeID { get; set; }
 
         public Employee Employee { get; set; }
-        public IntershipTeam IntershipTeam { get; set; }
+        public InternshipTeam InternshipTeam { get; set; }
     }
 }

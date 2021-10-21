@@ -1,8 +1,9 @@
 ﻿using System;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DAL
+namespace DAL.Configurations
 {
     class EmployeeStackConfigurations : IEntityTypeConfiguration<EmployeeStack>
     {

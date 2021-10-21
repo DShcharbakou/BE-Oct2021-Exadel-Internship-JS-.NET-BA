@@ -12,6 +12,10 @@ namespace DAL
             builder.HasOne(x => x.Topic)
                 .WithMany(x => x.TopicStacks)
                 .HasForeignKey(x => x.TopicID);
+
+            builder.HasOne(x => x.Stack)
+                .WithMany(x => x.TopicStacks)
+                .HasForeignKey(x => x.StackID);
         }
     }
 }

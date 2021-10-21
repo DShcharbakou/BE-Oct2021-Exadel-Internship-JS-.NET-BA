@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL
 {
-    class CandidateSandboxConfiguration : IEntityTypeConfiguration<CandidateSandbox>
+    class CandidateSandboxConfigurations : IEntityTypeConfiguration<CandidateSandbox>
     {
 
         public void Configure(EntityTypeBuilder<CandidateSandbox> builder)
         {
+            builder.HasOne(x => x.Candidates)
+                .WithMany(x => x.CandidateSandbox)
+                .HasForeignKey(x => x.CandidateID);
+
             builder.HasOne(x => x.Sandbox)
                 .WithMany(x => x.CandidateSandboxes)
                 .HasForeignKey(x => x.SandboxID);
-
-            builder.HasMany(x => x.SandboxTeams)
-                .WithOne(x => x.CandidateSandbox)
-                .HasForeignKey(x => x.TeamID);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,8 +10,8 @@ namespace DAL
 
         public void Configure(EntityTypeBuilder<CandidateSandbox> builder)
         {
-            builder.HasOne(x => x.Candidates)
-                .WithMany(x => x.CandidateSandbox)
+            builder.HasOne(x => x.Candidate)
+                .WithMany(x => x.CandidateSandboxes)
                 .HasForeignKey(x => x.CandidateID);
 
             builder.HasOne(x => x.Sandbox)

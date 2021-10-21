@@ -10,8 +10,8 @@ namespace DAL.Repositories
 {
     public abstract class BaseRepository<T> where T : BaseModel
     {
-        private InternshipDbContext _internshipDbContext;
-        private DbSet<T> _dbSet;
+        private readonly InternshipDbContext _internshipDbContext;
+        private readonly DbSet<T> _dbSet;
 
         public BaseRepository(InternshipDbContext internshipDbContext)
         {

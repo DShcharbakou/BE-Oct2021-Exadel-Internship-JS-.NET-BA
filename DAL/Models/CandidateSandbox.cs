@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.Models
 {
-    public class CandidateSandbox
+    public class CandidateSandbox : BaseModel
     {
         public int CandidateSandboxID { get; set; }
         public int CandidateID { get; set; }

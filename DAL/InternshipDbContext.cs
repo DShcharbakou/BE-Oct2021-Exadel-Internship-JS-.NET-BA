@@ -13,7 +13,7 @@ namespace DAL
         public InternshipDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Candidate> Candidates { get; set; }
-        public DbSet<CandidateTeam> CandidatesTeams { get; set; }
+        public DbSet<CandidateSandbox> CandidatesSandboxes { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeStack> EmployeesStacks { get; set; }
         public DbSet<InternshipTeam> InternshipTeams { get; set; }

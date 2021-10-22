@@ -17,6 +17,8 @@ namespace DAL.Configurations
             builder.HasOne(x => x.Topics)
                 .WithMany(x => x.InterviewResults)
                 .HasForeignKey( x => x.TopicID);
+
+            builder.HasKey(x => new { x.InterviewID, x.TopicID });
         }
     }
 }

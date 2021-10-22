@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-   public class TeamMentor : BaseModel
+   public class TeamMentor
     {
         public int TeamID { get; set; }
         public int EmployeeID { get; set; }

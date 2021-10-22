@@ -24,5 +24,11 @@ namespace DAL
         public DbSet<Topic> Topics { get; set; }
         public DbSet<TopicStack> TopicsStacks { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(InternshipDbContext).Assembly);
+        }
     }
 }

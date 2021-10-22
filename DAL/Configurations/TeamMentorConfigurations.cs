@@ -11,11 +11,14 @@ namespace DAL.Configurations
         public void Configure(EntityTypeBuilder<TeamMentor> builder)
         {
             builder.HasOne(x => x.InternshipTeam)
-                .WithOne(x => x.TeamMentor);
+                .WithMany(x => x.TeamMentors)
+                .HasForeignKey(x => x.EmployeeID);
 
             builder.HasOne(x => x.Employee)
                 .WithMany(x => x.TeamMentors)
                 .HasForeignKey(x => x.EmployeeID);
+
+            builder.HasKey(x => new { x.EmployeeID, x.TeamID });
         }
     }
 }

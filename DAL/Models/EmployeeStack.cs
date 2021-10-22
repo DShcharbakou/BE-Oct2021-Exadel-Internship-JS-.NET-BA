@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class EmployeeStack : BaseModel
+    public class EmployeeStack
     {
         public int EmployeeID { get; set;}
         public int StackID {get; set;}

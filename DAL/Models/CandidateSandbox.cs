@@ -9,7 +9,6 @@ namespace DAL.Models
 {
     public class CandidateSandbox : BaseModel
     {
-        public int CandidateSandboxID { get; set; }
         public int CandidateID { get; set; }
         public int SandboxID { get; set; }
         public bool IsActive { get; set; }

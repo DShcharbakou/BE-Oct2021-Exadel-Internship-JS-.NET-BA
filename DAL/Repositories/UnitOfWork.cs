@@ -8,16 +8,11 @@ namespace DAL.Repositories
         private readonly InternshipDbContext internshipDbContext;
 
         private BaseRepository<Candidate> candidateRep;
-        private BaseRepository<CandidateSandbox> candidateSandboxRep;
         private BaseRepository<Employee> employeeRep;
-        private BaseRepository<EmployeeStack> employeeStacksRep;
         private BaseRepository<InternshipTeam> internshipTeamsRep;
         private BaseRepository<Interview> interviewRep;
-        private BaseRepository<InterviewResult> interviewResultRep;
         private BaseRepository<Stack> stackRep;
-        private BaseRepository<TeamMentor> teamMentorRep;
         private BaseRepository<Topic> topicRep;
-        private BaseRepository<TopicStack> topicStackRep;
 
 
         public UnitOfWork(DbContextOptions options)
@@ -37,18 +32,7 @@ namespace DAL.Repositories
                 return candidateRep;
             }
         }
-        public BaseRepository<CandidateSandbox> CandidateTeamsRep
-        {
-            get
-            {
-
-                if (this.candidateSandboxRep == null)
-                {
-                    this.candidateSandboxRep = new CandidateSandboxRepository(internshipDbContext);
-                }
-                return candidateSandboxRep;
-            }
-        }
+       
         public BaseRepository<Employee> EmployeeRep
         {
             get
@@ -60,18 +44,7 @@ namespace DAL.Repositories
                 return employeeRep;
             }
         }
-        public BaseRepository<EmployeeStack> EmployeeStacksRep
-        {
-            get
-            {
-
-                if (this.employeeStacksRep == null)
-                {
-                    this.employeeStacksRep = new EmployeeStackRepository(internshipDbContext);
-                }
-                return employeeStacksRep;
-            }
-        }
+        
         public BaseRepository<InternshipTeam> InternshipTeamsRep
         {
             get
@@ -95,18 +68,7 @@ namespace DAL.Repositories
                 return interviewRep;
             }
         }
-        public BaseRepository<InterviewResult> InterviewResultRep
-        {
-            get
-            {
-
-                if (this.interviewResultRep == null)
-                {
-                    this.interviewResultRep = new InterviewResultsRepository(internshipDbContext);
-                }
-                return interviewResultRep;
-            }
-        }
+        
         public BaseRepository<Stack> StackRep
         {
             get
@@ -117,18 +79,6 @@ namespace DAL.Repositories
                     this.stackRep = new StackRepository(internshipDbContext);
                 }
                 return stackRep;
-            }
-        }
-        public BaseRepository<TeamMentor> TeamMentorRep
-        {
-            get
-            {
-
-                if (this.teamMentorRep == null)
-                {
-                    this.teamMentorRep = new TeamMentorRepository(internshipDbContext);
-                }
-                return teamMentorRep;
             }
         }
         public BaseRepository<Topic> TopicRep
@@ -143,18 +93,7 @@ namespace DAL.Repositories
                 return topicRep;
             }
         }
-        public BaseRepository<TopicStack> TopicStackRep
-        {
-            get
-            {
-
-                if (this.topicStackRep == null)
-                {
-                    this.topicStackRep = new TopicStackRepository(internshipDbContext);
-                }
-                return topicStackRep;
-            }
-        }
+        
         public void Save()
         {
             internshipDbContext.SaveChanges();

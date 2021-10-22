@@ -8,5 +8,9 @@ namespace BLL.DTO
 {
     class CandidateDTO
     {
+        public int Id { get; set; }
+        public string Specialization { get; set; }
+        public string Location { get; set; }
+        public string EnglishLevel { get; set; }
     }
 }

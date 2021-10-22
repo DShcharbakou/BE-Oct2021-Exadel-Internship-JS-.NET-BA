@@ -10,7 +10,7 @@ namespace DAL.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Skype { get; set; }
-        public string Specialisation { get; set; }
+        public string Specialization { get; set; }
         public string Location { get; set; }
         public string EnglishLevel { get; set; }
         public DateTimeOffset RegDate { get; set; }

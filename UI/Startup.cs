@@ -16,6 +16,8 @@ using System.IO;
 using Microsoft.OpenApi.Models;
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace UI
 {
@@ -34,6 +36,11 @@ namespace UI
             var connectionString = Configuration.GetValue<string>("connectionString");
             services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionString));
 
+            
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<InternshipDbContext>();
+
+
             services.AddControllers();
              
             services.AddSwaggerGen(c =>
@@ -42,6 +49,7 @@ namespace UI
             });
 
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -49,6 +57,13 @@ namespace UI
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Account}/{action=Register}/{id?}");
+            });
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
@@ -57,4 +72,5 @@ namespace UI
             });
         }
     }
+
 }

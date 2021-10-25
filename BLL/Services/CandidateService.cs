@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using DAL.Models;
+using DAL.Repositories;
 using BLL.Interfaces;
 using BLL.DTO;
-using DAL.Repositories;
+using AutoMapper;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -14,33 +17,28 @@ namespace BLL.Services
             _candidateRep = candidateRep;
         }
 
-        public IEnumerable<CandidateDTO> GetAllFormData()
+        public void AddCandidate(CandidateForm formData)
         {
-            List<CandidateDTO> listOfCandidates = new List<CandidateDTO>();
-            CandidateDTO candidateDTO = new CandidateDTO();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateForm, Candidate>()).CreateMapper();
+            var mapper = new Mapper((IConfigurationProvider)config);
+            // Отображение объекта CandidateForm на объект Candidate
+            var candidate = mapper.Map<Candidate>(formData);
 
-            var allCandidates = _candidateRep.Candidates.GetAll();
-            foreach (var item in allCandidates)
-            {
-                candidateDTO.Id = item.Id;
-                candidateDTO.Specialization = item.Specialization;
-                candidateDTO.Location = item.Location;
-                candidateDTO.EnglishLevel = item.EnglishLevel;
-                listOfCandidates.Add(candidateDTO);
-            }
-            return listOfCandidates;
+            _candidateRep.Candidates.Save(candidate);
+            _candidateRep.Save();
         }
 
-        public CandidateDTO GetData(int id)
+        //Вернуть список данных из форм кандидатов
+        public IEnumerable<CandidateForm> GetAllCandidateForms()
         {
-            var candidate = _candidateRep.Candidates.Get(id);
-            CandidateDTO candidateDTO = new CandidateDTO();
-            candidateDTO.Id = candidate.Id;
-            candidateDTO.Location = candidate.Location;
-            candidateDTO.Specialization = candidate.Specialization;
-            candidateDTO.EnglishLevel = candidate.EnglishLevel;
-            
-            return candidateDTO;
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateForm>()).CreateMapper();
+            return mapper.Map<IEnumerable<Candidate>, List<CandidateForm>>(_candidateRep.Candidates.GetAll());
+        }
+
+        public CandidateForm GetCandidateForm(int id)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateForm>()).CreateMapper();
+            return mapper.Map<Candidate, CandidateForm>(_candidateRep.Candidates.Get(id));
         }
 
     }

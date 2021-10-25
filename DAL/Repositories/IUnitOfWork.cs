@@ -8,7 +8,6 @@ namespace DAL.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        
         BaseRepository<Candidate> Candidates { get; }
         BaseRepository<Employee> Employees { get; }
         BaseRepository<InternshipTeam> InternshipTeams { get; }

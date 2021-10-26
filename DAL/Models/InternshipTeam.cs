@@ -10,7 +10,7 @@ namespace DAL.Models
     {
         public int TeamNumber { get; set; }
 
-        public SandboxTeam SandboxTeam { get; set; }
-        public TeamMentor TeamMentor { get; set; }
+        public ICollection<SandboxTeam> SandboxTeams { get; set; }
+        public ICollection<TeamMentor> TeamMentors { get; set; }
     }
 }

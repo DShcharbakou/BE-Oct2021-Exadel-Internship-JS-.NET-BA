@@ -24,7 +24,7 @@ namespace DAL.Repositories
             return _dbSet.ToList();
         }
 
-        public virtual T Get(int id)
+        public virtual T Get(long id)
         {
             return _dbSet.SingleOrDefault(x => x.Id == id);
         }
@@ -46,7 +46,7 @@ namespace DAL.Repositories
             _internshipDbContext.Remove(model);
         }
 
-        public virtual void Remove(int id)
+        public virtual void Remove(long id)
         {
             var model = Get(id);
             Remove(model);

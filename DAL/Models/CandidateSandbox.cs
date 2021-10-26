@@ -9,7 +9,6 @@ namespace DAL.Models
 {
     public class CandidateSandbox : BaseModel
     {
-
         public int CandidateSandboxID { get; set; } // I think if we have inheritance from BaseModel we don't need CandidateSandboxID
         public int CandidateID { get; set; }
         public int SandboxID { get; set; }

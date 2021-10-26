@@ -8,6 +8,7 @@ namespace DAL.Models
 {
     public class Sandbox : BaseModel
     {
+       
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
 

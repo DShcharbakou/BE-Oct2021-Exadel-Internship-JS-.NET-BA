@@ -13,7 +13,6 @@ namespace DAL.Models
         public int SpecialisationID { get; set; }
         public int CityId { get; set; }
         public int EnglishLevelID { get; set; }
-
         public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }
 

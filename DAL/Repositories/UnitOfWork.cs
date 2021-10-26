@@ -18,6 +18,11 @@ namespace DAL.Repositories
         private BaseRepository<TeamMentor> teamMentorRep;
         private BaseRepository<Topic> topicRep;
         private BaseRepository<TopicStack> topicStackRep;
+        private BaseRepository<Specialization> specializationRep;
+        private BaseRepository<EnglishLevel> englishLevelRep;
+        private BaseRepository<Country> countryRep;
+        private BaseRepository<City> cityRep;
+
 
 
         public UnitOfWork(DbContextOptions options)
@@ -153,6 +158,54 @@ namespace DAL.Repositories
                     this.topicStackRep = new TopicStackRepository(internshipDbContext);
                 }
                 return topicStackRep;
+            }
+        }
+        public BaseRepository<Specialization> SpecializationRep
+        {
+            get
+            {
+
+                if (this.specializationRep == null)
+                {
+                    this.specializationRep = new SpecializationRepository(internshipDbContext);
+                }
+                return specializationRep;
+            }
+        }
+        public BaseRepository<EnglishLevel> EnglishLevelRep
+        {
+            get
+            {
+
+                if (this.englishLevelRep == null)
+                {
+                    this.englishLevelRep = new EnglishLevelRepository(internshipDbContext);
+                }
+                return englishLevelRep;
+            }
+        }
+        public BaseRepository<Country> CountryRep
+        {
+            get
+            {
+
+                if (this.countryRep == null)
+                {
+                    this.countryRep = new CountryRepository(internshipDbContext);
+                }
+                return countryRep;
+            }
+        }
+        public BaseRepository<City> CityRep
+        {
+            get
+            {
+
+                if (this.cityRep == null)
+                {
+                    this.cityRep = new CityRepository(internshipDbContext);
+                }
+                return cityRep;
             }
         }
         public void Save()

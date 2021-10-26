@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace BLL.DTO
 {
-    public class Candidate : BaseModel
+    public class CandidateForm
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -13,11 +17,5 @@ namespace DAL.Models
         public string Specialization { get; set; }
         public string Location { get; set; }
         public string EnglishLevel { get; set; }
-        public DateTimeOffset RegDate { get; set; }
-        public bool IsArchived { get; set; }
-
-        public ICollection<Interview> Interviews { get; set; }
-
-        public ICollection<CandidateSandbox> CandidateSandboxes { get; set; }
     }
 }

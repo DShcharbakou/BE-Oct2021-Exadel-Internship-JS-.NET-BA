@@ -40,7 +40,6 @@ namespace UI
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();
 
-
             services.AddControllers();
              
             services.AddSwaggerGen(c =>
@@ -55,6 +54,7 @@ namespace UI
         {
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
+            app.UseDeveloperExceptionPage();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");

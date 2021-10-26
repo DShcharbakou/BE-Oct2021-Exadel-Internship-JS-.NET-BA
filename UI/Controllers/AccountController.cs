@@ -11,10 +11,10 @@ namespace UI.Controllers
     [Route("[controller]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -26,18 +26,21 @@ namespace UI.Controllers
             RegisterModelResult ErrorList = new RegisterModelResult();
             if (ModelState.IsValid) 
             {  
-                User user = new User { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, Password = model.Password, };
+                User user = new User { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, Password = model.Password, UserName = model.Username };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
+                ErrorList.ErrorList = new Dictionary<int, string>();
+                int i = 0;
                 if (!result.Succeeded) 
                 {
                     foreach (var error in result.Errors) 
                     {
                         //ModelState.AddModelError(string.Empty, error.Description);
-                        ErrorList.ErrorList.Add(string.Empty, error.Description);
+                        ErrorList.ErrorList.Add(i, error.Description);
+                        i++;
                     }
                 }
-                ErrorList.ErrorList.Add(string.Empty, "All Is good");
+                ErrorList.ErrorList.Add(i, "All Is good");
             }
 
             return ErrorList;
@@ -46,32 +49,38 @@ namespace UI.Controllers
         [HttpPost("Login")]
         public async Task<RegisterModelResult> Login(LoginModelRequest model)
         {
+            int i = 0;
             RegisterModelResult ErrorList = new RegisterModelResult();
 
             if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
             {
-                ErrorList.ErrorList.Add(string.Empty, "email or password is null");
+                ErrorList.ErrorList.Add(i, "email or password is null");
+                i++;
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                ErrorList.ErrorList.Add(string.Empty, "Invalid Login and/or password");
+                ErrorList.ErrorList.Add(i, "Invalid Login and/or password");
+                i++;
             }
 
             if (!user.EmailConfirmed)
             {
-                ErrorList.ErrorList.Add(string.Empty, "Email not confirmed, please check your email for confirmation link");
+                ErrorList.ErrorList.Add(i, "Email not confirmed, please check your email for confirmation link");
+                i++;
             }
 
             var passwordSignInResult = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
             if (!passwordSignInResult.Succeeded)
             {
-                ErrorList.ErrorList.Add(string.Empty, "Invalid Login and/or password");
+                ErrorList.ErrorList.Add(i, "Invalid Login and/or password");
+                i++;
             } 
             else
             {
-                ErrorList.ErrorList.Add(string.Empty, "All is qood");
+                ErrorList.ErrorList.Add(i, "All is qood");
+                i++;
             }
 
             return ErrorList;

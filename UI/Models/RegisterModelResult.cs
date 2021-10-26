@@ -7,6 +7,6 @@ namespace UI.Models
 {
     public class RegisterModelResult
     {
-       public Dictionary<string, string> ErrorList { get; set; } 
+       public Dictionary<int, string> ErrorList { get; set; } 
     }
 }

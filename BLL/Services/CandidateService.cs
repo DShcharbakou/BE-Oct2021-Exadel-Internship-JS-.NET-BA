@@ -21,10 +21,15 @@ namespace BLL.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateForm, Candidate>()).CreateMapper();
             var mapper = new Mapper((IConfigurationProvider)config);
-            // Отображение объекта CandidateForm на объект Candidate
             var candidate = mapper.Map<Candidate>(formData);
-
             _candidateRep.Candidates.Save(candidate);
+            _candidateRep.Save();
+        }
+
+        public void DeleteCandidate(int id)
+        {
+            var candidate = _candidateRep.Candidates.Get(id);
+            _candidateRep.Candidates.Remove(candidate);
             _candidateRep.Save();
         }
 
@@ -35,7 +40,7 @@ namespace BLL.Services
             return mapper.Map<IEnumerable<Candidate>, List<CandidateForm>>(_candidateRep.Candidates.GetAll());
         }
 
-        public CandidateForm GetCandidateForm(int id)
+        public CandidateForm GetCandidateFormById(int id)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateForm>()).CreateMapper();
             return mapper.Map<Candidate, CandidateForm>(_candidateRep.Candidates.Get(id));

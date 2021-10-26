@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace UI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -18,8 +20,8 @@ namespace UI.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost]
-        public async Task<RegisterModelResult> Register(RegisterModelRequest model)
+        [HttpPost("Register")]
+        public async Task<RegisterModelResult> Register([FromBody] RegisterModelRequest model)
         {
             RegisterModelResult ErrorList = new RegisterModelResult();
             if (ModelState.IsValid) 
@@ -41,7 +43,7 @@ namespace UI.Controllers
             return ErrorList;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<RegisterModelResult> Login(LoginModelRequest model)
         {
             RegisterModelResult ErrorList = new RegisterModelResult();
@@ -75,7 +77,7 @@ namespace UI.Controllers
             return ErrorList;
         }
 
-        [HttpPost]
+        [HttpPost("Logout")]
         public async void Logout()
         {
             RegisterModelResult ErrorList = new RegisterModelResult();

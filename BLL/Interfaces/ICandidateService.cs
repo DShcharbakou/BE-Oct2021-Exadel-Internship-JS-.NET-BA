@@ -5,9 +5,9 @@ namespace BLL.Interfaces
     public interface ICandidateService
     {
         IEnumerable<CandidateForm> GetAllCandidateForms();
-        CandidateForm GetCandidateForm(int id);
-        //CandidateDTO GetData(int id);// type Candidate?
+        CandidateForm GetCandidateFormById(int id);
         void AddCandidate(CandidateForm formData);
+        void DeleteCandidate(int id);//type CandidateForm?
 
     }
 }

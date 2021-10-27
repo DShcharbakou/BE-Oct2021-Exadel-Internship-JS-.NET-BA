@@ -18,6 +18,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace UI
 {
@@ -37,8 +38,13 @@ namespace UI
             services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionString));
 
             
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => //CookieAuthenticationOptions
+            {
+                options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+            });
 
             services.AddControllers();
              
@@ -68,6 +74,7 @@ namespace UI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

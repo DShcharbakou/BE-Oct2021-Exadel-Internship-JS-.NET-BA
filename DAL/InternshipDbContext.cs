@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class InternshipDbContext : IdentityDbContext
+    public class InternshipDbContext : IdentityDbContext<User>
     {
         public InternshipDbContext(DbContextOptions options) : base(options) { }
 

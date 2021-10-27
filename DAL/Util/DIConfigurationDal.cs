@@ -11,6 +11,7 @@ namespace DAL.Util
             // DI need to know about AddTransient, AddSingleton, AddScoped
             services.AddSingleton<BaseRepository<Candidate>, CandidateRepository>();
             services.AddSingleton<BaseRepository<Employee>, EmployeeRepository>();
+            services.AddSingleton<BaseRepository<InternshipTeam>, InternshipTeamRepository>();
         }
     }
 }

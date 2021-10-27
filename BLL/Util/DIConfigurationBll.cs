@@ -18,6 +18,7 @@ namespace BLL.Util
             // DI need to know about AddTransient, AddSingleton, AddScoped
             services.AddTransient<ICandidateService, CandidateService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IInternshipTeamService, InternshipTeamService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

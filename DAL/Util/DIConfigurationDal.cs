@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using DAL.Util;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,7 @@ namespace DAL.Util
             services.AddSingleton<BaseRepository<Candidate>, CandidateRepository>();
             services.AddSingleton<BaseRepository<Employee>, EmployeeRepository>();
             services.AddSingleton<BaseRepository<InternshipTeam>, InternshipTeamRepository>();
+            services.AddSingleton<BaseRepository<Topic>, TopicRepository>();
         }
     }
 }

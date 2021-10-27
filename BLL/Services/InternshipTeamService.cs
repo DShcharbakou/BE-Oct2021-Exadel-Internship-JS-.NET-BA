@@ -3,7 +3,6 @@ using DAL.Repositories;
 using BLL.Interfaces;
 using BLL.DTO;
 using AutoMapper;
-using DAL;
 using DAL.Models;
 
 namespace BLL.Services

@@ -1,11 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DAL.Util;
-using DAL.Repositories;
 using BLL.Interfaces;
 using BLL.Services;
 
@@ -19,6 +13,7 @@ namespace BLL.Util
             services.AddTransient<ICandidateService, CandidateService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IInternshipTeamService, InternshipTeamService>();
+            services.AddTransient<ITopicService, TopicService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

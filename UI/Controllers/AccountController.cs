@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace UI.Controllers
 {
@@ -18,12 +23,15 @@ namespace UI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-
+            _roleManager = roleManager;
+            _configuration = configuration;
         }
 
         [HttpPost("Register")]
@@ -54,61 +62,41 @@ namespace UI.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<RegisterModelResult> Login([FromBody] LoginModelRequest model)
+        public async Task<IActionResult> Login([FromBody] LoginModelRequest model)
         {
-            int i = 0;
-            RegisterModelResult ErrorList = new RegisterModelResult();
-            ErrorList.ErrorList = new Dictionary<int, string>();
-
-            if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
+            var user = await _userManager.FindByNameAsync(model.Email.Normalize());
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                ErrorList.ErrorList.Add(i, "email or password is null");
-                i++;
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
+                foreach (var userRole in userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddHours(3),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                    );
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo
+                });
             }
 
-            var user = await _userManager.FindByEmailAsync(model.Email.Normalize());
-            if (user == null)
-            {
-                ErrorList.ErrorList.Add(i, "Invalid Login and/or password");
-                i++;
-            }
-
-
-
-            if (!user.EmailConfirmed)
-            {
-                ErrorList.ErrorList.Add(i, "Email not confirmed, please check your email for confirmation link");
-                i++;
-            }
-
-            var passwordSignInResult = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
-            if (!passwordSignInResult.Succeeded)
-            {
-                ErrorList.ErrorList.Add(i, "Invalid Login and/or password");
-                i++;
-            }
-            else
-            {
-                await Authenticate(model.Email);
-                ErrorList.ErrorList.Add(i, "All is qood");
-                i++;
-            }
-
-
-            return ErrorList;
-        }
-
-        private async Task Authenticate(string userName)
-        {
-            // создаем один claim
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-            };
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            return Unauthorized();
         }
 
         [HttpPost("Logout")]

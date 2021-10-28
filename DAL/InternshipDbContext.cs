@@ -29,6 +29,11 @@ namespace DAL
         public DbSet<City> Cities { get; set; }
 
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(InternshipDbContext).Assembly);
+        }
     }
 }

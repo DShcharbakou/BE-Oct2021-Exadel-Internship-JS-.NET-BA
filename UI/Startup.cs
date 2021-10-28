@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace UI
 {
@@ -46,6 +48,13 @@ namespace UI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.Name = "MySessionCookie";
+                    options.LoginPath = "/Login/Index";
+                    options.SlidingExpiration = true;
+                });
             // Adding autorization
             services.AddAuthentication(options =>
             {
@@ -87,10 +96,20 @@ namespace UI
 
             app.UseHttpsRedirection();
 
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.None,
+            };
+
+            app.UseCookiePolicy(cookiePolicyOptions);
+            app.UseAuthentication();
+            
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -67,7 +67,8 @@ namespace UI
             // Adding Jwt Bearer  
             .AddJwtBearer(options =>
             {
-                var keyByteArray = Encoding.ASCII.GetBytes("C73ACEFE-1C87-4BB8-AD89-FD7E3DCE0D83");
+                var keyByteArray = Encoding.ASCII.GetBytes(
+                    Configuration.GetValue<string>("JWT:Secret"));
                 var signingKey = new SymmetricSecurityKey(keyByteArray);
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = false;

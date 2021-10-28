@@ -89,6 +89,15 @@ namespace UI.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
+
+
+                //var claims = new List<Claim>();
+                //claims.Add(new Claim("Token", token.ToString()));
+                //claims.Add(new Claim(ClaimTypes.AuthenticationMethod, "MyCookie"));
+                //var claimsIdentity = new ClaimsIdentity(claims, "MyCookie");
+                //var principal = new ClaimsPrincipal(claimsIdentity);
+                //await HttpContext.SignInAsync(principal);
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),

@@ -54,6 +54,8 @@ namespace UI
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
 
+
+
             // Adding Jwt Bearer  
             .AddJwtBearer(options =>
             {
@@ -69,6 +71,12 @@ namespace UI
                 };
             });
 
+            //.AddCookie("MyCookie", config =>
+            //{
+            //    config.Cookie.Name = "TestCookie";
+            //    config.LoginPath = "/Account/Login";
+            //    config.AccessDeniedPath = "/User/AccessDenied";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

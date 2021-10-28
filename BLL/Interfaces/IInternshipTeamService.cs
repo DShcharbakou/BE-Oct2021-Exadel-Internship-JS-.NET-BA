@@ -9,7 +9,7 @@ namespace BLL.Interfaces
 {
     public interface IInternshipTeamService
     {
-        IEnumerable<InternshipTeamDTO> GetList();//возвращать InternshipTeam или InternshipTeamDTO?
+        IEnumerable<InternshipTeamDTO> GetList();
         InternshipTeamDTO GetInternshipTeamById(int id);
         void AddInternshipTeam(InternshipTeamDTO teamDto);
         void DeleteInternshipTeam(int id);

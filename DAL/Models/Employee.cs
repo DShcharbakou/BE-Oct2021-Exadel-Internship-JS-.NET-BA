@@ -21,6 +21,5 @@ namespace DAL
         public ICollection<EmployeeStack> EmployeeStack { get; set; }
         public ICollection<TeamMentor> TeamMentors { get; set; }
 
-        //public ICollection<TeamMentor> TeamMentors { get; set; }
     }
 }

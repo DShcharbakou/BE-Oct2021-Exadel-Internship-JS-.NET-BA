@@ -6,7 +6,7 @@ namespace BLL.Interfaces
 {
     public interface ITopicService
     {
-        IEnumerable<TopicDTO> GetList();//возвращать topic или topicDTO?
+        IEnumerable<TopicDTO> GetList();
         TopicDTO GetTopicById(int id);
         void AddTopic(TopicDTO topicDto);
         void DeleteTopic(int id);

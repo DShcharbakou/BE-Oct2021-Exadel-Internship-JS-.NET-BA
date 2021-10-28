@@ -14,6 +14,8 @@ namespace DAL.Util
             services.AddSingleton<BaseRepository<Employee>, EmployeeRepository>();
             services.AddSingleton<BaseRepository<InternshipTeam>, InternshipTeamRepository>();
             services.AddSingleton<BaseRepository<Topic>, TopicRepository>();
+            services.AddSingleton<BaseRepository<Interview>, InterviewRepository>();
+            services.AddSingleton<BaseRepository<Stack>, StackRepository>();
         }
     }
 }

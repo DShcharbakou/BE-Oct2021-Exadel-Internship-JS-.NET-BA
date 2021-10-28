@@ -7,12 +7,12 @@ namespace DAL.Repositories
     {
         private readonly InternshipDbContext internshipDbContext;
 
-        BaseRepository<Candidate> candidateRep;
-        BaseRepository<Employee> employeeRep;
-        BaseRepository<InternshipTeam> internshipTeamsRep;
-        BaseRepository<Interview> interviewRep;
-        BaseRepository<Stack> stackRep;
-        BaseRepository<Topic> topicRep;
+        private BaseRepository<Candidate> candidateRep;
+        private BaseRepository<Employee> employeeRep;
+        private BaseRepository<InternshipTeam> internshipTeamsRep;
+        private BaseRepository<Interview> interviewRep;
+        private BaseRepository<Stack> stackRep;
+        private BaseRepository<Topic> topicRep;
 
         public UnitOfWork(DbContextOptions options)
         {

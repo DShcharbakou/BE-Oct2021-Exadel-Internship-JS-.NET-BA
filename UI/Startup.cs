@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI
 {
@@ -51,7 +52,7 @@ namespace UI
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.Cookie.Name = "MySessionCookie";
+                    options.Cookie.Name = "SessionCookie";
                     options.LoginPath = "/Login/Index";
                     options.SlidingExpiration = true;
                 });
@@ -66,16 +67,24 @@ namespace UI
             // Adding Jwt Bearer  
             .AddJwtBearer(options =>
             {
+                var keyByteArray = Encoding.ASCII.GetBytes("C73ACEFE-1C87-4BB8-AD89-FD7E3DCE0D83");
+                var signingKey = new SymmetricSecurityKey(keyByteArray);
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateAudience = false,
                     ValidAudience = Configuration["JWT:ValidAudience"],
                     ValidIssuer = Configuration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                    IssuerSigningKey = signingKey,
                 };
+            });
+
+            services.AddAuthorization(options => {
+                var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
 
         }
@@ -104,12 +113,9 @@ namespace UI
             };
 
             app.UseCookiePolicy(cookiePolicyOptions);
-            app.UseAuthentication();
-            
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

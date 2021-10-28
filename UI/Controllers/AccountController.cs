@@ -102,7 +102,7 @@ namespace UI.Controllers
 
                 var authProperties = new AuthenticationProperties
                 {
-                    ExpiresUtc = DateTime.Now.AddMinutes(10),
+                    ExpiresUtc = DateTime.Now.AddHours(3),
                 };
 
                 await HttpContext.SignInAsync(

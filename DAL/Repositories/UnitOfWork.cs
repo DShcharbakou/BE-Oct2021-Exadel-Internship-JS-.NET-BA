@@ -3,7 +3,7 @@ using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 namespace DAL.Repositories
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly InternshipDbContext internshipDbContext;
 
@@ -14,13 +14,14 @@ namespace DAL.Repositories
         private BaseRepository<Stack> stackRep;
         private BaseRepository<Topic> topicRep;
 
-
         public UnitOfWork(DbContextOptions options)
         {
             internshipDbContext = new InternshipDbContext(options);
         }
 
-        public BaseRepository<Candidate> CandidateRep
+
+        //---------------------------------------------
+        public BaseRepository<Candidate> Candidates
         {
             get
             {
@@ -33,7 +34,7 @@ namespace DAL.Repositories
             }
         }
        
-        public BaseRepository<Employee> EmployeeRep
+        public BaseRepository<Employee> Employees
         {
             get
             {
@@ -45,7 +46,7 @@ namespace DAL.Repositories
             }
         }
         
-        public BaseRepository<InternshipTeam> InternshipTeamsRep
+        public BaseRepository<InternshipTeam> InternshipTeams
         {
             get
             {
@@ -56,7 +57,7 @@ namespace DAL.Repositories
                 return internshipTeamsRep;
             }
         }
-        public BaseRepository<Interview> InterviewRep
+        public BaseRepository<Interview> Interviews
         {
             get
             {
@@ -69,7 +70,7 @@ namespace DAL.Repositories
             }
         }
         
-        public BaseRepository<Stack> StackRep
+        public BaseRepository<Stack> Stacks
         {
             get
             {
@@ -81,7 +82,7 @@ namespace DAL.Repositories
                 return stackRep;
             }
         }
-        public BaseRepository<Topic> TopicRep
+        public BaseRepository<Topic> Topics
         {
             get
             {

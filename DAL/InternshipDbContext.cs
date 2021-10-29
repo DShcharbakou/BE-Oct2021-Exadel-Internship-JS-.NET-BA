@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class InternshipDbContext : DbContext
+    public class InternshipDbContext : IdentityDbContext<User>
     {
         public InternshipDbContext(DbContextOptions options) : base(options) { }
 

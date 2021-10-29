@@ -9,38 +9,36 @@ namespace BLL.Services
 {
     public class InterviewService : IInterviewService
     {
-        private readonly IUnitOfWork _interviewRep;
-        public InterviewService(IUnitOfWork interview)
+        private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
+        public InterviewService(IUnitOfWork db, IMapper mapper)
         {
-            _interviewRep = interview;
+            _db = db;
+            _mapper = mapper;
         }
 
         public void AddInterview(InterviewDTO interviewDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<InterviewDTO, Interview>()).CreateMapper();
-            var mapper = new Mapper((IConfigurationProvider)config);
-            var interview = mapper.Map<Interview>(interviewDto);
-            _interviewRep.Interviews.Save(interview);
-            _interviewRep.Save();
+            var interview = _mapper.Map<Interview>(interviewDto);
+            _db.Interviews.Save(interview);
+            _db.Save();
         }
 
         public void DeleteInterview(int id)
         {
-            var interview = _interviewRep.Interviews.Get(id);
-            _interviewRep.Interviews.Remove(interview);
-            _interviewRep.Save();
+            var interview = _db.Interviews.Get(id);
+            _db.Interviews.Remove(interview);
+            _db.Save();
         }
 
         public InterviewDTO GetInterviewById(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Interview, InterviewDTO>()).CreateMapper();
-            return mapper.Map<Interview, InterviewDTO>(_interviewRep.Interviews.Get(id));
+            return _mapper.Map<Interview, InterviewDTO>(_db.Interviews.Get(id));
         }
 
         public IEnumerable<InterviewDTO> GetList()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Interview, InterviewDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Interview>, List<InterviewDTO>>(_interviewRep.Interviews.GetAll());
+            return _mapper.Map<IEnumerable<Interview>, List<InterviewDTO>>(_db.Interviews.GetAll());
         }
     }
 }

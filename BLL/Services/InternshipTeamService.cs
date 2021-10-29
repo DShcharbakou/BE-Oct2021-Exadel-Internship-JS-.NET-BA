@@ -9,39 +9,36 @@ namespace BLL.Services
 {
     public class InternshipTeamService : IInternshipTeamService
     {
-        private readonly IUnitOfWork _internshipTeamRep;
-
-        public InternshipTeamService(IUnitOfWork team)
+        private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
+        public InternshipTeamService(IUnitOfWork db, IMapper mapper)
         {
-            _internshipTeamRep = team;
+            _db = db;
+            _mapper = mapper;
         }
 
         public void AddInternshipTeam(InternshipTeamDTO teamDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<InternshipTeamDTO, InternshipTeam>()).CreateMapper();
-            var mapper = new Mapper((IConfigurationProvider)config);
-            var team = mapper.Map<InternshipTeam>(teamDto);
-            _internshipTeamRep.InternshipTeams.Save(team);
-            _internshipTeamRep.Save();
+            var team = _mapper.Map<InternshipTeam>(teamDto);
+            _db.InternshipTeams.Save(team);
+            _db.Save();
         }
 
         public void DeleteInternshipTeam(int id)
         {
-            var team = _internshipTeamRep.InternshipTeams.Get(id);
-            _internshipTeamRep.InternshipTeams.Remove(team);
-            _internshipTeamRep.Save();
+            var team = _db.InternshipTeams.Get(id);
+            _db.InternshipTeams.Remove(team);
+            _db.Save();
         }
 
         public InternshipTeamDTO GetInternshipTeamById(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<InternshipTeam, InternshipTeamDTO>()).CreateMapper();
-            return mapper.Map<InternshipTeam, InternshipTeamDTO>(_internshipTeamRep.InternshipTeams.Get(id));
+            return _mapper.Map<InternshipTeam, InternshipTeamDTO>(_db.InternshipTeams.Get(id));
         }
 
         public IEnumerable<InternshipTeamDTO> GetList()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<InternshipTeam, InternshipTeamDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<InternshipTeam>, List<InternshipTeamDTO>>(_internshipTeamRep.InternshipTeams.GetAll());
+            return _mapper.Map<IEnumerable<InternshipTeam>, List<InternshipTeamDTO>>(_db.InternshipTeams.GetAll());
         }
     }
 }

@@ -9,39 +9,36 @@ namespace BLL.Services
 {
     public class TopicService : ITopicService
     {
-        private readonly IUnitOfWork _topicRep;
-
-        public TopicService(IUnitOfWork topic)
+        private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
+        public TopicService(IUnitOfWork db, IMapper mapper)
         {
-            _topicRep = topic;
+            _db = db;
+            _mapper = mapper;
         }
 
         public void AddTopic(TopicDTO topicDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<TopicDTO, Topic>()).CreateMapper();
-            var mapper = new Mapper((IConfigurationProvider)config);
-            var topic = mapper.Map<Topic>(topicDto);
-            _topicRep.Topics.Save(topic);
-            _topicRep.Save();
+            var topic = _mapper.Map<Topic>(topicDto);
+            _db.Topics.Save(topic);
+            _db.Save();
         }
 
         public void DeleteTopic(int id)
         {
-            var topic = _topicRep.Topics.Get(id);
-            _topicRep.Topics.Remove(topic);
-            _topicRep.Save();
+            var topic = _db.Topics.Get(id);
+            _db.Topics.Remove(topic);
+            _db.Save();
         }
 
         public IEnumerable<TopicDTO> GetList()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Topic, TopicDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Topic>, List<TopicDTO>>(_topicRep.Topics.GetAll());
+            return _mapper.Map<IEnumerable<Topic>, List<TopicDTO>>(_db.Topics.GetAll());
         }
 
         public TopicDTO GetTopicById(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Topic, TopicDTO>()).CreateMapper();
-            return mapper.Map<Topic, TopicDTO>(_topicRep.Topics.Get(id));
+            return _mapper.Map<Topic, TopicDTO>(_db.Topics.Get(id));
         }
     }
 }

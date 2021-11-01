@@ -14,6 +14,10 @@ namespace DAL.Repositories
         BaseRepository<Interview> Interviews { get; }
         BaseRepository<Stack> Stacks { get; }
         BaseRepository<Topic> Topics { get; }
-        void Save();
+        BaseRepository<Specialization> Specializations{get;}
+        BaseRepository<EnglishLevel> EnglishLevels {get;}
+        BaseRepository<Country> Countries{ get; }
+        BaseRepository<City> Cities { get; }
+void Save();
     }
 }

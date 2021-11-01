@@ -13,6 +13,10 @@ namespace DAL.Repositories
         private BaseRepository<Interview> interviewRep;
         private BaseRepository<Stack> stackRep;
         private BaseRepository<Topic> topicRep;
+        private BaseRepository<Specialization> specializationRep;
+        private BaseRepository<EnglishLevel> englishLevelRep;
+        private BaseRepository<Country> countryRep;
+        private BaseRepository<City> cityRep;
 
         public UnitOfWork(DbContextOptions options)
         {
@@ -94,7 +98,55 @@ namespace DAL.Repositories
                 return topicRep;
             }
         }
-        
+        public BaseRepository<Specialization> Specializations
+        {
+            get
+            {
+
+                if (this.specializationRep == null)
+                {
+                    this.specializationRep = new SpecializationRepository(internshipDbContext);
+                }
+                return specializationRep;
+            }
+        }
+        public BaseRepository<EnglishLevel> EnglishLevels
+        {
+            get
+            {
+
+                if (this.englishLevelRep == null)
+                {
+                    this.englishLevelRep = new EnglishLevelRepository(internshipDbContext);
+                }
+                return englishLevelRep;
+            }
+        }
+        public BaseRepository<Country> Countries
+        {
+            get
+            {
+
+                if (this.countryRep == null)
+                {
+                    this.countryRep = new CountryRepository(internshipDbContext);
+                }
+                return countryRep;
+            }
+        }
+        public BaseRepository<City> Cities
+        {
+            get
+            {
+
+                if (this.cityRep == null)
+                {
+                    this.cityRep = new CityRepository(internshipDbContext);
+                }
+                return cityRep;
+            }
+        }
+
         public void Save()
         {
             internshipDbContext.SaveChanges();

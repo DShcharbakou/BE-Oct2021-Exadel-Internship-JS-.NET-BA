@@ -24,6 +24,10 @@ namespace DAL
         public DbSet<TeamMentor> TeamsMentors { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<TopicStack> TopicsStacks { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<EnglishLevel> EnglishLevel { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

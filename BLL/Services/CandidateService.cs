@@ -17,9 +17,9 @@ namespace BLL.Services
             _candidateRep = candidateRep;
         }
 
-        public void AddCandidate(CandidateForm formData)
+        public void AddCandidate(CandidateDTO formData)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateForm, Candidate>()).CreateMapper();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateDTO, Candidate>()).CreateMapper();
             var mapper = new Mapper((IConfigurationProvider)config);
             var candidate = mapper.Map<Candidate>(formData);
             _candidateRep.Candidates.Save(candidate);
@@ -34,16 +34,16 @@ namespace BLL.Services
         }
 
         //Вернуть список данных из форм кандидатов
-        public IEnumerable<CandidateForm> GetAllCandidateForms()
+        public IEnumerable<CandidateDTO> GetAllCandidates()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateForm>()).CreateMapper();
-            return mapper.Map<IEnumerable<Candidate>, List<CandidateForm>>(_candidateRep.Candidates.GetAll());
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_candidateRep.Candidates.GetAll());
         }
 
-        public CandidateForm GetCandidateFormById(int id)
+        public CandidateDTO GetCandidateById(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateForm>()).CreateMapper();
-            return mapper.Map<Candidate, CandidateForm>(_candidateRep.Candidates.Get(id));
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Candidate, CandidateDTO>()).CreateMapper();
+            return mapper.Map<Candidate, CandidateDTO>(_candidateRep.Candidates.Get(id));
         }
 
     }

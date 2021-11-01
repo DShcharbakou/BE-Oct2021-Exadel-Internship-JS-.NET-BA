@@ -98,7 +98,7 @@ namespace DAL.Repositories
                 return topicRep;
             }
         }
-        public BaseRepository<Specialization> SpecializationRep
+        public BaseRepository<Specialization> Specializations
         {
             get
             {
@@ -110,7 +110,7 @@ namespace DAL.Repositories
                 return specializationRep;
             }
         }
-        public BaseRepository<EnglishLevel> EnglishLevelRep
+        public BaseRepository<EnglishLevel> EnglishLevels
         {
             get
             {
@@ -122,7 +122,7 @@ namespace DAL.Repositories
                 return englishLevelRep;
             }
         }
-        public BaseRepository<Country> CountryRep
+        public BaseRepository<Country> Countries
         {
             get
             {
@@ -134,7 +134,7 @@ namespace DAL.Repositories
                 return countryRep;
             }
         }
-        public BaseRepository<City> CityRep
+        public BaseRepository<City> Cities
         {
             get
             {

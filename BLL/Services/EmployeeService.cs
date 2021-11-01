@@ -9,30 +9,29 @@ namespace BLL.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IUnitOfWork _employeeRep;
-
-        public EmployeeService(IUnitOfWork emp)
+        private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
+        public EmployeeService(IUnitOfWork db, IMapper mapper)
         {
-            _employeeRep = emp;
+            _db = db;
+            _mapper = mapper;
         }
 
         public IEnumerable<EmployeeDTO> GetList()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Employee, EmployeeDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Employee>, List<EmployeeDTO>>(_employeeRep.Employees.GetAll());
+            return _mapper.Map<IEnumerable<Employee>, List<EmployeeDTO>>(_db.Employees.GetAll());
         }
 
         public EmployeeDTO GetEmployeeById(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Employee, EmployeeDTO>()).CreateMapper();
-            return mapper.Map<Employee, EmployeeDTO>(_employeeRep.Employees.Get(id));
+            return _mapper.Map<Employee, EmployeeDTO>(_db.Employees.Get(id));
         }
 
         public void DeleteEmployee(int id)
         {
-            var employee = _employeeRep.Employees.Get(id);
-            _employeeRep.Employees.Remove(employee);
-            _employeeRep.Save();
+            var employee = _db.Employees.Get(id);
+            _db.Employees.Remove(employee);
+            _db.Save();
         }
     }
 }

@@ -13,37 +13,35 @@ namespace BLL.Services
 {
     public class StackService : IStackService
     {
-        private readonly IUnitOfWork _stackRep;
-        public StackService(IUnitOfWork stack)
+        private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
+        public StackService(IUnitOfWork db, IMapper mapper)
         {
-            _stackRep = stack;
+            _db = db;
+            _mapper = mapper;
         }
         public void AddStack(StackDTO stackDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<StackDTO, Stack>()).CreateMapper();
-            var mapper = new Mapper((IConfigurationProvider)config);
-            var stack = mapper.Map<Stack>(stackDto);
-            _stackRep.Stacks.Save(stack);
-            _stackRep.Save();
+            var stack = _mapper.Map<Stack>(stackDto);
+            _db.Stacks.Save(stack);
+            _db.Save();
         }
 
         public void DeleteStack(int id)
         {
-            var stack = _stackRep.Stacks.Get(id);
-            _stackRep.Stacks.Remove(stack);
-            _stackRep.Save();
+            var stack = _db.Stacks.Get(id);
+            _db.Stacks.Remove(stack);
+            _db.Save();
         }
 
         public IEnumerable<StackDTO> GetList()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Stack, StackDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Stack>, List<StackDTO>>(_stackRep.Stacks.GetAll());
+            return _mapper.Map<IEnumerable<Stack>, List<StackDTO>>(_db.Stacks.GetAll());
         }
 
         public StackDTO GetStackById(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Stack, StackDTO>()).CreateMapper();
-            return mapper.Map<Stack, StackDTO>(_stackRep.Stacks.Get(id));
+            return _mapper.Map<Stack, StackDTO>(_db.Stacks.Get(id));
         }
     }
 }

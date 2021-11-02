@@ -94,7 +94,7 @@ namespace UI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             SeedExtension.SeedRoles(roleManager).Wait();
-            SeedExtension.SeedAdmin(userManager);
+            SeedExtension.SeedUsers(userManager);
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.

@@ -88,6 +88,7 @@ namespace UI
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
 
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -117,6 +118,7 @@ namespace UI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

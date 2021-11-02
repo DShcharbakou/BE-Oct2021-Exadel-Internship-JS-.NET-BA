@@ -93,8 +93,8 @@ namespace UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            SeedExtension.SeedRoles(roleManager).Wait();
-            SeedExtension.SeedUsers(userManager);
+            StartupSeedExtension.SeedRoles(roleManager).Wait();
+            StartupSeedExtension.SeedUsers(userManager);
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.

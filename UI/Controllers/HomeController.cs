@@ -16,6 +16,7 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         [Authorize(Roles = UserRoles.Admin)]
+        [BlacklistAuthorize]
         [HttpGet("Index")]
         public string Index()
         {

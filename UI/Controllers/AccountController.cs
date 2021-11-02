@@ -13,6 +13,7 @@ using System;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http.Headers;
 
 namespace UI.Controllers
 {
@@ -25,6 +26,7 @@ namespace UI.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private TockenControl tockenControl;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
@@ -32,6 +34,7 @@ namespace UI.Controllers
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            tockenControl = new TockenControl();
         }
 
         [HttpPost("Register")]
@@ -45,6 +48,17 @@ namespace UI.Controllers
                 User user = new User { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, Password = model.Password, UserName = model.Email };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                if (await _roleManager.RoleExistsAsync(model.Role))
+                {
+                    await _userManager.AddToRoleAsync(user, model.Role);
+                }
+
                 int i = 0;
                 if (!result.Succeeded) 
                 {
@@ -100,10 +114,20 @@ namespace UI.Controllers
         }
 
         [HttpPost("Logout")]
-        public async void Logout()
+        public void Logout([FromHeader] string authorization)
         {
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                tockenControl.Update();
+                var scheme = headerValue.Scheme;
+                var parameter = headerValue.Parameter;
 
-            await _signInManager.SignOutAsync();
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(parameter);
+                tockenControl.Logout(parameter, jsonToken.ValidTo);
+                tockenControl.Update();
+                tockenControl.Save();
+            }
         }
     }
 }

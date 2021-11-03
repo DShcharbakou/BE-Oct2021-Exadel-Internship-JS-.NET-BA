@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    [Migration("20211103142632_AddColumnToStack")]
-    partial class AddColumnToStack
+    [Migration("20211103154114_AddSkillTypeToStack")]
+    partial class AddSkillTypeToStack
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -287,6 +287,9 @@ namespace DAL.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

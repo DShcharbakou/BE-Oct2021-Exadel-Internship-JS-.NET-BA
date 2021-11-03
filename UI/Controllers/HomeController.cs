@@ -13,12 +13,20 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace UI.Controllers
 {
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("[controller]")]
     public class HomeController : Controller
     {
+        [Authorize(Roles = UserRoles.Admin)]
+
         [HttpGet("Index")]
         public string Index()
+        {
+            return "It Works!";
+        }
+
+        [Authorize(Roles = UserRoles.User)]
+        [HttpGet("Test_user")]
+        public string Test()
         {
             return "It Works!";
         }

@@ -9,24 +9,21 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UI
 {
     public class BlacklistAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
     {
-        private IMemoryCache _memoryCache;
-        private TockenControl _manager;
+        private TockenControl _manager = new TockenControl();
 
-        /*(public BlacklistAuthorizeAttribute(TockenControl manager)
-        {
-            _manager = manager;
-        }*/
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            _manager.Download(_memoryCache);
+            var memoryCache = context.HttpContext.RequestServices.GetService<IMemoryCache>();
+            _manager.Download(memoryCache);
             var headerValue = context.HttpContext.Request.Headers["Authorization"];
             headerValue = headerValue.ToString().Split("Bearer ");
-            if (!_manager.IsInBlacklist(headerValue))
+            if (_manager.IsInBlacklist(headerValue))
             {
                 // it isn't needed to set unauthorized result 
                 // as the base class already requires the user to be authenticated

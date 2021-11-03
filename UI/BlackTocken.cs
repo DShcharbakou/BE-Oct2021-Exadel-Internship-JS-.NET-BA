@@ -56,7 +56,9 @@ namespace UI
 
         public bool IsInBlacklist(string tocken)
         {
-            return BlackList.TokenList.Contains(tocken);
+            if (BlackList.TokenList != null)
+                return BlackList.TokenList.Contains(tocken);
+            return false;
         }
     }
 }

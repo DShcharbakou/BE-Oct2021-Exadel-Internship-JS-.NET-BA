@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public enum SkillType : int
+    public enum SkillType
     {
-        SoftSkill = 0,
-        TechSkill = 1
+        SoftSkill,
+        TechSkill
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace UI
 {
-
     public struct TokenManager
     {
         public List<string> TokenList { get; set; }
@@ -18,25 +19,13 @@ namespace UI
         private TokenManager BlackList;
         private const int TimeLive = 4;
 
-        public TockenControl()
-        {
-
-            if (System.IO.File.Exists("blacklist.json"))
-            {
-                Download();
-            }
-            else
-            {
-                BlackList = new TokenManager();
-                BlackList.TokenList = new List<string>();
-                BlackList.TimeList = new List<DateTime>();
-                Save();
-            }
-            
-        }
-
         public void Logout(string token, DateTime createTime)
         {
+            if (BlackList.TokenList == null || BlackList.TimeList == null)
+            {
+                BlackList.TokenList = new List<string>();
+                BlackList.TimeList = new List<DateTime>();
+            }
             BlackList.TokenList.Add(token);
             BlackList.TimeList.Add(createTime);
         }
@@ -54,22 +43,15 @@ namespace UI
             }
         }
 
-        public async void Save()
+        public IMemoryCache Save(IMemoryCache memoryCache)
         {
-            using (FileStream fs = new FileStream("blacklist.json", FileMode.OpenOrCreate))
-            {
-                await JsonSerializer.SerializeAsync<TokenManager>(fs, BlackList);
-                fs.Close();
-            }
+            memoryCache.Set("Blacklist", BlackList);
+            return memoryCache;
         }
 
-        public async void Download()
+        public void Download(IMemoryCache memoryCache)
         {
-            using(FileStream fs = new FileStream("blacklist.json", FileMode.OpenOrCreate))
-            {
-                BlackList = await JsonSerializer.DeserializeAsync<TokenManager>(fs);
-                fs.Close();
-            }
+            memoryCache.TryGetValue("Blacklist", out BlackList);
         }
 
         public bool IsInBlacklist(string tocken)

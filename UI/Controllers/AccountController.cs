@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace UI.Controllers
 {
@@ -26,15 +27,17 @@ namespace UI.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        private TockenControl tockenControl;
+        private TockenControl _tockenControl;
+        private IMemoryCache _memoryCache;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IMemoryCache memoryCache)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
-            tockenControl = new TockenControl();
+            _tockenControl = new TockenControl();
+            _memoryCache = memoryCache;
         }
 
         [HttpPost("Register")]
@@ -118,15 +121,14 @@ namespace UI.Controllers
         {
             if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
             {
-                tockenControl.Update();
-                var scheme = headerValue.Scheme;
+                _tockenControl.Download(_memoryCache);
                 var parameter = headerValue.Parameter;
 
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(parameter);
-                tockenControl.Logout(parameter, jsonToken.ValidTo);
-                tockenControl.Update();
-                tockenControl.Save();
+                _tockenControl.Logout(parameter, jsonToken.ValidTo);
+                _tockenControl.Update();
+                _tockenControl.Save(_memoryCache);
             }
         }
     }

@@ -15,8 +15,8 @@ namespace UI.Controllers
     [Route("[controller]")]
     public class HomeController : Controller
     {
-        [Authorize(Roles = UserRoles.Admin)]
         [BlacklistAuthorize]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpGet("Index")]
         public string Index()
         {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,20 @@ using System.Threading.Tasks;
 namespace UI
 {
     public class BlacklistAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
-    {  
-        
+    {
+        private IMemoryCache _memoryCache;
+        private TockenControl _manager;
+
+        /*(public BlacklistAuthorizeAttribute(TockenControl manager)
+        {
+            _manager = manager;
+        }*/
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            TockenControl manager = new TockenControl();
+            _manager.Download(_memoryCache);
             var headerValue = context.HttpContext.Request.Headers["Authorization"];
             headerValue = headerValue.ToString().Split("Bearer ");
-            if (!manager.IsInBlacklist(headerValue))
+            if (!_manager.IsInBlacklist(headerValue))
             {
                 // it isn't needed to set unauthorized result 
                 // as the base class already requires the user to be authenticated

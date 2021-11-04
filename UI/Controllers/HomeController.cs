@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace UI.Controllers
 {
@@ -16,8 +16,8 @@ namespace UI.Controllers
     [Route("[controller]")]
     public class HomeController : Controller
     {
+        [BlacklistAuthorize]
         [Authorize(Roles = UserRoles.Admin)]
-
         [HttpGet("Index")]
         public string Index()
         {

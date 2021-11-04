@@ -7,6 +7,7 @@ namespace UI.Models
 {
     public class LogoutModel
     {
-        public string LogoutID { get; set; }
+        public string Tocken { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }

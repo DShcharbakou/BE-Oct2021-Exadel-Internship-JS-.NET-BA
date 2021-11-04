@@ -13,6 +13,10 @@ using System;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http.Headers;
+using Microsoft.Extensions.Caching.Memory;
+using BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Controllers
 {
@@ -22,16 +26,17 @@ namespace UI.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private ITokenService _tokenService;
+ 
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AccountController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ITokenService tokenService)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _tokenService = tokenService;
         }
 
         [HttpPost("Register")]
@@ -45,6 +50,17 @@ namespace UI.Controllers
                 User user = new User { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, Password = model.Password, UserName = model.Email };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                if (await _roleManager.RoleExistsAsync(model.Role))
+                {
+                    await _userManager.AddToRoleAsync(user, model.Role);
+                }
+
                 int i = 0;
                 if (!result.Succeeded) 
                 {
@@ -64,53 +80,9 @@ namespace UI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginModelRequest model)
         {
-            var user = await _userManager.FindByNameAsync(model.Email.Normalize());
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            var token = await _tokenService.Login(model.Email, model.Password);
+            if (token != null)
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
-
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-
-
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, model.Email),
-                    new Claim(ClaimTypes.Role, "User"),
-                };
-
-                var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var authProperties = new AuthenticationProperties
-                {
-                    ExpiresUtc = DateTime.Now.AddHours(3),
-                };
-
-                await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-
-
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -122,10 +94,13 @@ namespace UI.Controllers
         }
 
         [HttpPost("Logout")]
-        public async void Logout()
+        [BlacklistAuthorize]
+        [Authorize]
+        public void Logout()
         {
-
-            await _signInManager.SignOutAsync();
+            string authorizationHeader = Request.Headers["Authorization"];
+            string token = authorizationHeader.Split("Bearer ")[1];
+            _tokenService.Logout(token);
         }
     }
 }

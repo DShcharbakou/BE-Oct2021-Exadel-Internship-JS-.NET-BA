@@ -26,16 +26,14 @@ namespace UI.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private ITokenService _tokenService;
  
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ITokenService tokenService)
+        public AccountController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ITokenService tokenService)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _tokenService = tokenService;
@@ -82,10 +80,14 @@ namespace UI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginModelRequest model)
         {
-            var user = await _userManager.FindByNameAsync(model.Email.Normalize());
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            var token = await _tokenService.Login(model.Email, model.Password);
+            if (token != null)
             {
-                
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo
+                });
             }
 
             return Unauthorized();

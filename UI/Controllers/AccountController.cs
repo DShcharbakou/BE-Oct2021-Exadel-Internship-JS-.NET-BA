@@ -15,6 +15,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 using Microsoft.Extensions.Caching.Memory;
+using BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Controllers
 {
@@ -27,17 +29,16 @@ namespace UI.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        private TockenControl _tockenControl;
-        private IMemoryCache _memoryCache;
+        private ITokenService _tokenService;
+ 
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IMemoryCache memoryCache)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
-            _tockenControl = new TockenControl();
-            _memoryCache = memoryCache;
+            _tokenService = tokenService;
         }
 
         [HttpPost("Register")]
@@ -84,53 +85,20 @@ namespace UI.Controllers
             var user = await _userManager.FindByNameAsync(model.Email.Normalize());
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
-
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-
-                return Ok(new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
-                });
+                
             }
 
             return Unauthorized();
         }
 
         [HttpPost("Logout")]
-        public void Logout([FromHeader] string authorization)
+        [BlacklistAuthorize]
+        [Authorize]
+        public void Logout()
         {
-            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
-            {
-                _tockenControl.Download(_memoryCache);
-                var parameter = headerValue.Parameter;
-
-                var handler = new JwtSecurityTokenHandler();
-                var jsonToken = handler.ReadToken(parameter);
-                _tockenControl.Logout(parameter, jsonToken.ValidTo);
-                _tockenControl.Update();
-                _tockenControl.Save(_memoryCache);
-            }
+            string authorizationHeader = Request.Headers["Authorization"];
+            string token = authorizationHeader.Split("Bearer ")[1];
+            _tokenService.Logout(token);
         }
     }
 }

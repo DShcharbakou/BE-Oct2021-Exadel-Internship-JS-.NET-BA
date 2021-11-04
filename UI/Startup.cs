@@ -20,6 +20,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using BLL.Interfaces;
+using BLL.Services;
 
 namespace UI
 {
@@ -99,6 +101,7 @@ namespace UI
                     ValidAudience = Configuration["JWT:ValidAudience"],
                     ValidIssuer = Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = signingKey,
+                    ClockSkew = TimeSpan.Zero,
                 };
             });
 
@@ -108,6 +111,7 @@ namespace UI
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
 
+            services.AddScoped<ITokenService, TokenService>();
             services.AddCors();
         }
 

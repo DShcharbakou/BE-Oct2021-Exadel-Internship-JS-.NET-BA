@@ -1,13 +1,12 @@
-﻿using DAL.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace BLL.DTO
 {
-    public class Employee : BaseModel
+    public class EmployeeDTO
     {
         public string Name { get; set; }
         public string FirstName { get; set; }
@@ -17,9 +16,8 @@ namespace DAL
         public string Skype { get; set; }
         public int RoleId { get; set; }
 
-        public ICollection<Interview> Interviews { get; set; }
-        public ICollection<EmployeeStack> EmployeeStack { get; set; }
-        public ICollection<TeamMentor> TeamMentors { get; set; }
-
+        // public ICollection<Interview> Interviews { get; set; }
+        // public ICollection<EmployeeStack> EmployeeStack { get; set; }
+        //public ICollection<TeamMentor> TeamMentors { get; set; }
     }
 }

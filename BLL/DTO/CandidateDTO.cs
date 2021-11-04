@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace BLL.DTO
 {
-    public class Candidate : BaseModel
+    public class CandidateDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -13,11 +16,5 @@ namespace DAL.Models
         public int SpecializationID { get; set; }
         public int CityID { get; set; }
         public int EnglishLevelID { get; set; }
-        public DateTimeOffset RegDate { get; set; }
-        public bool IsArchived { get; set; }
-
-        public ICollection<Interview> Interviews { get; set; }
-
-        public ICollection<CandidateSandbox> CandidateSandboxes { get; set; }
     }
 }

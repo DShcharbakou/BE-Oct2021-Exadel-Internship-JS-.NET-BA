@@ -1,4 +1,5 @@
 ﻿using DAL.Repositories;
+using DAL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,19 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace BLL
 {
     public static class StartupSeedExtension
     {
         public static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            string[] roleNames = { "admin", "recruiter", "manager", "interviewer", "mentor", "supermentor" };
+            UserRoles[] roleNames = { UserRoles.admin, UserRoles.recruiter, UserRoles.manager, UserRoles.interviewer, UserRoles.mentor, UserRoles.supermentor };
 
             foreach (var role in roleNames)
             {
-                if (!await roleManager.RoleExistsAsync(role))
+                if (!await roleManager.RoleExistsAsync(role.ToString()))
                 {
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                    await roleManager.CreateAsync(new IdentityRole(role.ToString()));
                 }
             }
         }
@@ -148,17 +149,17 @@ namespace DAL
                 }
             }
 
-            userManager.AddToRoleAsync(admin, "admin").Wait();
-            userManager.AddToRoleAsync(recruiterVasya, "recruiter").Wait();
-            userManager.AddToRoleAsync(recruiterPetya, "recruiter").Wait();
-            userManager.AddToRoleAsync(managerLesha, "manager").Wait();
-            userManager.AddToRoleAsync(managerKatya, "manager").Wait();
-            userManager.AddToRoleAsync(interviewerDima, "interviewer").Wait();
-            userManager.AddToRoleAsync(interviewerKostya, "interviewer").Wait();
-            userManager.AddToRoleAsync(mentorSasha, "mentor").Wait();
-            userManager.AddToRoleAsync(mentorVadim, "mentor").Wait();
-            userManager.AddToRoleAsync(supermentorKirill, "supermentor").Wait();
-            userManager.AddToRoleAsync(supermentorLena, "supermentor").Wait();
+            userManager.AddToRoleAsync(admin, UserRoles.admin.ToString()).Wait();
+            userManager.AddToRoleAsync(recruiterVasya, UserRoles.recruiter.ToString()).Wait();
+            userManager.AddToRoleAsync(recruiterPetya, UserRoles.recruiter.ToString()).Wait();
+            userManager.AddToRoleAsync(managerLesha, UserRoles.manager.ToString()).Wait();
+            userManager.AddToRoleAsync(managerKatya, UserRoles.manager.ToString()).Wait();
+            userManager.AddToRoleAsync(interviewerDima, UserRoles.interviewer.ToString()).Wait();
+            userManager.AddToRoleAsync(interviewerKostya, UserRoles.interviewer.ToString()).Wait();
+            userManager.AddToRoleAsync(mentorSasha, UserRoles.mentor.ToString()).Wait();
+            userManager.AddToRoleAsync(mentorVadim, UserRoles.mentor.ToString()).Wait();
+            userManager.AddToRoleAsync(supermentorKirill, UserRoles.supermentor.ToString()).Wait();
+            userManager.AddToRoleAsync(supermentorLena, UserRoles.supermentor.ToString()).Wait();
         }
     }
 }

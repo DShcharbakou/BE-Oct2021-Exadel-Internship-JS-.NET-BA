@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface ITokenService
+    public interface IAuthenticationService
     {
         public Task<JwtSecurityToken> Login(string email, string password);
         public void Logout(string token);

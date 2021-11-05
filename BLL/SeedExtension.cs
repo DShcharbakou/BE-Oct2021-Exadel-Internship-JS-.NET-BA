@@ -15,9 +15,7 @@ namespace BLL
     {
         public static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            UserRoles[] roleNames = { UserRoles.admin, UserRoles.recruiter, UserRoles.manager, UserRoles.interviewer, UserRoles.mentor, UserRoles.supermentor };
-
-            foreach (var role in roleNames)
+            foreach (var role in Enum.GetValues(typeof(UserRoles)))
             {
                 if (!await roleManager.RoleExistsAsync(role.ToString()))
                 {

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using BLL.Interfaces;
 
-namespace UI.Attribute
+namespace UI.Attributes
 {
     public class BlacklistAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
     {

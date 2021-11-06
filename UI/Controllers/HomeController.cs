@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
-using UI.Attribute;
+using UI.Attributes;
 
 namespace UI.Controllers
 {
@@ -16,7 +16,6 @@ namespace UI.Controllers
     [Route("[controller]")]
     public class HomeController : Controller
     {
-        UserRoles claim = UserRoles.admin;
         [BlacklistAuthorize]
         [Authorize()]
         [HttpGet("Index")]

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using UI.Models;
 using DAL;
 using System.Collections.Generic;
-using UI.Attribute;
+using UI.Attributes;
 using System.IdentityModel.Tokens.Jwt;
 using System;
 using Microsoft.IdentityModel.Tokens;

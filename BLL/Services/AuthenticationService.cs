@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class TokenService : ITokenService
+    public class AuthenticationService : IAuthenticationService
     {
         private IMemoryCache _cache;
         private const string TokensKey = "token_";
@@ -23,7 +23,7 @@ namespace BLL.Services
         private UserManager<User> _userManager;
 
 
-        public TokenService(IMemoryCache cache, UserManager<User> userManager)
+        public AuthenticationService(IMemoryCache cache, UserManager<User> userManager)
         {
             _cache = cache;
             _userManager = userManager;

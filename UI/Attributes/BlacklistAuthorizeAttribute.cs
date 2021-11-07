@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using BLL.Interfaces;
 
-namespace UI
+namespace UI.Attributes
 {
     public class BlacklistAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
     {
@@ -21,7 +21,7 @@ namespace UI
             var headerValue = context.HttpContext.Request.Headers["Authorization"];
             headerValue = headerValue.ToString().Split("Bearer ");
 
-            var tokenService = context.HttpContext.RequestServices.GetService<ITokenService>();
+            var tokenService = context.HttpContext.RequestServices.GetService<IAuthenticationService>();
             if (tokenService.IsBlacklisted(headerValue))
             {
                 context.Result = new UnauthorizedResult();

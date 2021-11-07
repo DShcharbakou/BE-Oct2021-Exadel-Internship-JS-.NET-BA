@@ -1,5 +1,4 @@
-﻿using DAL;
-using DAL.Repositories;
+﻿using BLL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
+using UI.Attributes;
 
 namespace UI.Controllers
 {
@@ -17,14 +17,14 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         [BlacklistAuthorize]
-        [Authorize(Roles = UserRoles.Admin)]
+        [Authorize()]
         [HttpGet("Index")]
         public string Index()
         {
             return "It Works!";
         }
 
-        [Authorize(Roles = UserRoles.User)]
+        [Authorize()]
         [HttpGet("Test_user")]
         public string Test()
         {

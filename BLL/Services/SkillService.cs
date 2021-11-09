@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class StackService : IStackService
+    public class SkillService : ISkillService
     {
         private readonly IUnitOfWork _db;
         private readonly IMapper _mapper;
-        public StackService(IUnitOfWork db, IMapper mapper)
+        public SkillService(IUnitOfWork db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;

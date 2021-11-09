@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IStackService
+    public interface ISkillService
     {
         IEnumerable<StackDTO> GetList();
         StackDTO GetStackById(int id);

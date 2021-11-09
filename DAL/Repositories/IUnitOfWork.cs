@@ -12,7 +12,7 @@ namespace DAL.Repositories
         BaseRepository<Employee> Employees { get; }
         BaseRepository<InternshipTeam> InternshipTeams { get; }
         BaseRepository<Interview> Interviews { get; }
-        BaseRepository<Stack> Stacks { get; }
+        BaseRepository<Skill> Skills { get; }
         BaseRepository<Topic> Topics { get; }
         BaseRepository<Specialization> Specializations{get;}
         BaseRepository<EnglishLevel> EnglishLevels {get;}

@@ -11,7 +11,7 @@ namespace DAL.Repositories
         private BaseRepository<Employee> employeeRep;
         private BaseRepository<InternshipTeam> internshipTeamsRep;
         private BaseRepository<Interview> interviewRep;
-        private BaseRepository<Stack> stackRep;
+        private BaseRepository<Skill> skillRep;
         private BaseRepository<Topic> topicRep;
         private BaseRepository<Specialization> specializationRep;
         private BaseRepository<EnglishLevel> englishLevelRep;
@@ -74,16 +74,16 @@ namespace DAL.Repositories
             }
         }
         
-        public BaseRepository<Stack> Stacks
+        public BaseRepository<Skill> Skills
         {
             get
             {
 
-                if (this.stackRep == null)
+                if (this.skillRep == null)
                 {
-                    this.stackRep = new StackRepository(internshipDbContext);
+                    this.skillRep = new SkillRepository(internshipDbContext);
                 }
-                return stackRep;
+                return skillRep;
             }
         }
         public BaseRepository<Topic> Topics

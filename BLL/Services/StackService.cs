@@ -22,26 +22,26 @@ namespace BLL.Services
         }
         public void AddStack(StackDTO stackDto)
         {
-            var stack = _mapper.Map<Stack>(stackDto);
-            _db.Stacks.Save(stack);
+            var stack = _mapper.Map<Skill>(stackDto);
+            _db.Skills.Save(stack);
             _db.Save();
         }
 
         public void DeleteStack(int id)
         {
-            var stack = _db.Stacks.Get(id);
-            _db.Stacks.Remove(stack);
+            var stack = _db.Skills.Get(id);
+            _db.Skills.Remove(stack);
             _db.Save();
         }
 
         public IEnumerable<StackDTO> GetList()
         {
-            return _mapper.Map<IEnumerable<Stack>, List<StackDTO>>(_db.Stacks.GetAll());
+            return _mapper.Map<IEnumerable<Skill>, List<StackDTO>>(_db.Skills.GetAll());
         }
 
         public StackDTO GetStackById(int id)
         {
-            return _mapper.Map<Stack, StackDTO>(_db.Stacks.Get(id));
+            return _mapper.Map<Skill, StackDTO>(_db.Skills.Get(id));
         }
     }
 }

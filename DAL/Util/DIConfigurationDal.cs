@@ -14,7 +14,7 @@ namespace DAL.Util
             services.AddTransient<BaseRepository<InternshipTeam>, InternshipTeamRepository>();
             services.AddTransient<BaseRepository<Topic>, TopicRepository>();
             services.AddTransient<BaseRepository<Interview>, InterviewRepository>();
-            services.AddTransient<BaseRepository<Stack>, StackRepository>();
+            services.AddTransient<BaseRepository<Skill>, SkillRepository>();
         }
     }
 }

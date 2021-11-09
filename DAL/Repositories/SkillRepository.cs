@@ -7,8 +7,8 @@ using DAL.Models;
 
 namespace DAL.Repositories
 {
-    internal class StackRepository : BaseRepository<Stack>
+    internal class SkillRepository : BaseRepository<Skill>
     {
-        public StackRepository(InternshipDbContext internshipDbContext) : base(internshipDbContext) { }
+        public SkillRepository(InternshipDbContext internshipDbContext) : base(internshipDbContext) { }
     }
 }

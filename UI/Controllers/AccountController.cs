@@ -30,7 +30,7 @@ namespace UI.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModelRequest model)
         {
             var token = await _tokenService.Login(model.Email, model.Password);
@@ -46,7 +46,7 @@ namespace UI.Controllers
             return Unauthorized();
         }
 
-        [HttpPost("Logout")]
+        [HttpPost("logout")]
         [BlacklistAuthorize]
         [Authorize]
         public void Logout()

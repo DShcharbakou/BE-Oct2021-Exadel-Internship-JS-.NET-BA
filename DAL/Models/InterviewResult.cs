@@ -14,6 +14,6 @@ namespace DAL.Models
         public string Comment {get; set;}
 
         public Interview Interview { get; set; }
-        public Topic Topics { get; set; }
+        public Topic Topic { get; set; }
     }
 }

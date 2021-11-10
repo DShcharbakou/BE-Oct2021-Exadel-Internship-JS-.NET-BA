@@ -7,16 +7,16 @@ namespace DAL.Repositories
     {
         private readonly InternshipDbContext internshipDbContext;
 
-        private BaseRepository<Candidate> candidateRep;
-        private BaseRepository<Employee> employeeRep;
-        private BaseRepository<InternshipTeam> internshipTeamsRep;
-        private BaseRepository<Interview> interviewRep;
-        private BaseRepository<Stack> stackRep;
-        private BaseRepository<Topic> topicRep;
-        private BaseRepository<Specialization> specializationRep;
-        private BaseRepository<EnglishLevel> englishLevelRep;
-        private BaseRepository<Country> countryRep;
-        private BaseRepository<City> cityRep;
+        private IBaseRepository<Candidate> candidateRep;
+        private IBaseRepository<Employee> employeeRep;
+        private IBaseRepository<InternshipTeam> internshipTeamsRep;
+        private IBaseRepository<Interview> interviewRep;
+        private IBaseRepository<Skill> skillRep;
+        private IBaseRepository<Topic> topicRep;
+        private IBaseRepository<Specialization> specializationRep;
+        private IBaseRepository<EnglishLevel> englishLevelRep;
+        private IBaseRepository<Country> countryRep;
+        private IBaseRepository<City> cityRep;
 
         public UnitOfWork(DbContextOptions options)
         {
@@ -25,123 +25,123 @@ namespace DAL.Repositories
 
 
         //---------------------------------------------
-        public BaseRepository<Candidate> Candidates
+        public IBaseRepository<Candidate> Candidates
         {
             get
             {
 
                 if (this.candidateRep == null)
                 {
-                    this.candidateRep = new CandidateRepository(internshipDbContext);
+                    this.candidateRep = new BaseRepository<Candidate>(internshipDbContext);
                 }
                 return candidateRep;
             }
         }
        
-        public BaseRepository<Employee> Employees
+        public IBaseRepository<Employee> Employees
         {
             get
             {
                 if (this.employeeRep == null)
                 {
-                    this.employeeRep = new EmployeeRepository(internshipDbContext);
+                    this.employeeRep = new BaseRepository<Employee>(internshipDbContext);
                 }
                 return employeeRep;
             }
         }
         
-        public BaseRepository<InternshipTeam> InternshipTeams
+        public IBaseRepository<InternshipTeam> InternshipTeams
         {
             get
             {
                 if (this.internshipTeamsRep == null)
                 {
-                    this.internshipTeamsRep = new InternshipTeamRepository(internshipDbContext);
+                    this.internshipTeamsRep = new BaseRepository<InternshipTeam>(internshipDbContext);
                 }
                 return internshipTeamsRep;
             }
         }
-        public BaseRepository<Interview> Interviews
+        public IBaseRepository<Interview> Interviews
         {
             get
             {
 
                 if (this.interviewRep == null)
                 {
-                    this.interviewRep = new InterviewRepository(internshipDbContext);
+                    this.interviewRep = new BaseRepository<Interview>(internshipDbContext);
                 }
                 return interviewRep;
             }
         }
         
-        public BaseRepository<Stack> Stacks
+        public IBaseRepository<Skill> Skills
         {
             get
             {
 
-                if (this.stackRep == null)
+                if (this.skillRep == null)
                 {
-                    this.stackRep = new StackRepository(internshipDbContext);
+                    this.skillRep = new BaseRepository<Skill>(internshipDbContext);
                 }
-                return stackRep;
+                return skillRep;
             }
         }
-        public BaseRepository<Topic> Topics
+        public IBaseRepository<Topic> Topics
         {
             get
             {
 
                 if (this.topicRep == null)
                 {
-                    this.topicRep = new TopicRepository(internshipDbContext);
+                    this.topicRep = new BaseRepository<Topic>(internshipDbContext);
                 }
                 return topicRep;
             }
         }
-        public BaseRepository<Specialization> Specializations
+        public IBaseRepository<Specialization> Specializations
         {
             get
             {
 
                 if (this.specializationRep == null)
                 {
-                    this.specializationRep = new SpecializationRepository(internshipDbContext);
+                    this.specializationRep = new BaseRepository<Specialization>(internshipDbContext);
                 }
                 return specializationRep;
             }
         }
-        public BaseRepository<EnglishLevel> EnglishLevels
+        public IBaseRepository<EnglishLevel> EnglishLevels
         {
             get
             {
 
                 if (this.englishLevelRep == null)
                 {
-                    this.englishLevelRep = new EnglishLevelRepository(internshipDbContext);
+                    this.englishLevelRep = new BaseRepository<EnglishLevel>(internshipDbContext);
                 }
                 return englishLevelRep;
             }
         }
-        public BaseRepository<Country> Countries
+        public IBaseRepository<Country> Countries
         {
             get
             {
 
                 if (this.countryRep == null)
                 {
-                    this.countryRep = new CountryRepository(internshipDbContext);
+                    this.countryRep = new BaseRepository<Country>(internshipDbContext);
                 }
                 return countryRep;
             }
         }
-        public BaseRepository<City> Cities
+        public IBaseRepository<City> Cities
         {
             get
             {
 
                 if (this.cityRep == null)
                 {
-                    this.cityRep = new CityRepository(internshipDbContext);
+                    this.cityRep = new BaseRepository<City>(internshipDbContext);
                 }
                 return cityRep;
             }

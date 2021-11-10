@@ -18,7 +18,7 @@ namespace DAL
         public int RoleId { get; set; }
 
         public ICollection<Interview> Interviews { get; set; }
-        public ICollection<EmployeeStack> EmployeeStack { get; set; }
+        public ICollection<EmployeeSkill> EmployeeSkills { get; set; }
         public ICollection<TeamMentor> TeamMentors { get; set; }
 
     }

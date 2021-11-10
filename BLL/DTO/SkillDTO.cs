@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class StackDTO
+    public class SkillDTO
     {
         public string Description { get; set; }
     }

@@ -10,7 +10,7 @@ namespace DAL.Models
     {
         public string Description {get; set;}
 
-        public ICollection<InterviewResult> InterviewResults { get; set; }
-        public ICollection<TopicStack> TopicStacks { get; set; }
+        public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
+        public ICollection<TopicSkill> TopicSkills { get; set; }
     }
 }

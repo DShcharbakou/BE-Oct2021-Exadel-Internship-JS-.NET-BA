@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public abstract class BaseRepository<T> where T : BaseModel
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
         private readonly InternshipDbContext _internshipDbContext;
         private readonly DbSet<T> _dbSet;

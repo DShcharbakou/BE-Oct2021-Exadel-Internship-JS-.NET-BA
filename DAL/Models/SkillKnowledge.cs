@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class InterviewResult
+    public class SkillKnowledge
     {
         public int InterviewID {get; set;}
         public int TopicID {get; set;}
@@ -14,6 +14,6 @@ namespace DAL.Models
         public string Comment {get; set;}
 
         public Interview Interview { get; set; }
-        public Topic Topics { get; set; }
+        public Topic Topic { get; set; }
     }
 }

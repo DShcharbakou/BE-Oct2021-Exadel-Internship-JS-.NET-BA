@@ -26,8 +26,8 @@ namespace BLL.MappingProfiles
             CreateMap<InterviewDTO, Interview>();
             CreateMap<Interview, InterviewDTO>();
 
-            CreateMap<StackDTO, Stack>();
-            CreateMap<Stack, StackDTO>();
+            CreateMap<SkillDTO, Skill>();
+            CreateMap<Skill, SkillDTO>();
 
             CreateMap<TopicDTO, Topic>();
             CreateMap<Topic, TopicDTO>();

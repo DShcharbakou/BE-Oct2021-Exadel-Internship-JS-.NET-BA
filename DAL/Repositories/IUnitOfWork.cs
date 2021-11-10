@@ -8,16 +8,16 @@ namespace DAL.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        BaseRepository<Candidate> Candidates { get; }
-        BaseRepository<Employee> Employees { get; }
-        BaseRepository<InternshipTeam> InternshipTeams { get; }
-        BaseRepository<Interview> Interviews { get; }
-        BaseRepository<Stack> Stacks { get; }
-        BaseRepository<Topic> Topics { get; }
-        BaseRepository<Specialization> Specializations{get;}
-        BaseRepository<EnglishLevel> EnglishLevels {get;}
-        BaseRepository<Country> Countries{ get; }
-        BaseRepository<City> Cities { get; }
+        IBaseRepository<Candidate> Candidates { get; }
+        IBaseRepository<Employee> Employees { get; }
+        IBaseRepository<InternshipTeam> InternshipTeams { get; }
+        IBaseRepository<Interview> Interviews { get; }
+        IBaseRepository<Skill> Skills { get; }
+        IBaseRepository<Topic> Topics { get; }
+        IBaseRepository<Specialization> Specializations{get;}
+        IBaseRepository<EnglishLevel> EnglishLevels {get;}
+        IBaseRepository<Country> Countries{ get; }
+        IBaseRepository<City> Cities { get; }
 void Save();
     }
 }

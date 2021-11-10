@@ -9,9 +9,9 @@ namespace BLL.Interfaces
 {
     public interface ISkillService
     {
-        IEnumerable<StackDTO> GetList();
-        StackDTO GetStackById(int id);
-        void AddStack(StackDTO stackDto);
-        void DeleteStack(int id);
+        IEnumerable<SkillDTO> GetList();
+        SkillDTO GetStackById(int id);
+        void AddSkill(SkillDTO stackDto);
+        void DeleteSkill(int id);
     }
 }

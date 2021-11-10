@@ -20,28 +20,28 @@ namespace BLL.Services
             _db = db;
             _mapper = mapper;
         }
-        public void AddStack(StackDTO stackDto)
+        public void AddSkill(SkillDTO skillDto)
         {
-            var stack = _mapper.Map<Skill>(stackDto);
-            _db.Skills.Save(stack);
+            var skill = _mapper.Map<Skill>(skillDto);
+            _db.Skills.Save(skill);
             _db.Save();
         }
 
-        public void DeleteStack(int id)
+        public void DeleteSkill(int id)
         {
-            var stack = _db.Skills.Get(id);
-            _db.Skills.Remove(stack);
+            var skill = _db.Skills.Get(id);
+            _db.Skills.Remove(skill);
             _db.Save();
         }
 
-        public IEnumerable<StackDTO> GetList()
+        public IEnumerable<SkillDTO> GetList()
         {
-            return _mapper.Map<IEnumerable<Skill>, List<StackDTO>>(_db.Skills.GetAll());
+            return _mapper.Map<IEnumerable<Skill>, List<SkillDTO>>(_db.Skills.GetAll());
         }
 
-        public StackDTO GetStackById(int id)
+        public SkillDTO GetStackById(int id)
         {
-            return _mapper.Map<Skill, StackDTO>(_db.Skills.Get(id));
+            return _mapper.Map<Skill, SkillDTO>(_db.Skills.Get(id));
         }
     }
 }

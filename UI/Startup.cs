@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using BLL.Interfaces;
 using BLL.Services;
 using BLL;
+using FluentValidation.AspNetCore;
 
 namespace UI
 {
@@ -121,8 +122,17 @@ namespace UI
                                       builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                                   });
             });
+
             services.AddRouting(options => options.LowercaseUrls = true);
+
+            //adding Fluent Validation
+            services.AddControllers()
+                .AddFluentValidation(s =>
+                {
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
         }
+    }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)

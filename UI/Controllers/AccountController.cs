@@ -31,7 +31,7 @@ namespace UI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModelRequest model)
+        public async Task<IActionResult> Login([FromBody] LoginRequestModel model)
         {
             var token = await _tokenService.Login(model.Email, model.Password);
             if (token != null)

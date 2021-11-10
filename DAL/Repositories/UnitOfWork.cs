@@ -32,7 +32,7 @@ namespace DAL.Repositories
 
                 if (this.candidateRep == null)
                 {
-                    this.candidateRep = new CandidateRepository(internshipDbContext);
+                    this.candidateRep = new BaseRepository<Candidate>(internshipDbContext);
                 }
                 return candidateRep;
             }
@@ -44,7 +44,7 @@ namespace DAL.Repositories
             {
                 if (this.employeeRep == null)
                 {
-                    this.employeeRep = new EmployeeRepository(internshipDbContext);
+                    this.employeeRep = new BaseRepository<Employee>(internshipDbContext);
                 }
                 return employeeRep;
             }
@@ -56,7 +56,7 @@ namespace DAL.Repositories
             {
                 if (this.internshipTeamsRep == null)
                 {
-                    this.internshipTeamsRep = new InternshipTeamRepository(internshipDbContext);
+                    this.internshipTeamsRep = new BaseRepository<InternshipTeam>(internshipDbContext);
                 }
                 return internshipTeamsRep;
             }
@@ -68,7 +68,7 @@ namespace DAL.Repositories
 
                 if (this.interviewRep == null)
                 {
-                    this.interviewRep = new InterviewRepository(internshipDbContext);
+                    this.interviewRep = new BaseRepository<Interview>(internshipDbContext);
                 }
                 return interviewRep;
             }
@@ -81,7 +81,7 @@ namespace DAL.Repositories
 
                 if (this.skillRep == null)
                 {
-                    this.skillRep = new SkillRepository(internshipDbContext);
+                    this.skillRep = new BaseRepository<Skill>(internshipDbContext);
                 }
                 return skillRep;
             }
@@ -93,7 +93,7 @@ namespace DAL.Repositories
 
                 if (this.topicRep == null)
                 {
-                    this.topicRep = new TopicRepository(internshipDbContext);
+                    this.topicRep = new BaseRepository<Topic>(internshipDbContext);
                 }
                 return topicRep;
             }
@@ -105,7 +105,7 @@ namespace DAL.Repositories
 
                 if (this.specializationRep == null)
                 {
-                    this.specializationRep = new SpecializationRepository(internshipDbContext);
+                    this.specializationRep = new BaseRepository<Specialization>(internshipDbContext);
                 }
                 return specializationRep;
             }
@@ -117,7 +117,7 @@ namespace DAL.Repositories
 
                 if (this.englishLevelRep == null)
                 {
-                    this.englishLevelRep = new EnglishLevelRepository(internshipDbContext);
+                    this.englishLevelRep = new BaseRepository<EnglishLevel>(internshipDbContext);
                 }
                 return englishLevelRep;
             }
@@ -129,7 +129,7 @@ namespace DAL.Repositories
 
                 if (this.countryRep == null)
                 {
-                    this.countryRep = new CountryRepository(internshipDbContext);
+                    this.countryRep = new BaseRepository<Country>(internshipDbContext);
                 }
                 return countryRep;
             }
@@ -141,7 +141,7 @@ namespace DAL.Repositories
 
                 if (this.cityRep == null)
                 {
-                    this.cityRep = new CityRepository(internshipDbContext);
+                    this.cityRep = new BaseRepository<City>(internshipDbContext);
                 }
                 return cityRep;
             }

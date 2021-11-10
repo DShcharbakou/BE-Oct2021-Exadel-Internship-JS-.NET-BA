@@ -8,13 +8,14 @@ namespace DAL.Util
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            // DI need to know about AddTransient, AddSingleton, AddScoped
-            services.AddTransient<BaseRepository<Candidate>, CandidateRepository>();
-            services.AddTransient<BaseRepository<Employee>, EmployeeRepository>();
-            services.AddTransient<BaseRepository<InternshipTeam>, InternshipTeamRepository>();
-            services.AddTransient<BaseRepository<Topic>, TopicRepository>();
-            services.AddTransient<BaseRepository<Interview>, InterviewRepository>();
-            services.AddTransient<BaseRepository<Skill>, SkillRepository>();
+             //DI need to know about AddTransient, AddSingleton, AddScoped
+
+            services.AddTransient<IBaseRepository<Candidate>, BaseRepository<Candidate>>();
+            services.AddTransient<IBaseRepository<Employee>, BaseRepository<Employee>>();
+            services.AddTransient<IBaseRepository<InternshipTeam>, BaseRepository<InternshipTeam>>();
+            services.AddTransient<IBaseRepository<Topic>, BaseRepository<Topic>>();
+            services.AddTransient<IBaseRepository<Interview>, BaseRepository<Interview>>();
+            services.AddTransient<IBaseRepository<Skill>, BaseRepository<Skill>>();
         }
     }
 }

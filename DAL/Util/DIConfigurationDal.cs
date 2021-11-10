@@ -10,12 +10,12 @@ namespace DAL.Util
         {
              //DI need to know about AddTransient, AddSingleton, AddScoped
 
-            services.AddTransient<IBaseRepository<Candidate>, BaseRepository<Candidate>>();
-            services.AddTransient<IBaseRepository<Employee>, BaseRepository<Employee>>();
-            services.AddTransient<IBaseRepository<InternshipTeam>, BaseRepository<InternshipTeam>>();
-            services.AddTransient<IBaseRepository<Topic>, BaseRepository<Topic>>();
-            services.AddTransient<IBaseRepository<Interview>, BaseRepository<Interview>>();
-            services.AddTransient<IBaseRepository<Skill>, BaseRepository<Skill>>();
+            services.AddScoped<IBaseRepository<Candidate>, BaseRepository<Candidate>>();
+            services.AddScoped<IBaseRepository<Employee>, BaseRepository<Employee>>();
+            services.AddScoped<IBaseRepository<InternshipTeam>, BaseRepository<InternshipTeam>>();
+            services.AddScoped<IBaseRepository<Topic>, BaseRepository<Topic>>();
+            services.AddScoped<IBaseRepository<Interview>, BaseRepository<Interview>>();
+            services.AddScoped<IBaseRepository<Skill>, BaseRepository<Skill>>();
         }
     }
 }

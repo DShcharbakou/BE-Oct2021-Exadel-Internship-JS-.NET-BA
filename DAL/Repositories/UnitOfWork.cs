@@ -7,16 +7,16 @@ namespace DAL.Repositories
     {
         private readonly InternshipDbContext internshipDbContext;
 
-        private BaseRepository<Candidate> candidateRep;
-        private BaseRepository<Employee> employeeRep;
-        private BaseRepository<InternshipTeam> internshipTeamsRep;
-        private BaseRepository<Interview> interviewRep;
-        private BaseRepository<Skill> skillRep;
-        private BaseRepository<Topic> topicRep;
-        private BaseRepository<Specialization> specializationRep;
-        private BaseRepository<EnglishLevel> englishLevelRep;
-        private BaseRepository<Country> countryRep;
-        private BaseRepository<City> cityRep;
+        private IBaseRepository<Candidate> candidateRep;
+        private IBaseRepository<Employee> employeeRep;
+        private IBaseRepository<InternshipTeam> internshipTeamsRep;
+        private IBaseRepository<Interview> interviewRep;
+        private IBaseRepository<Skill> skillRep;
+        private IBaseRepository<Topic> topicRep;
+        private IBaseRepository<Specialization> specializationRep;
+        private IBaseRepository<EnglishLevel> englishLevelRep;
+        private IBaseRepository<Country> countryRep;
+        private IBaseRepository<City> cityRep;
 
         public UnitOfWork(DbContextOptions options)
         {
@@ -25,7 +25,7 @@ namespace DAL.Repositories
 
 
         //---------------------------------------------
-        public BaseRepository<Candidate> Candidates
+        public IBaseRepository<Candidate> Candidates
         {
             get
             {
@@ -38,7 +38,7 @@ namespace DAL.Repositories
             }
         }
        
-        public BaseRepository<Employee> Employees
+        public IBaseRepository<Employee> Employees
         {
             get
             {
@@ -50,7 +50,7 @@ namespace DAL.Repositories
             }
         }
         
-        public BaseRepository<InternshipTeam> InternshipTeams
+        public IBaseRepository<InternshipTeam> InternshipTeams
         {
             get
             {
@@ -61,7 +61,7 @@ namespace DAL.Repositories
                 return internshipTeamsRep;
             }
         }
-        public BaseRepository<Interview> Interviews
+        public IBaseRepository<Interview> Interviews
         {
             get
             {
@@ -74,7 +74,7 @@ namespace DAL.Repositories
             }
         }
         
-        public BaseRepository<Skill> Skills
+        public IBaseRepository<Skill> Skills
         {
             get
             {
@@ -86,7 +86,7 @@ namespace DAL.Repositories
                 return skillRep;
             }
         }
-        public BaseRepository<Topic> Topics
+        public IBaseRepository<Topic> Topics
         {
             get
             {
@@ -98,7 +98,7 @@ namespace DAL.Repositories
                 return topicRep;
             }
         }
-        public BaseRepository<Specialization> Specializations
+        public IBaseRepository<Specialization> Specializations
         {
             get
             {
@@ -110,7 +110,7 @@ namespace DAL.Repositories
                 return specializationRep;
             }
         }
-        public BaseRepository<EnglishLevel> EnglishLevels
+        public IBaseRepository<EnglishLevel> EnglishLevels
         {
             get
             {
@@ -122,7 +122,7 @@ namespace DAL.Repositories
                 return englishLevelRep;
             }
         }
-        public BaseRepository<Country> Countries
+        public IBaseRepository<Country> Countries
         {
             get
             {
@@ -134,7 +134,7 @@ namespace DAL.Repositories
                 return countryRep;
             }
         }
-        public BaseRepository<City> Cities
+        public IBaseRepository<City> Cities
         {
             get
             {

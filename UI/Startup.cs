@@ -112,7 +112,7 @@ namespace UI
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
 
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,

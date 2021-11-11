@@ -12,12 +12,10 @@ namespace UI.Validators
         public DeveloperValidator()
         {
             RuleFor(p => p.Email)
-                .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("{PropertyName} should be not empty.")
                 .Length(12, 40);
 
             RuleFor(p => p.Password)
-                .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("{PropertyName} should be not empty.")
                 .Length(4, 20);
         }

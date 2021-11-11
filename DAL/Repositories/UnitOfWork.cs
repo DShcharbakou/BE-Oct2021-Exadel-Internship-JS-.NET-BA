@@ -32,7 +32,7 @@ namespace DAL.Repositories
 
                 if (this.candidateRep == null)
                 {
-                    this.candidateRep = new CandidateRepository(internshipDbContext);
+                    this.candidateRep = new CandidateSet(internshipDbContext);
                 }
                 return candidateRep;
             }
@@ -146,6 +146,7 @@ namespace DAL.Repositories
                 return cityRep;
             }
         }
+
 
         public void Save()
         {

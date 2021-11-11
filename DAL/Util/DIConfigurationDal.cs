@@ -9,7 +9,7 @@ namespace DAL.Util
         public static void ConfigureServices(IServiceCollection services)
         {
              //DI need to know about AddTransient, AddSingleton, AddScoped
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
             services.AddScoped<IBaseRepository<Candidate>, BaseRepository<Candidate>>();
             services.AddScoped<IBaseRepository<Employee>, BaseRepository<Employee>>();
             services.AddScoped<IBaseRepository<InternshipTeam>, BaseRepository<InternshipTeam>>();

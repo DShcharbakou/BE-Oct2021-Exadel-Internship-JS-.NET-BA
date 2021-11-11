@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Authorization;
 using BLL.Interfaces;
 using BLL.Services;
 using BLL;
+using FluentValidation.AspNetCore;
+using BLL.Util;
 
 namespace UI
 {
@@ -48,7 +50,8 @@ namespace UI
                 .AddEntityFrameworkStores<InternshipDbContext>();
 
             services.AddControllers();
-             
+
+            DIConfigurationBll.ConfigureServices(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -121,8 +124,18 @@ namespace UI
                                       builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                                   });
             });
+
             services.AddRouting(options => options.LowercaseUrls = true);
+
+            //adding Fluent Validation
+            services.AddControllers()
+                .AddFluentValidation(s =>
+                {
+                    s.LocalizationEnabled = false;
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
         }
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)

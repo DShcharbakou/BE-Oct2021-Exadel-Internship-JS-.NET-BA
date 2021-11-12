@@ -27,7 +27,25 @@ namespace DAL.Repositories
 
         public virtual T Get(int id, IBaseSpecifications<T> baseSpecifications = null)
         {
-            return _dbSet.SingleOrDefault(x => x.Id == id);
+            try
+            {
+                var item = SpecificationEvaluator<T>.GetQuery(_internshipDbContext.Set<T>()
+                                        .Where(x => x.Id == id)
+                                        .AsQueryable(), baseSpecifications)
+                                        .AsNoTracking()
+                                        .SingleOrDefault();
+
+                if (item == null)
+                {
+                    throw new Exception($"Couldn't find entity with id={id}");
+                }
+
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't retrieve entity with id={id}: {ex.Message}");
+            }
         }
 
         public virtual void Save(T model)

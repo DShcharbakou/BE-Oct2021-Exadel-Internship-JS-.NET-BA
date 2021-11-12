@@ -5,6 +5,7 @@ using BLL.Interfaces;
 using BLL.DTO;
 using AutoMapper;
 using System.Linq;
+using DAL.Repositories.Specifications;
 
 namespace BLL.Services
 {
@@ -12,6 +13,7 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork _db;
         private readonly IMapper _mapper;
+
         public CandidateService(IUnitOfWork db, IMapper mapper)
         {
             _db = db;
@@ -42,6 +44,5 @@ namespace BLL.Services
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
-
     }
 }

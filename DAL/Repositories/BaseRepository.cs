@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using DAL.Repositories.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace DAL.Repositories
             return _dbSet.ToList();
         }
 
-        public virtual T Get(int id)
+        public virtual T Get(int id, IBaseSpecifications<T> baseSpecifications = null)
         {
             return _dbSet.SingleOrDefault(x => x.Id == id);
         }

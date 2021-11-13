@@ -152,8 +152,8 @@ namespace BLL
             userManager.AddToRoleAsync(recruiterPetya, UserRoles.recruiter.ToString()).Wait();
             userManager.AddToRoleAsync(managerLesha, UserRoles.manager.ToString()).Wait();
             userManager.AddToRoleAsync(managerKatya, UserRoles.manager.ToString()).Wait();
-            userManager.AddToRoleAsync(interviewerDima, UserRoles.interviewer.ToString()).Wait();
-            userManager.AddToRoleAsync(interviewerKostya, UserRoles.interviewer.ToString()).Wait();
+            userManager.AddToRoleAsync(interviewerDima, UserRoles.techInterviewer.ToString()).Wait();
+            userManager.AddToRoleAsync(interviewerKostya, UserRoles.techInterviewer.ToString()).Wait();
             userManager.AddToRoleAsync(mentorSasha, UserRoles.mentor.ToString()).Wait();
             userManager.AddToRoleAsync(mentorVadim, UserRoles.mentor.ToString()).Wait();
             userManager.AddToRoleAsync(supermentorKirill, UserRoles.supermentor.ToString()).Wait();

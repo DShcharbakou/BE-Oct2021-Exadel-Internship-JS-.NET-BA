@@ -34,7 +34,7 @@ namespace BLL
                 Email = "admin@exadel.com",
                 FirstName = "Admin",
                 LastName = "Admin",
-                Password = "Admin1!"
+                Password = "Test1!"
             };
             users.Add(admin);
 
@@ -44,7 +44,7 @@ namespace BLL
                 Email = "recruiterVasya@exadel.com",
                 FirstName = "Vasya",
                 LastName = "Vasylyev",
-                Password = "RecruiterVasya1!"
+                Password = "Test1!"
             };
             users.Add(recruiterVasya);
 
@@ -54,7 +54,7 @@ namespace BLL
                 Email = "recruiterPetya@exadel.com",
                 FirstName = "Petya",
                 LastName = "Petrov",
-                Password = "RecruiterPetya1!"
+                Password = "Test1!"
             };
             users.Add(recruiterPetya);
 
@@ -64,7 +64,7 @@ namespace BLL
                 Email = "managerLesha@exadel.com",
                 FirstName = "Lesha",
                 LastName = "Leshov",
-                Password = "ManagerLesha1!"
+                Password = "Test1!"
             };
             users.Add(managerLesha);
 
@@ -74,7 +74,7 @@ namespace BLL
                 Email = "managerKatya@exadel.com",
                 FirstName = "Katya",
                 LastName = "Kotova",
-                Password = "ManagerKatya1!"
+                Password = "Test1!"
             };
             users.Add(managerKatya);
 
@@ -84,7 +84,7 @@ namespace BLL
                 Email = "interviewerDima@exadel.com",
                 FirstName = "Dima",
                 LastName = "Dimov",
-                Password = "InterviewerDima1!"
+                Password = "Test1!"
             };
             users.Add(interviewerDima);
 
@@ -94,7 +94,7 @@ namespace BLL
                 Email = "interviewerKostya@exadel.com",
                 FirstName = "Kostya",
                 LastName = "Kostov",
-                Password = "InterviewerKostya1!"
+                Password = "Test1!"
             };
             users.Add(interviewerKostya);
 
@@ -104,7 +104,7 @@ namespace BLL
                 Email = "mentorSasha@exadel.com",
                 FirstName = "Sasha",
                 LastName = "Sashov",
-                Password = "MentorSasha1!"
+                Password = "Test1!"
             };
             users.Add(mentorSasha);
 
@@ -114,7 +114,7 @@ namespace BLL
                 Email = "mentorVadim@exadel.com",
                 FirstName = "Vadim",
                 LastName = "Vodov",
-                Password = "MentorVadim1!"
+                Password = "Test1!"
             };
             users.Add(mentorVadim);
 
@@ -124,7 +124,7 @@ namespace BLL
                 Email = "supermentorKirill@exadel.com",
                 FirstName = "Kirill",
                 LastName = "Kirillov",
-                Password = "SupermentorKirill1!"
+                Password = "Test1!"
             };
             users.Add(supermentorKirill);
 
@@ -134,7 +134,7 @@ namespace BLL
                 Email = "supermentorLena@exadel.com",
                 FirstName = "Lena",
                 LastName = "Lenova",
-                Password = "SupermentorLena1!"
+                Password = "Test1!"
             };
             users.Add(supermentorLena);
 

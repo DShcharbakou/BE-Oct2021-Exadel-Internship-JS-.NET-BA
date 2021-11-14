@@ -45,7 +45,9 @@ namespace UI
             var connectionString = Configuration.GetValue<string>("connectionString");
             services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionString));
 
-            
+            //var connectionStrings = Configuration.GetConnectionString("HostConnection");
+            //services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionStrings));
+
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();
 
@@ -115,7 +117,6 @@ namespace UI
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
 
-            
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -140,8 +141,8 @@ namespace UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            StartupSeedExtension.SeedRoles(roleManager).Wait();
-            StartupSeedExtension.SeedUsers(userManager);
+            IdentitySeedExtension.SeedRoles(roleManager).Wait();
+            IdentitySeedExtension.SeedUsers(userManager);
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.

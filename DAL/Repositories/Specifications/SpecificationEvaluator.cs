@@ -8,43 +8,25 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Specifications
 {
-    public class SpecificationEvaluator<TEntity> where TEntity : BaseModel
+    public class SpecificationEvaluator<T> where T : BaseModel
     {
-        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> query, IBaseSpecifications<TEntity> specifications)
+        public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, IBaseSpecifications<T> specification)
         {
-            // Do not apply anything if specifications is null
-            if (specifications == null)
+            var query = inputQuery;
+            if (specification.Criteria != null)
             {
-                return query;
+                query = query.Where(specification.Criteria);
+            }
+            if (specification.OrderBy != null)
+            {
+                query = query.OrderBy(specification.OrderBy);
+            }
+            if (specification.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending);
             }
 
-            // Modify the IQueryable
-            // Apply filter conditions
-            if (specifications.FilterCondition != null)
-            {
-                query = query.Where(specifications.FilterCondition);
-            }
-
-            // Includes
-            query = specifications.Includes
-                        .Aggregate(query, (current, include) => current.Include(include));
-
-            // Apply ordering
-            if (specifications.OrderBy != null)
-            {
-                query = query.OrderBy(specifications.OrderBy);
-            }
-            else if (specifications.OrderByDescending != null)
-            {
-                query = query.OrderByDescending(specifications.OrderByDescending);
-            }
-
-            // Apply GroupBy
-            if (specifications.GroupBy != null)
-            {
-                query = query.GroupBy(specifications.GroupBy).SelectMany(x => x);
-            }
-
+            query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
             return query;
         }
     }

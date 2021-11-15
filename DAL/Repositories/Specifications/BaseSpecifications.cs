@@ -7,71 +7,33 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Specifications
 {
-    public class BaseSpecifications<T> : IBaseSpecifications<T>
+    public class BaseSpecifcation<T> : IBaseSpecifications<T>
     {
-        private readonly List<Expression<Func<T, object>>> _includeCollection = new List<Expression<Func<T, object>>>();
+        public BaseSpecifcation(){}
 
-        public BaseSpecifications()
+        public BaseSpecifcation(Expression<Func<T, bool>> criteria)
         {
+            Criteria = criteria;
         }
 
-        public BaseSpecifications(Expression<Func<T, bool>> filterCondition)
-        {
-            this.FilterCondition = filterCondition;
-        }
-
-        public bool IsSatisfiedBy(T entity)
-        {
-            Func<T, bool> predicate = this.FilterCondition.Compile();
-            return predicate(entity);
-        }
-
-        public BaseSpecifications<T> And(BaseSpecifications<T> specification)
-        {
-            return new AndSpecification<T>(this, specification);
-        }
-
-        public BaseSpecifications<T> Or(BaseSpecifications<T> specification)
-        {
-            return new OrSpecification<T>(this, specification);
-        }
-
-        public virtual Expression<Func<T, bool>> FilterCondition { get; private set; }
+        public Expression<Func<T, bool>> Criteria { get; }
+        public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
         public Expression<Func<T, object>> OrderBy { get; private set; }
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
-        public List<Expression<Func<T, object>>> Includes
-        {
-            get
-            {
-                return _includeCollection;
-            }
-        }
-
-        public Expression<Func<T, object>> GroupBy { get; private set; }
 
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
         }
 
-        protected void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
+        protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
 
-        protected void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
+        protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
         {
-            OrderByDescending = orderByDescendingExpression;
-        }
-
-        protected void SetFilterCondition(Expression<Func<T, bool>> filterExpression)
-        {
-            FilterCondition = filterExpression;
-        }
-
-        protected void ApplyGroupBy(Expression<Func<T, object>> groupByExpression)
-        {
-            GroupBy = groupByExpression;
+            OrderByDescending = orderByDescExpression;
         }
     }
 }

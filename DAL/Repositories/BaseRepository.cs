@@ -25,27 +25,14 @@ namespace DAL.Repositories
             return _dbSet.ToList();
         }
 
-        public virtual T Get(int id, IBaseSpecifications<T> baseSpecifications = null)
+        public virtual T Get(int id)
         {
-            try
-            {
-                var item = SpecificationEvaluator<T>.GetQuery(_internshipDbContext.Set<T>()
-                                        .Where(x => x.Id == id)
-                                        .AsQueryable(), baseSpecifications)
-                                        .AsNoTracking()
-                                        .SingleOrDefault();
+            return _dbSet.SingleOrDefault(x => x.Id == id);
+        }
 
-                if (item == null)
-                {
-                    throw new Exception($"Couldn't find entity with id={id}");
-                }
-
-                return item;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Couldn't retrieve entity with id={id}: {ex.Message}");
-            }
+        public virtual IEnumerable<T> FindWithSpecificationPattern(IBaseSpecifications<T> baseSpecifications = null)
+        {
+                return  _internshipDbContext.Set<T>().AsNoTracking().ToList();
         }
 
         public virtual void Save(T model)
@@ -79,4 +66,5 @@ namespace DAL.Repositories
         //    }
         //}
     }
+
 }

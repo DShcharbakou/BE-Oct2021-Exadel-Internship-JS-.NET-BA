@@ -10,6 +10,7 @@ namespace DAL.Repositories
     {
         IBaseRepository<Candidate> Candidates { get; }
         IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
+        IBaseRepository<Sandbox> Sandboxes { get; }
         IBaseRepository<Employee> Employees { get; }
         IBaseRepository<InternshipTeam> InternshipTeams { get; }
         IBaseRepository<Interview> Interviews { get; }

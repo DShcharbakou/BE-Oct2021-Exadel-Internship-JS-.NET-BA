@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Specifications
 {
-    public class BaseSpecifcation<T> : IBaseSpecifications<T>
+    public class BaseSpecifications<T> : IBaseSpecifications<T>
     {
-        public BaseSpecifcation(){}
+        public BaseSpecifications(){}
 
-        public BaseSpecifcation(Expression<Func<T, bool>> criteria)
+        public BaseSpecifications(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
         }

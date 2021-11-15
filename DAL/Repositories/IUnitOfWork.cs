@@ -9,6 +9,7 @@ namespace DAL.Repositories
     public interface IUnitOfWork : IDisposable
     {
         IBaseRepository<Candidate> Candidates { get; }
+        IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
         IBaseRepository<Employee> Employees { get; }
         IBaseRepository<InternshipTeam> InternshipTeams { get; }
         IBaseRepository<Interview> Interviews { get; }
@@ -18,6 +19,6 @@ namespace DAL.Repositories
         IBaseRepository<EnglishLevel> EnglishLevels {get;}
         IBaseRepository<Country> Countries{ get; }
         IBaseRepository<City> Cities { get; }
-void Save();
+        void Save();
     }
 }

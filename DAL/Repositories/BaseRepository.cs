@@ -32,7 +32,6 @@ namespace DAL.Repositories
 
         public virtual IEnumerable<T> FindWithSpecificationPattern(IBaseSpecifications<T> baseSpecifications = null)
         {
-            //return  _internshipDbContext.Set<T>().AsNoTracking().ToList();
             return SpecificationEvaluator<T>.GetQuery(_internshipDbContext.Set<T>().AsQueryable(), baseSpecifications);
         }
 

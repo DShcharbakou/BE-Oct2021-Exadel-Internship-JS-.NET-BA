@@ -8,27 +8,23 @@ namespace DAL.Repositories
         private readonly InternshipDbContext internshipDbContext;
 
         private IBaseRepository<Candidate> candidateRep;
-        private IBaseRepository<CandidateSandbox> candidateSandboxRep;
-        private IBaseRepository<City> cityRep;
-        private IBaseRepository<Country> countryRep;
         private IBaseRepository<Employee> employeeRep;
-        private IBaseRepository<EnglishLevel> englishLevelRep;
         private IBaseRepository<InternshipTeam> internshipTeamsRep;
         private IBaseRepository<Interview> interviewRep;
-        private IBaseRepository<Sandbox> sandboxRep;
         private IBaseRepository<Skill> skillRep;
-        private IBaseRepository<Specialization> specializationRep;
         private IBaseRepository<Topic> topicRep;
-
-
+        private IBaseRepository<Specialization> specializationRep;
+        private IBaseRepository<EnglishLevel> englishLevelRep;
+        private IBaseRepository<Country> countryRep;
+        private IBaseRepository<City> cityRep;
 
         public UnitOfWork(DbContextOptions options)
         {
             internshipDbContext = new InternshipDbContext(options);
         }
 
-        //---------------------------------------------
 
+        //---------------------------------------------
         public IBaseRepository<Candidate> Candidates
         {
             get
@@ -39,32 +35,6 @@ namespace DAL.Repositories
                     this.candidateRep = new BaseRepository<Candidate>(internshipDbContext);
                 }
                 return candidateRep;
-            }
-        }
-
-        public IBaseRepository<Sandbox> Sandboxes
-        {
-            get
-            {
-
-                if (this.sandboxRep == null)
-                {
-                    this.sandboxRep = new BaseRepository<Sandbox>(internshipDbContext);
-                }
-                return sandboxRep;
-            }
-        }
-
-        public IBaseRepository<CandidateSandbox> CandidatesSandboxes
-        {
-            get
-            {
-
-                if (this.candidateSandboxRep == null)
-                {
-                    this.candidateSandboxRep = new BaseRepository<CandidateSandbox>(internshipDbContext);
-                }
-                return candidateSandboxRep;
             }
         }
 
@@ -79,7 +49,7 @@ namespace DAL.Repositories
                 return employeeRep;
             }
         }
-        
+
         public IBaseRepository<InternshipTeam> InternshipTeams
         {
             get
@@ -103,7 +73,7 @@ namespace DAL.Repositories
                 return interviewRep;
             }
         }
-        
+
         public IBaseRepository<Skill> Skills
         {
             get

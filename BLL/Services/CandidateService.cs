@@ -50,7 +50,7 @@ namespace BLL.Services
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam()
         {
            
-            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(/*Сюда добавляем id Текущего сендбокса и id ментора(employee)*/)));
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification()));
         }
 
     }

@@ -53,15 +53,5 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(/*Сюда добавляем id Текущего сендбокса и id ментора(employee)*/)));
         }
 
-
-        public IEnumerable<CandidateDTO> GetCandidates()
-        {
-
-
-            if (HttpContext.User.Identity is ClaimsIdentity identity)
-            {
-                IEnumerable<Claim> claims = identity.Claims;
-            }
-        }
     }
 }

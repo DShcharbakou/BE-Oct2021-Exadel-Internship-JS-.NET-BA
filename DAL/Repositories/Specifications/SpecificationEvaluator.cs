@@ -10,15 +10,35 @@ namespace DAL.Repositories.Specifications
 {
     public class SpecificationEvaluator<T> where T : BaseModel
     {
-        public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, IBaseSpecifications<T> specification)
+        public static IQueryable<T> GetQuery(IQueryable<T> query, IBaseSpecifications<T> specifications)
         {
-            var query = inputQuery;
-            if (specification.Criteria != null)
+            if (specifications == null)
             {
-                query = query.Where(specification.Criteria);
+                return query;
             }
 
-            query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
+            if (specifications.FilterCondition != null)
+            {
+                query = query.Where(specifications.FilterCondition);
+            }
+
+            query = specifications.Includes
+                        .Aggregate(query, (current, include) => current.Include(include));
+
+            if (specifications.OrderBy != null)
+            {
+                query = query.OrderBy(specifications.OrderBy);
+            }
+            else if (specifications.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specifications.OrderByDescending);
+            }
+
+            if (specifications.GroupBy != null)
+            {
+                query = query.GroupBy(specifications.GroupBy).SelectMany(x => x);
+            }
+
             return query;
         }
     }

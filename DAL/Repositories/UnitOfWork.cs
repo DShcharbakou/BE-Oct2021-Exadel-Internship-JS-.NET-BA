@@ -8,20 +8,17 @@ namespace DAL.Repositories
         private readonly InternshipDbContext internshipDbContext;
 
         private IBaseRepository<Candidate> candidateRep;
-        private IBaseRepository<CandidateSandbox> candidateSandboxRep;
-        private IBaseRepository<City> cityRep;
-        private IBaseRepository<Country> countryRep;
         private IBaseRepository<Employee> employeeRep;
-        private IBaseRepository<EnglishLevel> englishLevelRep;
         private IBaseRepository<InternshipTeam> internshipTeamsRep;
         private IBaseRepository<Interview> interviewRep;
-        private IBaseRepository<Sandbox> sandboxRep;
         private IBaseRepository<Skill> skillRep;
-        private IBaseRepository<Specialization> specializationRep;
         private IBaseRepository<Topic> topicRep;
-
-
-
+        private IBaseRepository<Specialization> specializationRep;
+        private IBaseRepository<EnglishLevel> englishLevelRep;
+        private IBaseRepository<Country> countryRep;
+        private IBaseRepository<City> cityRep;
+        private IBaseRepository<Sandbox> sandboxRep;
+        private IBaseRepository<CandidateSandbox> candidateSandboxRep;
         public UnitOfWork(DbContextOptions options)
         {
             internshipDbContext = new InternshipDbContext(options);

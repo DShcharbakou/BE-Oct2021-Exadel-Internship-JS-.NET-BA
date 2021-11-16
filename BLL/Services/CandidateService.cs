@@ -6,6 +6,8 @@ using BLL.DTO;
 using AutoMapper;
 using System.Linq;
 using DAL.Repositories.Specifications;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace BLL.Services
 {
@@ -44,5 +46,12 @@ namespace BLL.Services
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
+
+        public IEnumerable<CandidateDTO> GetCandidatesFromTeam()
+        {
+           
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(/*Сюда добавляем id Текущего сендбокса и id ментора(employee)*/)));
+        }
+
     }
 }

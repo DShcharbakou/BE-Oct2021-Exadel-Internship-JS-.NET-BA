@@ -14,10 +14,12 @@ namespace DAL.Repositories
         IBaseRepository<Interview> Interviews { get; }
         IBaseRepository<Skill> Skills { get; }
         IBaseRepository<Topic> Topics { get; }
-        IBaseRepository<Specialization> Specializations{get;}
-        IBaseRepository<EnglishLevel> EnglishLevels {get;}
-        IBaseRepository<Country> Countries{ get; }
+        IBaseRepository<Specialization> Specializations { get; }
+        IBaseRepository<EnglishLevel> EnglishLevels { get; }
+        IBaseRepository<Country> Countries { get; }
         IBaseRepository<City> Cities { get; }
-void Save();
+        IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
+        IBaseRepository<Sandbox> Sandboxes { get; }
+        void Save();
     }
 }

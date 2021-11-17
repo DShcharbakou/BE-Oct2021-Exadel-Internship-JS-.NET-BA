@@ -20,6 +20,7 @@ namespace DAL.Repositories
         IBaseRepository<City> Cities { get; }
         IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
         IBaseRepository<Sandbox> Sandboxes { get; }
+
         void Save();
     }
 }

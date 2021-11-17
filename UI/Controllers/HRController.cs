@@ -22,7 +22,9 @@ namespace UI.Controllers
         readonly ICandidateService candidateService;
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate)
-        { }
+        {
+            candidateService = candidate;
+        }
 
         // GET: api/<HRController>
         [HttpGet] // maybe there is must be renamed
@@ -32,7 +34,7 @@ namespace UI.Controllers
         }
 
         // GET api/<HRController>/5
-        [HttpGet("{Id}")]
+        [HttpGet("Get")]
         public CandidateDTO Get(int id)
         {
             return candidateService.GetCandidateById(id);
@@ -49,15 +51,15 @@ namespace UI.Controllers
          }
         */
 
-        /*  // GET api/<HRController>/false
+        /*  // GET api/<HRController>/HRInter
           [HttpGet("{IsInterwievedByHR}")] // тоже должен вернуть по идее список кандидатов
-          public string Get(bool answer)
+          public CandidateDTO Get(string getInterw)
           {
               return "value";
           }
 
 
-          // GET api/<HRController>/true
+          // GET api/<HRController>/TechInter
           [HttpGet("{IsInterwievedByTech}")] //тоже должен вернуть по идее список кандидатов
           public string Get(bool answer)
           {

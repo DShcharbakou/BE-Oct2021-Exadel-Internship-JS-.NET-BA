@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using DAL.Repositories.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,11 @@ namespace DAL.Repositories
         public virtual T Get(int id)
         {
             return _dbSet.SingleOrDefault(x => x.Id == id);
+        }
+
+        public virtual IEnumerable<T> FindWithSpecificationPattern(IBaseSpecifications<T> baseSpecifications = null)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_internshipDbContext.Set<T>().AsQueryable(), baseSpecifications);
         }
 
         public virtual void Save(T model)
@@ -60,4 +66,5 @@ namespace DAL.Repositories
         //    }
         //}
     }
+
 }

@@ -8,6 +8,9 @@ using System.Linq;
 using System;
 using System.Collections;
 using System.Text.RegularExpressions;
+using DAL.Repositories.Specifications;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace BLL.Services
 {
@@ -15,6 +18,7 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork _db;
         private readonly IMapper _mapper;
+
         public CandidateService(IUnitOfWork db, IMapper mapper)
         {
             _db = db;
@@ -53,6 +57,12 @@ namespace BLL.Services
         public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
+        }
+
+        public IEnumerable<CandidateDTO> GetCandidatesFromTeam()
+        {
+           
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification()));
         }
 
     }

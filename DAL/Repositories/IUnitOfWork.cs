@@ -18,6 +18,9 @@ namespace DAL.Repositories
         IBaseRepository<EnglishLevel> EnglishLevels { get; }
         IBaseRepository<Country> Countries { get; }
         IBaseRepository<City> Cities { get; }
+        IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
+        IBaseRepository<Sandbox> Sandboxes { get; }
+
         void Save();
     }
 }

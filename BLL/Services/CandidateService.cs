@@ -45,15 +45,6 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
         }
 
-
-        /*  private int GetStatusDataForDTOCandidate()
-          {
-              var statusHrInterview = _db.Interviews.Select(p => new 
-              Id = p.ID,
-              CandidateId = p.Candidates.ID).Count;
-              return statusHrInterview;
-          }*/
-
         public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));

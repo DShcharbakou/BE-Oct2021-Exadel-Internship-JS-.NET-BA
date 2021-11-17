@@ -27,14 +27,15 @@ namespace UI.Controllers
         }
 
         // GET: api/<HRController>
-        [HttpGet] // maybe there is must be renamed
+        [HttpGet]
         public List<CandidateDTO> Get()
         {
             return candidateService.GetAllCandidates();
+            //should write methods(?) which will add data from queries
         }
 
         // GET api/<HRController>/5
-        [HttpGet("Get")]
+        [HttpGet("ID")]
         public CandidateDTO Get(int id)
         {
             return candidateService.GetCandidateById(id);
@@ -49,23 +50,7 @@ namespace UI.Controllers
 
              return "value";
          }
-        */
-
-        /*  // GET api/<HRController>/HRInter
-          [HttpGet("{IsInterwievedByHR}")] // тоже должен вернуть по идее список кандидатов
-          public CandidateDTO Get(string getInterw)
-          {
-              return "value";
-          }
-
-
-          // GET api/<HRController>/TechInter
-          [HttpGet("{IsInterwievedByTech}")] //тоже должен вернуть по идее список кандидатов
-          public string Get(bool answer)
-          {
-              return "value";
-          }
-
+        
           // GET api/<HRController>/decline
           [HttpGet("{Status}")] //тоже должен вернуть по идее список кандидатов
           public string Get(string status)

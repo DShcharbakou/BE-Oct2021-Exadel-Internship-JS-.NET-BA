@@ -59,6 +59,16 @@ namespace BLL.Services
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
 
+        public int GetCountOfSandboxes(int candidateID)
+        {
+            return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
+        }
+
+        public int GetCountOfInterviewes(int candidateID)
+        {
+            return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+        }
+
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam()
         {
            

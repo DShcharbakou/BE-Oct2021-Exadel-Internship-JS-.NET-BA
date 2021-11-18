@@ -22,6 +22,8 @@ namespace DAL.Repositories
         private IBaseRepository<City> cityRep;
         private IBaseRepository<CandidateSandbox> candidateSandboxRep;
         private IBaseRepository<Sandbox> sandboxRep;
+        private IBaseRepository<Status> statusRep;
+        
         public UnitOfWork(DbContextOptions options)
         {
             internshipDbContext = new InternshipDbContext(options);
@@ -176,6 +178,20 @@ namespace DAL.Repositories
                 return sandboxRep;
             }
         }
+
+        public IBaseRepository<Status> Statuses
+        {
+            get
+            {
+
+                if (this.statusRep == null)
+                {
+                    this.statusRep = new BaseRepository<Status>(internshipDbContext);
+                }
+                return statusRep;
+            }
+        }
+
 
         public void Save()
         {

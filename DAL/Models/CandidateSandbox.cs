@@ -15,6 +15,7 @@ namespace DAL.Models
 
         public Candidate Candidate { get; set; }
         public Sandbox Sandbox { get; set; }
+        public Status Status { get; set; }
 
         public ICollection<SandboxTeam> SandboxTeams { get; set; }
     }

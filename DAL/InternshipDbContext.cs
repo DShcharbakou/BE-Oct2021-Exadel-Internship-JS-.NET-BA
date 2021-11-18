@@ -29,7 +29,6 @@ namespace DAL
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<CurrentSandboxCandidateData> CurrentSandboxCandidateDatas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

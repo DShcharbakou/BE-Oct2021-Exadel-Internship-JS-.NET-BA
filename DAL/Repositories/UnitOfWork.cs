@@ -15,8 +15,8 @@ namespace DAL.Repositories
         private IBaseRepository<Topic> topicRep;
         private IBaseRepository<Specialization> specializationRep;
         private IBaseRepository<EnglishLevel> englishLevelRep;
-        private IBaseRepository<Country> countryRep;
-        private IBaseRepository<City> cityRep;
+        //private IBaseRepository<Country> countryRep;
+        //private IBaseRepository<City> cityRep;
 
         public UnitOfWork(DbContextOptions options)
         {
@@ -122,30 +122,30 @@ namespace DAL.Repositories
                 return englishLevelRep;
             }
         }
-        public IBaseRepository<Country> Countries
-        {
-            get
-            {
+        //public IBaseRepository<Country> Countries
+        //{
+        //    get
+        //    {
 
-                if (this.countryRep == null)
-                {
-                    this.countryRep = new BaseRepository<Country>(internshipDbContext);
-                }
-                return countryRep;
-            }
-        }
-        public IBaseRepository<City> Cities
-        {
-            get
-            {
+        //        if (this.countryRep == null)
+        //        {
+        //            this.countryRep = new BaseRepository<Country>(internshipDbContext);
+        //        }
+        //        return countryRep;
+        //    }
+        //}
+        //public IBaseRepository<City> Cities
+        //{
+        //    get
+        //    {
 
-                if (this.cityRep == null)
-                {
-                    this.cityRep = new BaseRepository<City>(internshipDbContext);
-                }
-                return cityRep;
-            }
-        }
+        //        if (this.cityRep == null)
+        //        {
+        //            this.cityRep = new BaseRepository<City>(internshipDbContext);
+        //        }
+        //        return cityRep;
+        //    }
+        //}
 
         public void Save()
         {

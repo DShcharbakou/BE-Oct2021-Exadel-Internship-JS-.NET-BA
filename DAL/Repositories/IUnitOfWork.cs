@@ -16,8 +16,8 @@ namespace DAL.Repositories
         IBaseRepository<Topic> Topics { get; }
         IBaseRepository<Specialization> Specializations{get;}
         IBaseRepository<EnglishLevel> EnglishLevels {get;}
-        IBaseRepository<Country> Countries{ get; }
-        IBaseRepository<City> Cities { get; }
+        //IBaseRepository<Country> Countries{ get; }
+        //IBaseRepository<City> Cities { get; }
 void Save();
     }
 }

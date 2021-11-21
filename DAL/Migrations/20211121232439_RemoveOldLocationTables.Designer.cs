@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    [Migration("20211121215527_AddNewCountriesAndCities")]
-    partial class AddNewCountriesAndCities
+    [Migration("20211121232439_RemoveOldLocationTables")]
+    partial class RemoveOldLocationTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,39 +119,6 @@ namespace DAL.Migrations
                     b.HasIndex("SandboxID");
 
                     b.ToTable("CandidatesSandboxes");
-                });
-
-            modelBuilder.Entity("DAL.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CountryID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("DAL.Models.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("DAL.Models.EmployeeSkill", b =>

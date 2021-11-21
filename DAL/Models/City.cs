@@ -10,5 +10,7 @@ namespace DAL.Models
     {
         public string CityName { get; set; }
         public int State_Id { get; set; }
+
+        public State State { get; set; }
     }
 }

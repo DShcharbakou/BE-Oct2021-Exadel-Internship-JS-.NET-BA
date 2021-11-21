@@ -11,6 +11,7 @@ namespace DAL.Models
         public string StateName { get; set; }
         public int Country_Id { get; set; }
 
+        public Country Country { get; set; }
         public ICollection<City> Cities { get; set; }
     }
 }

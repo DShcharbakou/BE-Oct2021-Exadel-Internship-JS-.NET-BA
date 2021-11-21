@@ -8,7 +8,7 @@ namespace DAL.Models
 {
    public class City : BaseModel
     {
-        public string Name { get; set; }
-        public int CountryID { get; set; }
+        public string CityName { get; set; }
+        public int State_Id { get; set; }
     }
 }

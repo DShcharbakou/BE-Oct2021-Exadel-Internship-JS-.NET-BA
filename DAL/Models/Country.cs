@@ -8,6 +8,10 @@ namespace DAL.Models
 {
    public class Country : BaseModel
     {
-        public string Name { get; set; }
+        public string Shortname { get; set; }
+        public string CountryName { get; set; }
+        public int Phonecode { get; set; }
+
+        public ICollection<State> States { get; set; }
     }
 }

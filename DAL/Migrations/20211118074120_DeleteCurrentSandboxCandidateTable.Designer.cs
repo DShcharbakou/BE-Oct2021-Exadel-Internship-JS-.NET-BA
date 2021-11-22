@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211118074120_DeleteCurrentSandboxCandidateTable")]
+    partial class DeleteCurrentSandboxCandidateTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,8 +117,6 @@ namespace DAL.Migrations
                     b.HasIndex("CandidateID");
 
                     b.HasIndex("SandboxID");
-
-                    b.HasIndex("StatusID");
 
                     b.ToTable("CandidatesSandboxes");
                 });
@@ -588,17 +588,9 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Status", "Status")
-                        .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Candidate");
 
                     b.Navigation("Sandbox");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("DAL.Models.EmployeeSkill", b =>
@@ -809,11 +801,6 @@ namespace DAL.Migrations
                     b.Navigation("EmployeeSkills");
 
                     b.Navigation("TopicSkills");
-                });
-
-            modelBuilder.Entity("DAL.Models.Status", b =>
-                {
-                    b.Navigation("CandidateSandboxes");
                 });
 
             modelBuilder.Entity("DAL.Models.Topic", b =>

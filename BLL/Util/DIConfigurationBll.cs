@@ -17,7 +17,9 @@ namespace BLL.Util
             services.AddTransient<IInternshipTeamService, InternshipTeamService>();
             services.AddTransient<ITopicService, TopicService>();
             services.AddTransient<IInterviewService, InterviewService>();
-            services.AddTransient<IStackService, StackService>();
+            services.AddTransient<ISkillService, SkillService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

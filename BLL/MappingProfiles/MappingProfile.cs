@@ -14,8 +14,10 @@ namespace BLL.MappingProfiles
     {
         public MappingProfile()
         {
+            CreateMap<Candidate, CandidateDTO>()
+                .ForMember(cd => cd.ID, cd => cd.MapFrom(cd => cd.Id));
             CreateMap<CandidateDTO, Candidate>();
-            CreateMap<Candidate, CandidateDTO>();
+
 
             CreateMap<EmployeeDTO, Employee>();
             CreateMap<Employee, EmployeeDTO>();
@@ -26,8 +28,8 @@ namespace BLL.MappingProfiles
             CreateMap<InterviewDTO, Interview>();
             CreateMap<Interview, InterviewDTO>();
 
-            CreateMap<StackDTO, Stack>();
-            CreateMap<Stack, StackDTO>();
+            CreateMap<SkillDTO, Skill>();
+            CreateMap<Skill, SkillDTO>();
 
             CreateMap<TopicDTO, Topic>();
             CreateMap<Topic, TopicDTO>();

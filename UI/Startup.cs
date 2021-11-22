@@ -17,14 +17,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using BLL.Interfaces;
+using BLL.Services;
+using BLL;
+using FluentValidation.AspNetCore;
+using BLL.Util;
+using AutoMapper;
+using BLL.MappingProfiles;
 
 namespace UI
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,27 +42,50 @@ namespace UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+
             var connectionString = Configuration.GetValue<string>("connectionString");
             services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionString));
 
-            
+            services.AddAutoMapper(typeof(MappingProfile));
+
+
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();
 
             services.AddControllers();
-             
+
+            DIConfigurationBll.ConfigureServices(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+            services.AddSwaggerGen(setup =>
+            {
+                // Include 'SecurityScheme' to use JWT Authentication
+                var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
-                    options.Cookie.Name = "SessionCookie";
-                    options.LoginPath = "/Login/Index";
-                    options.SlidingExpiration = true;
-                });
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                setup.AddSecurityRequirement(new OpenApiSecurityRequirement { { jwtSecurityScheme, Array.Empty<string>() } });
+
+            });
+
             // Adding autorization
             services.AddAuthentication(options =>
             {
@@ -79,6 +109,7 @@ namespace UI
                     ValidAudience = Configuration["JWT:ValidAudience"],
                     ValidIssuer = Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = signingKey,
+                    ClockSkew = TimeSpan.Zero,
                 };
             });
 
@@ -88,11 +119,35 @@ namespace UI
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
 
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                                  });
+            });
+
+            services.AddRouting(options => options.LowercaseUrls = true);
+
+            //adding Fluent Validation
+            services.AddControllers()
+                .AddFluentValidation(s =>
+                {
+                    s.LocalizationEnabled = false;
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
+
         }
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
+            StartupSeedExtension.SeedRoles(roleManager).Wait();
+            StartupSeedExtension.SeedUsers(userManager);
+
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseDeveloperExceptionPage();
@@ -106,17 +161,10 @@ namespace UI
 
             app.UseHttpsRedirection();
 
-            var cookiePolicyOptions = new CookiePolicyOptions
-            {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
-                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
-                Secure = CookieSecurePolicy.None,
-            };
-
-            app.UseCookiePolicy(cookiePolicyOptions);
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -35,14 +35,8 @@ namespace DAL.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Skype")
                         .HasColumnType("nvarchar(max)");
@@ -104,10 +98,10 @@ namespace DAL.Migrations
                     b.Property<int>("CandidateID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<int>("SandboxID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -115,6 +109,8 @@ namespace DAL.Migrations
                     b.HasIndex("CandidateID");
 
                     b.HasIndex("SandboxID");
+
+                    b.HasIndex("StatusID");
 
                     b.ToTable("CandidatesSandboxes");
                 });
@@ -152,19 +148,19 @@ namespace DAL.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("DAL.Models.EmployeeStack", b =>
+            modelBuilder.Entity("DAL.Models.EmployeeSkill", b =>
                 {
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
-                    b.Property<int>("StackID")
+                    b.Property<int>("SkillID")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeID", "StackID");
+                    b.HasKey("EmployeeID", "SkillID");
 
-                    b.HasIndex("StackID");
+                    b.HasIndex("SkillID");
 
-                    b.ToTable("EmployeesStacks");
+                    b.ToTable("EmployeesSkills");
                 });
 
             modelBuilder.Entity("DAL.Models.EnglishLevel", b =>
@@ -222,27 +218,6 @@ namespace DAL.Migrations
                     b.ToTable("Interviews");
                 });
 
-            modelBuilder.Entity("DAL.Models.InterviewResult", b =>
-                {
-                    b.Property<int>("InterviewID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TopicID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.HasKey("InterviewID", "TopicID");
-
-                    b.HasIndex("TopicID");
-
-                    b.ToTable("InterviewResults");
-                });
-
             modelBuilder.Entity("DAL.Models.Sandbox", b =>
                 {
                     b.Property<int>("Id")
@@ -261,6 +236,45 @@ namespace DAL.Migrations
                     b.ToTable("Sandbox");
                 });
 
+            modelBuilder.Entity("DAL.Models.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("DAL.Models.SkillKnowledge", b =>
+                {
+                    b.Property<int>("InterviewID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TopicID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.HasKey("InterviewID", "TopicID");
+
+                    b.HasIndex("TopicID");
+
+                    b.ToTable("SkillKnowledges");
+                });
+
             modelBuilder.Entity("DAL.Models.Specialization", b =>
                 {
                     b.Property<int>("Id")
@@ -276,19 +290,19 @@ namespace DAL.Migrations
                     b.ToTable("Specializations");
                 });
 
-            modelBuilder.Entity("DAL.Models.Stack", b =>
+            modelBuilder.Entity("DAL.Models.Status", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stacks");
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("DAL.Models.TeamMentor", b =>
@@ -319,19 +333,19 @@ namespace DAL.Migrations
                     b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("DAL.Models.TopicStack", b =>
+            modelBuilder.Entity("DAL.Models.TopicSkill", b =>
                 {
-                    b.Property<int>("StackID")
+                    b.Property<int>("SkillID")
                         .HasColumnType("int");
 
                     b.Property<int>("TopicID")
                         .HasColumnType("int");
 
-                    b.HasKey("StackID", "TopicID");
+                    b.HasKey("SkillID", "TopicID");
 
                     b.HasIndex("TopicID");
 
-                    b.ToTable("TopicsStacks");
+                    b.ToTable("TopicsSkills");
                 });
 
             modelBuilder.Entity("DAL.SandboxTeam", b =>
@@ -568,28 +582,36 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DAL.Models.Status", "Status")
+                        .WithMany("CandidateSandboxes")
+                        .HasForeignKey("StatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Candidate");
 
                     b.Navigation("Sandbox");
+
+                    b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("DAL.Models.EmployeeStack", b =>
+            modelBuilder.Entity("DAL.Models.EmployeeSkill", b =>
                 {
                     b.HasOne("DAL.Employee", "Employee")
-                        .WithMany("EmployeeStack")
+                        .WithMany("EmployeeSkills")
                         .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Stack", "Stack")
-                        .WithMany("EmployeeStacks")
-                        .HasForeignKey("StackID")
+                    b.HasOne("DAL.Models.Skill", "Skill")
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("SkillID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
 
-                    b.Navigation("Stack");
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("DAL.Models.Interview", b =>
@@ -611,23 +633,23 @@ namespace DAL.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("DAL.Models.InterviewResult", b =>
+            modelBuilder.Entity("DAL.Models.SkillKnowledge", b =>
                 {
                     b.HasOne("DAL.Models.Interview", "Interview")
-                        .WithMany("InterviewResults")
+                        .WithMany("SkillKnowledges")
                         .HasForeignKey("InterviewID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Topic", "Topics")
-                        .WithMany("InterviewResults")
+                    b.HasOne("DAL.Models.Topic", "Topic")
+                        .WithMany("SkillKnowledges")
                         .HasForeignKey("TopicID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Interview");
 
-                    b.Navigation("Topics");
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("DAL.Models.TeamMentor", b =>
@@ -649,21 +671,21 @@ namespace DAL.Migrations
                     b.Navigation("InternshipTeam");
                 });
 
-            modelBuilder.Entity("DAL.Models.TopicStack", b =>
+            modelBuilder.Entity("DAL.Models.TopicSkill", b =>
                 {
-                    b.HasOne("DAL.Models.Stack", "Stack")
-                        .WithMany("TopicStacks")
-                        .HasForeignKey("StackID")
+                    b.HasOne("DAL.Models.Skill", "Skill")
+                        .WithMany("TopicSkills")
+                        .HasForeignKey("SkillID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Topic", "Topic")
-                        .WithMany("TopicStacks")
+                        .WithMany("TopicSkills")
                         .HasForeignKey("TopicID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Stack");
+                    b.Navigation("Skill");
 
                     b.Navigation("Topic");
                 });
@@ -740,7 +762,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Employee", b =>
                 {
-                    b.Navigation("EmployeeStack");
+                    b.Navigation("EmployeeSkills");
 
                     b.Navigation("Interviews");
 
@@ -768,7 +790,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Interview", b =>
                 {
-                    b.Navigation("InterviewResults");
+                    b.Navigation("SkillKnowledges");
                 });
 
             modelBuilder.Entity("DAL.Models.Sandbox", b =>
@@ -776,18 +798,23 @@ namespace DAL.Migrations
                     b.Navigation("CandidateSandboxes");
                 });
 
-            modelBuilder.Entity("DAL.Models.Stack", b =>
+            modelBuilder.Entity("DAL.Models.Skill", b =>
                 {
-                    b.Navigation("EmployeeStacks");
+                    b.Navigation("EmployeeSkills");
 
-                    b.Navigation("TopicStacks");
+                    b.Navigation("TopicSkills");
+                });
+
+            modelBuilder.Entity("DAL.Models.Status", b =>
+                {
+                    b.Navigation("CandidateSandboxes");
                 });
 
             modelBuilder.Entity("DAL.Models.Topic", b =>
                 {
-                    b.Navigation("InterviewResults");
+                    b.Navigation("SkillKnowledges");
 
-                    b.Navigation("TopicStacks");
+                    b.Navigation("TopicSkills");
                 });
 #pragma warning restore 612, 618
         }

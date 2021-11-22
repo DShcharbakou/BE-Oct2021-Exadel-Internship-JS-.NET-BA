@@ -12,6 +12,6 @@ namespace DAL.Models
         public Candidate Candidate { get; set; }
         public Employee Employee{ get; set; }
 
-        public ICollection<InterviewResult> InterviewResults { get; set; }
+        public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
     }
 }

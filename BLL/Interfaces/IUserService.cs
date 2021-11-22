@@ -8,7 +8,7 @@ namespace BLL.Interfaces
 {
     public interface IUserService
     {
-        void AddingUser(string email, string password, string firstName, string lastName, string jobUser, string jobSystem);
+        void AddingUser(string email, string password, string firstName, string lastName, string role);
         void DeleteUser(string email);
     }
 }

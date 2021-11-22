@@ -14,7 +14,6 @@ namespace DAL
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Skype { get; set; }
-        public int RoleId { get; set; }
 
         public ICollection<Interview> Interviews { get; set; }
         public ICollection<EmployeeSkill> EmployeeSkills { get; set; }

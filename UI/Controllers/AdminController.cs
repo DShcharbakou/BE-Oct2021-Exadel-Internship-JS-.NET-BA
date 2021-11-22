@@ -30,7 +30,7 @@ namespace UI.Controllers
         [HttpPost("addingUser")]
         public void UserAdd([FromBody] AddingUser user)
         {
-            _userService.AddingUser(user.email, user.password, user.firstName, user.lastName, user.roleUser, user.roleSystem);
+            _userService.AddingUser(user.email, user.password, user.firstName, user.lastName, user.role);
         }
 
         [HttpPost("deleteUser")]

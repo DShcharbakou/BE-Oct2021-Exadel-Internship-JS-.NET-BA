@@ -25,7 +25,7 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public void AddingUser(string email, string password, string firstName, string lastName, string roleUser, string roleSystem)
+        public void AddingUser(string email, string password, string firstName, string lastName, string role)
         {
             User user = new User
             {
@@ -40,19 +40,13 @@ namespace BLL.Services
                 IdentityResult resultCreating = _userManager.CreateAsync(user, user.Password).Result;
                 if (resultCreating.Succeeded)
                 {
-                    IdentityResult resultRoleCreating = _userManager.AddToRoleAsync(user, roleUser).Result;
+                    IdentityResult resultRoleCreating = _userManager.AddToRoleAsync(user, role).Result;
                 }
 
                 EmployeeDTO employee = new EmployeeDTO();
                 employee.FirstName = user.FirstName;
                 employee.LastName = user.LastName;
                 employee.Email = user.Email;
-                foreach (var role in Enum.GetValues(typeof(UserRoles)))
-                {
-                    if (role.ToString() == roleSystem)
-                        employee.RoleId = Convert.ToInt32(role);
-                }
-
 
                 var employ = _mapper.Map<Employee>(employee);
                 _db.Employees.Save(employ);

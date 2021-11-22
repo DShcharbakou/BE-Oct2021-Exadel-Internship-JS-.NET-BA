@@ -1,5 +1,9 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.DTO;
+using BLL.Interfaces;
 using DAL;
+using DAL.Models;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,12 +16,16 @@ namespace BLL.Services
     class UserService : IUserService
     {
         private UserManager<User> _userManager;
-        public UserService(UserManager<User> userManager)
+        private readonly IUnitOfWork _db;
+        private readonly IMapper _mapper;
+        public UserService(UserManager<User> userManager, IUnitOfWork db, IMapper mapper)
         {
             _userManager = userManager;
+            _db = db;
+            _mapper = mapper;
         }
 
-        public void AddingUser(string email, string password, string firstName, string lastName, string role)
+        public void AddingUser(string email, string password, string firstName, string lastName, string roleUser, string roleSystem)
         {
             User user = new User
             {
@@ -27,20 +35,33 @@ namespace BLL.Services
                 LastName = lastName,
                 Password = password
             };
-            IdentityResult resultCreating = _userManager.CreateAsync(user, user.Password).Result;
-            if (resultCreating.Succeeded) 
+            if (!_userManager.FindByEmailAsync(email).IsCompleted)
             {
+                IdentityResult resultCreating = _userManager.CreateAsync(user, user.Password).Result;
+                if (resultCreating.Succeeded)
+                {
+                    IdentityResult resultRoleCreating = _userManager.AddToRoleAsync(user, roleUser).Result;
+                }
 
-                IdentityResult resultRoleCreating = _userManager.AddToRoleAsync(user, role).Result;
+                EmployeeDTO employee = new EmployeeDTO();
+                employee.FirstName = user.FirstName;
+                employee.LastName = user.LastName;
+                employee.Email = user.Email;
+                foreach (var role in Enum.GetValues(typeof(UserRoles)))
+                {
+                    if (role.ToString() == roleSystem)
+                        employee.RoleId = Convert.ToInt32(role);
+                }
 
+
+                var employ = _mapper.Map<Employee>(employee);
+                _db.Employees.Save(employ);
+                _db.Save();
             }
-
-
         }
 
         public void DeleteUser(string email)
         {
-
             var user = _userManager.FindByNameAsync(email).Result;
             _userManager.DeleteAsync(user);
         }

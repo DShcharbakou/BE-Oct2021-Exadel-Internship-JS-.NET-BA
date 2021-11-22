@@ -7,5 +7,6 @@ namespace BLL.Interfaces
         IEnumerable<EmployeeDTO> GetList();
         EmployeeDTO GetEmployeeById(int id);
         void DeleteEmployee(int id);
+        EmployeeDTO GetEmployeeByEmail(string email);
     }
 }

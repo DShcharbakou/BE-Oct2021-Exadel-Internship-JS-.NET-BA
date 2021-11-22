@@ -33,6 +33,9 @@ namespace BLL.MappingProfiles
 
             CreateMap<TopicDTO, Topic>();
             CreateMap<Topic, TopicDTO>();
+
+            CreateMap<Sandbox, SandboxDTO>();
+            CreateMap<SandboxDTO, Sandbox>();
         }
     }
 }

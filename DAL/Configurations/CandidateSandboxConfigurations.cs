@@ -17,10 +17,6 @@ namespace DAL.Configurations
             builder.HasOne(x => x.Sandbox)
                 .WithMany(x => x.CandidateSandboxes)
                 .HasForeignKey(x => x.SandboxID);
-
-            builder.HasOne(x => x.Status)
-            .WithMany(x => x.CandidateSandboxes)
-            .HasForeignKey(x => x.StatusID);
         }
     }
 }

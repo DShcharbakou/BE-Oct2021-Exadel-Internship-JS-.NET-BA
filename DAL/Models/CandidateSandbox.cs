@@ -11,11 +11,10 @@ namespace DAL.Models
     {
         public int CandidateID { get; set; }
         public int SandboxID { get; set; }
-        public int StatusID { get; set; }
+        public bool IsActive { get; set; }
 
         public Candidate Candidate { get; set; }
         public Sandbox Sandbox { get; set; }
-        public Status Status { get; set; }
 
         public ICollection<SandboxTeam> SandboxTeams { get; set; }
     }

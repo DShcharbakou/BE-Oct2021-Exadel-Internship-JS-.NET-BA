@@ -104,10 +104,10 @@ namespace DAL.Migrations
                     b.Property<int>("CandidateID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SandboxID")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("StatusID")
+                    b.Property<int>("SandboxID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -115,8 +115,6 @@ namespace DAL.Migrations
                     b.HasIndex("CandidateID");
 
                     b.HasIndex("SandboxID");
-
-                    b.HasIndex("StatusID");
 
                     b.ToTable("CandidatesSandboxes");
                 });
@@ -294,21 +292,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specializations");
-                });
-
-            modelBuilder.Entity("DAL.Models.Status", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("DAL.Models.TeamMentor", b =>
@@ -588,17 +571,9 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Status", "Status")
-                        .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Candidate");
 
                     b.Navigation("Sandbox");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("DAL.Models.EmployeeSkill", b =>
@@ -809,11 +784,6 @@ namespace DAL.Migrations
                     b.Navigation("EmployeeSkills");
 
                     b.Navigation("TopicSkills");
-                });
-
-            modelBuilder.Entity("DAL.Models.Status", b =>
-                {
-                    b.Navigation("CandidateSandboxes");
                 });
 
             modelBuilder.Entity("DAL.Models.Topic", b =>

@@ -28,7 +28,6 @@ namespace DAL
         public DbSet<EnglishLevel> EnglishLevel { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<Status> Statuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

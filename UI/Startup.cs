@@ -23,8 +23,6 @@ using BLL.Services;
 using BLL;
 using FluentValidation.AspNetCore;
 using BLL.Util;
-using AutoMapper;
-using BLL.MappingProfiles;
 
 namespace UI
 {
@@ -47,9 +45,7 @@ namespace UI
             var connectionString = Configuration.GetValue<string>("connectionString");
             services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionString));
 
-            services.AddAutoMapper(typeof(MappingProfile));
-
-
+            
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();
 
@@ -138,7 +134,6 @@ namespace UI
                     s.LocalizationEnabled = false;
                     s.RegisterValidatorsFromAssemblyContaining<Startup>();
                 });
-
         }
     
 

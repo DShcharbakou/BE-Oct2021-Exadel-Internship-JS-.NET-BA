@@ -38,7 +38,7 @@ namespace DAL.Migrations
                         column: x => x.Country_Id,
                         principalTable: "Countries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,7 +58,7 @@ namespace DAL.Migrations
                         column: x => x.State_Id,
                         principalTable: "States",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

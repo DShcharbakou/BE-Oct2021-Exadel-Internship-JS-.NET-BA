@@ -129,15 +129,12 @@ namespace DAL.Migrations
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
-
                     b.Property<int>("State_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StateId");
+                    b.HasIndex("State_Id");
 
                     b.ToTable("Cities");
                 });
@@ -312,9 +309,6 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CountryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Country_Id")
                         .HasColumnType("int");
 
@@ -323,7 +317,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("Country_Id");
 
                     b.ToTable("States");
                 });
@@ -614,7 +608,9 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Models.State", "State")
                         .WithMany("Cities")
-                        .HasForeignKey("StateId");
+                        .HasForeignKey("State_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("State");
                 });
@@ -680,7 +676,9 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Models.Country", "Country")
                         .WithMany("States")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("Country_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });

@@ -4,6 +4,7 @@ using BLL.Interfaces;
 using BLL.DTO;
 using AutoMapper;
 using DAL;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -32,6 +33,11 @@ namespace BLL.Services
             var employee = _db.Employees.Get(id);
             _db.Employees.Remove(employee);
             _db.Save();
+        }
+
+        public EmployeeDTO GetEmployeeByEmail(string email)
+        {
+            return _mapper.Map<Employee, EmployeeDTO>(_db.Employees.GetAll().Where(x => x.Email == email).FirstOrDefault());
         }
     }
 }

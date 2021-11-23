@@ -20,6 +20,7 @@ namespace BLL.Util
             services.AddTransient<ISkillService, SkillService>();
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ISandboxService, SandboxService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

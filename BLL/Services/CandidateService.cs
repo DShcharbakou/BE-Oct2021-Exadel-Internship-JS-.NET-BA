@@ -94,10 +94,9 @@ namespace BLL.Services
             return candidate;
         }
 
-        public IEnumerable<CandidateDTO> GetCandidatesFromTeam()
+        public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)
         {
-           
-            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification()));
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));
         }
 
     }

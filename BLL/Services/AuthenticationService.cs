@@ -30,7 +30,7 @@ namespace BLL.Services
 
         }
 
-        public bool IsBlacklisted(string token) 
+        public bool IsBlacklisted(string token)
         {
             return _cache.Get(TokensKey + token) != null;
         }
@@ -45,6 +45,7 @@ namespace BLL.Services
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 

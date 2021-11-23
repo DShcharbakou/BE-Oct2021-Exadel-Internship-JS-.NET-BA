@@ -17,40 +17,66 @@ namespace UI.Controllers
     {
         private readonly ICandidateService _candidateService;
         private readonly IEmployeeService _employeeService;
-        private readonly IInternshipTeamService _internshipTeam;
+        private readonly IInternshipTeamService _internshipTeamService;
+        private readonly ISpecializationService _specializationService;
+        private readonly IEnglishLevelService _englishLevelService;
+        private readonly ICityService _cityService;
         private readonly UserManager<User> _userManager;
 
-        public MentorController(ICandidateService candidateService, IInternshipTeamService internshipTeam, IEmployeeService employeeService, UserManager<User> userManager)
+        public MentorController(ICandidateService candidateService,
+                                ISpecializationService specializationService,
+                                IInternshipTeamService internshipTeamService,
+                                IEmployeeService employeeService,
+                                IEnglishLevelService englishLevelService,
+                                ICityService cityService,
+                                UserManager<User> userManager)
         {
             _candidateService = candidateService;
             _userManager = userManager;
             _employeeService = employeeService;
-            _internshipTeam = internshipTeam;
+            _internshipTeamService = internshipTeamService;
+            _specializationService = specializationService;
+            _englishLevelService = englishLevelService;
+            _cityService = cityService;
         }
 
         // GET: api/<MentorController>
         [HttpGet]
+        //[Route("api/mentor/candidates")]
         [Authorize(Roles = "admin, mentor")]
         public async Task<List<CandidateDTO>> GetCandidates()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var employee = _employeeService.GetEmployeeByEmail(user.Email);
-            var currentTeam = _internshipTeam.GetInternshipTeamByEmployeeId(employee.Id);
-            var result = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
-            return result.ToList();
+            var currentTeam = _internshipTeamService.GetInternshipTeamByEmployeeId(employee.Id);
+            var candidates = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
+            return candidates.ToList();
         }
 
         // GET api/<MentorController>/5
+
         [HttpGet("{id}")]
-        public string Get(int id)
+        //[Route("api/mentor/{id}")]
+        public CandidateForMentorDTO GetFormData(int id)
         {
-            return "value";
+            var candidate = _candidateService.GetCandidateById(id);
+            CandidateForMentorDTO formData = new();
+            formData.FirstName = candidate.FirstName;
+            formData.LastName = candidate.LastName;
+            formData.Email = candidate.Email;
+            formData.Phone = candidate.Phone;
+            formData.Skype = candidate.Skype;
+            formData.Specialization = _specializationService.GetSpecializationById(candidate.ID);
+            formData.Location = _cityService.GetCityById(candidate.ID);
+            formData.EnglishLevel = _englishLevelService.GetEnglishLevelById(candidate.ID);
+            return formData;
         }
 
         // POST api/<MentorController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
+
         }
 
         // PUT api/<MentorController>/5

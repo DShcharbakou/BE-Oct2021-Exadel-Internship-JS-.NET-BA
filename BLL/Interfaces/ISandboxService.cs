@@ -9,6 +9,5 @@ namespace BLL.Interfaces
         SandboxDTO GetSandboxById(int id);
         void AddSandbox(SandboxDTO sandboxDto);
         void DeleteSandbox(int id);
-        int GetCurrentSandboxId();
     }
 }

@@ -6,11 +6,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "Cities");
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

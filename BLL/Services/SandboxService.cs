@@ -44,12 +44,5 @@ namespace BLL.Services
         {
             return _mapper.Map<Sandbox, SandboxDTO>(_db.Sandboxes.Get(id));
         }
-
-        public int GetCurrentSandboxId()
-        {
-            var sndbxDTO = _mapper.Map<Sandbox, SandboxDTO>(_db.Sandboxes.GetAll().LastOrDefault());
-            return sndbxDTO.Id;
-        }
-
     }
 }

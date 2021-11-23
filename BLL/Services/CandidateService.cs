@@ -60,9 +60,9 @@ namespace BLL.Services
             return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
         }
 
-        public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId, int currentSandbox)
+        public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)
         {
-            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId, currentSandbox)));
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));
         }
 
     }

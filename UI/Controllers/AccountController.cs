@@ -24,7 +24,6 @@ namespace UI.Controllers
     {
         private IAuthenticationService _tokenService;
  
-
         public AccountController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IAuthenticationService tokenService)
         {
             _tokenService = tokenService;

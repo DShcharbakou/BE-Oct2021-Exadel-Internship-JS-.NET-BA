@@ -39,9 +39,9 @@ namespace BLL.Services
             _db.Save();
         }
 
-        //Вернуть список данных из форм кандидатов
         public List<CandidateDTO> GetAllCandidates()
         {
+            var result = _mapper.Map(SetStatusInformationForCandidate(), _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.GetAll()));
             return _mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
         }
 
@@ -55,9 +55,43 @@ namespace BLL.Services
             return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
         }
 
+        public bool IsIntervHR(int id)
+        {
+            if (this.GetCountOfInterviewes(id) >= 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsIntervTech(int id)
+        {
+            if (this.GetCountOfInterviewes(id) >= 2)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string GetCandidateStatus(int candidateId)
+        {
+            var statuses = _db.Statuses.FindWithSpecificationPattern(new StatusForCandidateSpecification(candidateId));
+            return statuses.FirstOrDefault().Name;
+        }
+
         public int GetCountOfInterviewes(int candidateID)
         {
             return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+        }
+
+        public CandidateDTOForStatuses SetStatusInformationForCandidate(int candidateId)
+        {
+            var candidate = new CandidateDTOForStatuses(candidateId);
+            candidate.IsInterviewedByHR = this.IsIntervHR(candidateId);
+            candidate.IsInterviewedByTech = this.IsIntervTech(candidateId);
+            candidate.SandboxCount = this.GetCountOfSandboxes(candidateId);
+            candidate.Status = this.GetCandidateStatus(candidateId);
+            return candidate;
         }
 
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam()

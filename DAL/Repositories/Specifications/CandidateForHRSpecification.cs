@@ -13,7 +13,7 @@ namespace DAL.Repositories.Specifications
         {
             AddInclude(x => x.CandidateSandboxes);
             //filtration by current sandbox
-            SetFilterCondition(x => x.CandidateSandboxes.Where(y => y.SandboxID == 1).Select(x => x.Id).Contains(x.Id));
+            SetFilterCondition(x => x.CandidateSandboxes.Where(y => y.Sandbox.StartDate <= DateTime.UtcNow && y.Sandbox.EndDate >= DateTime.UtcNow).Select(x => x.Id).Contains(x.Id));
             
         }
     }

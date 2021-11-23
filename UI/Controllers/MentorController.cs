@@ -18,21 +18,14 @@ namespace UI.Controllers
         private readonly ICandidateService _candidateService;
         private readonly IEmployeeService _employeeService;
         private readonly IInternshipTeamService _internshipTeam;
-        private readonly ISandboxService _sandboxService;
         private readonly UserManager<User> _userManager;
 
-        public MentorController(ICandidateService candidateService,
-                                ISandboxService sandboxService,
-                                IInternshipTeamService internshipTeam,
-                                IEmployeeService employeeService,
-                                IMapper mapper,
-                                UserManager<User> userManager)
+        public MentorController(ICandidateService candidateService, IInternshipTeamService internshipTeam, IEmployeeService employeeService, UserManager<User> userManager)
         {
             _candidateService = candidateService;
             _userManager = userManager;
             _employeeService = employeeService;
             _internshipTeam = internshipTeam;
-            _sandboxService = sandboxService;
         }
 
         // GET: api/<MentorController>
@@ -43,8 +36,7 @@ namespace UI.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var employee = _employeeService.GetEmployeeByEmail(user.Email);
             var currentTeam = _internshipTeam.GetInternshipTeamByEmployeeId(employee.Id);
-            var currentSandbox = _sandboxService.GetCurrentSandboxId();
-            var result = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber, currentSandbox);
+            var result = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
             return result.ToList();
         }
 

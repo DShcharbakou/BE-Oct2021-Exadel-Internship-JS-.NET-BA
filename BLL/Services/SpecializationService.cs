@@ -1,12 +1,5 @@
-﻿using AutoMapper;
-using BLL.DTO;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -21,7 +14,7 @@ namespace BLL.Services
 
         public string GetSpecializationById(int id)
         {
-            return _db.Specializations.Get(id).Name.ToString();
+            return _db.Specializations.Get(id).Name;
         }
     }
 }

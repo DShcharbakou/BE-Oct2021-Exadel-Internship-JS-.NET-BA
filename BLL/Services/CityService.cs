@@ -24,11 +24,7 @@ namespace BLL.Services
             var state = _db.States.Get(stateId).StateName;
             var countryId = _db.States.Get(stateId).Country_Id;
             var country = _db.Countries.Get(countryId).CountryName;
-
-            //var countryy = _db.Cities.Get(id).State.Country;
-            //var statee = _db.Cities.Get(id).State.StateName;
-
-            string location = $"{country}, {state} , {city}";
+            string location = $"{country}, {state}, {city}";
             return location;
         }
     }

@@ -41,7 +41,7 @@ namespace BLL.Services
 
         public List<CandidateDTO> GetAllCandidates()
         {
-            var result = _mapper.Map(SetStatusInformationForCandidate(), _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.GetAll()));
+           // var result = _mapper.Map(SetStatusInformationForCandidate(), _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.GetAll()));
             return _mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
         }
 
@@ -94,6 +94,11 @@ namespace BLL.Services
             return candidate;
         }
 
+        public List<CandidateDTOForStatuses> GetCandidatesWithStatuses(int? teamId)
+        {
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidatesWithStatusesSpecification(teamId)).Select(x => new FullCandidateDTO() { ID = x.CandidateID, StatusID = x.StatusID, FirstName = x.Candidate.FirstName }).ToList();
+
+        }
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)
         {
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));

@@ -31,7 +31,7 @@ namespace UI.Controllers
         public List<CandidateDTO> Get()
         {
             return candidateService.GetAllCandidates();
-            //should write methods(?) which will add data from queries
+           
         }
 
         // GET api/<HRController>/5
@@ -71,10 +71,5 @@ namespace UI.Controllers
         {
         }
 
-        // DELETE api/<HRController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

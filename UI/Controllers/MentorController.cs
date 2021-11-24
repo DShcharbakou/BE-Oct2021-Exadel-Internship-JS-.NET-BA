@@ -43,11 +43,6 @@ namespace UI.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/<MentorController>
-        //[Route("api/mentor/candidates")]
-        //[Authorize(Roles = "admin, mentor")]
-
-
         [HttpGet("candidates")]
         [Authorize(Roles = "admin, mentor")]
         public async Task<List<CandidateDTO>> GetCandidates()
@@ -71,24 +66,6 @@ namespace UI.Controllers
             return formData;
         }
 
-        // POST api/<MentorController>
-        /*        [HttpGet("{id}")]
-                [Route("api/mentor/{id}/skills")]
-                public SkillDTO GetSkills(int id)
-                {
 
-                }*/
-
-        // PUT api/<MentorController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MentorController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

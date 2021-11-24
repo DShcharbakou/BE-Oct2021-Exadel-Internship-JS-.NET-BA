@@ -44,8 +44,11 @@ namespace UI.Controllers
         }
 
         // GET: api/<MentorController>
-        [HttpGet]
         //[Route("api/mentor/candidates")]
+        //[Authorize(Roles = "admin, mentor")]
+
+
+        [HttpGet("candidates")]
         [Authorize(Roles = "admin, mentor")]
         public async Task<List<CandidateDTO>> GetCandidates()
         {
@@ -57,10 +60,8 @@ namespace UI.Controllers
         }
 
         // GET api/<MentorController>/5
-
-        [HttpGet("{id}")]
-        //[Route("api/mentor/{id}")]
-        public CandidateForMentorDTO GetFormData(int id)
+        [HttpGet("{id}/form")]
+        public CandidateForMentorDTO GetForm(int id)
         {
             var candidate = _candidateService.GetCandidateById(id);
             var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
@@ -71,11 +72,12 @@ namespace UI.Controllers
         }
 
         // POST api/<MentorController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+        /*        [HttpGet("{id}")]
+                [Route("api/mentor/{id}/skills")]
+                public SkillDTO GetSkills(int id)
+                {
 
-        }
+                }*/
 
         // PUT api/<MentorController>/5
         [HttpPut("{id}")]

@@ -1,6 +1,7 @@
-﻿using DAL.Repositories;
-using DAL;
-using Microsoft.AspNetCore.Identity;
+﻿using BLL.DTO;
+using BLL.Interfaces;
+using DAL.Models;
+using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -11,153 +12,106 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public static class StartupSeedExtension
+    public static class SeedExtension
     {
-        public static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
+        public static IHost SeedData(this IHost server)
         {
-            foreach (var role in Enum.GetValues(typeof(UserRoles)))
+            using (var serviceScope = server.Services.CreateScope())
             {
-                if (!await roleManager.RoleExistsAsync(role.ToString()))
-                {
-                    await roleManager.CreateAsync(new IdentityRole(role.ToString()));
-                }
+                SetDefaultSpecialization(serviceScope.ServiceProvider);
+                SetDefaultCandidate(serviceScope.ServiceProvider);
             }
+
+            return server;
         }
 
-        public static void SeedUsers(UserManager<User> userManager)
+        private static void SetDefaultSpecialization(IServiceProvider services)
         {
-            List<User> users = new List<User>() { };
+            var unitOfWork = services.GetService<IUnitOfWork>();
 
-            User admin = new User
+            var dotNetSpecialization = new Specialization()
             {
-                UserName = "admin@exadel.com",
-                Email = "admin@exadel.com",
-                FirstName = "Admin",
-                LastName = "Admin",
-                Password = "Admin1!"
+                Name = "dotnet",
             };
-            users.Add(admin);
+            unitOfWork.Specializations.Save(dotNetSpecialization);
 
-            User recruiterVasya = new User
+            var javaScriptSpecialization = new Specialization()
             {
-                UserName = "recruiterVasya@exadel.com",
-                Email = "recruiterVasya@exadel.com",
-                FirstName = "Vasya",
-                LastName = "Vasylyev",
-                Password = "RecruiterVasya1!"
+                Name = "javascript",
             };
-            users.Add(recruiterVasya);
+            unitOfWork.Specializations.Save(javaScriptSpecialization);
 
-            User recruiterPetya = new User
+            var usinessAnalystaSpecialization = new Specialization()
             {
-                UserName = "recruiterPetya@exadel.com",
-                Email = "recruiterPetya@exadel.com",
-                FirstName = "Petya",
-                LastName = "Petrov",
-                Password = "RecruiterPetya1!"
+                Name = "businessanalyst",
             };
-            users.Add(recruiterPetya);
+            unitOfWork.Specializations.Save(usinessAnalystaSpecialization);
+        }
 
-            User managerLesha = new User
+        //private static Specialization GetSpecialization(string name, IServiceProvider services)
+        //{
+        //    var unitOfWork = services.GetService<IUnitOfWork>();
+        //    unitOfWork.Specializations.Get
+        //    return 
+        //}
+
+        private static void SetDefaultCandidate(IServiceProvider services)
+        {
+            var candidateService = services.GetService<ICandidateService>();
+
+            //var idSpecialization = GetSpecialization("dotnet", services);
+
+            var firstCandidateDTO = new CandidateDTO()
             {
-                UserName = "managerLesha@exadel.com",
-                Email = "managerLesha@exadel.com",
-                FirstName = "Lesha",
-                LastName = "Leshov",
-                Password = "ManagerLesha1!"
+                FirstName = "Jack",
+                LastName = "Sparrow",
+                Email = "jacksparrow@test.com",
+                Phone = "+3751231230",
+                Skype = "jacksparrow",
+                SpecializationID = 1,
+                CityID = 3,
+                EnglishLevelID = 2,
             };
-            users.Add(managerLesha);
+            candidateService.AddCandidate(firstCandidateDTO);
 
-            User managerKatya = new User
+            var secondCandidateDTO = new CandidateDTO()
             {
-                UserName = "managerKatya@exadel.com",
-                Email = "managerKatya@exadel.com",
-                FirstName = "Katya",
-                LastName = "Kotova",
-                Password = "ManagerKatya1!"
+                FirstName = "Deyneris",
+                LastName = "Targarien",
+                Email = "deyneristargarien@test.com",
+                Phone = "+3570010209",
+                Skype = "deyneristargarien",
+                SpecializationID = 1,
+                CityID = 3,
+                EnglishLevelID = 2,
             };
-            users.Add(managerKatya);
+            candidateService.AddCandidate(secondCandidateDTO);
 
-            User interviewerDima = new User
+            var thirdCandidateDTO = new CandidateDTO()
             {
-                UserName = "interviewerDima@exadel.com",
-                Email = "interviewerDima@exadel.com",
-                FirstName = "Dima",
-                LastName = "Dimov",
-                Password = "InterviewerDima1!"
+                FirstName = "Klark",
+                LastName = "Kent",
+                Email = "klarkkent@test.com",
+                Phone = "80445677631",
+                Skype = "123456fghjk",
+                SpecializationID = 1,
+                CityID = 3,
+                EnglishLevelID = 2,
             };
-            users.Add(interviewerDima);
+            candidateService.AddCandidate(thirdCandidateDTO);
 
-            User interviewerKostya = new User
+            var fourthCandidateDTO = new CandidateDTO()
             {
-                UserName = "interviewerKostya@exadel.com",
-                Email = "interviewerKostya@exadel.com",
-                FirstName = "Kostya",
-                LastName = "Kostov",
-                Password = "InterviewerKostya1!"
+                FirstName = "Luke",
+                LastName = "Skywolker",
+                Email = "lukeskywolker@test.com",
+                Phone = "88001005001",
+                Skype = "lukskyoker",
+                SpecializationID = 1,
+                CityID = 3,
+                EnglishLevelID = 2,
             };
-            users.Add(interviewerKostya);
-
-            User mentorSasha = new User
-            {
-                UserName = "mentorSasha@exadel.com",
-                Email = "mentorSasha@exadel.com",
-                FirstName = "Sasha",
-                LastName = "Sashov",
-                Password = "MentorSasha1!"
-            };
-            users.Add(mentorSasha);
-
-            User mentorVadim = new User
-            {
-                UserName = "mentorVadim@exadel.com",
-                Email = "mentorVadim@exadel.com",
-                FirstName = "Vadim",
-                LastName = "Vodov",
-                Password = "MentorVadim1!"
-            };
-            users.Add(mentorVadim);
-
-            User supermentorKirill = new User
-            {
-                UserName = "supermentorKirill@exadel.com",
-                Email = "supermentorKirill@exadel.com",
-                FirstName = "Kirill",
-                LastName = "Kirillov",
-                Password = "SupermentorKirill1!"
-            };
-            users.Add(supermentorKirill);
-
-            User supermentorLena = new User
-            {
-                UserName = "supermentorLena@exadel.com",
-                Email = "supermentorLena@exadel.com",
-                FirstName = "Lena",
-                LastName = "Lenova",
-                Password = "SupermentorLena1!"
-            };
-            users.Add(supermentorLena);
-
-            foreach (var user in users)
-            {
-                if (userManager.FindByEmailAsync(user.Email).Result == null)
-                {
-                    IdentityResult resultCreating = userManager.CreateAsync(user, user.Password).Result;
-                    if (resultCreating.Succeeded) { continue; }
-                }
-            }
-
-            userManager.AddToRoleAsync(admin, UserRoles.admin.ToString()).Wait();
-            userManager.AddToRoleAsync(recruiterVasya, UserRoles.recruiter.ToString()).Wait();
-            userManager.AddToRoleAsync(recruiterPetya, UserRoles.recruiter.ToString()).Wait();
-            userManager.AddToRoleAsync(managerLesha, UserRoles.manager.ToString()).Wait();
-            userManager.AddToRoleAsync(managerKatya, UserRoles.manager.ToString()).Wait();
-            userManager.AddToRoleAsync(interviewerDima, UserRoles.interviewer.ToString()).Wait();
-            userManager.AddToRoleAsync(interviewerKostya, UserRoles.interviewer.ToString()).Wait();
-            userManager.AddToRoleAsync(mentorSasha, UserRoles.mentor.ToString()).Wait();
-            userManager.AddToRoleAsync(mentorVadim, UserRoles.mentor.ToString()).Wait();
-            userManager.AddToRoleAsync(supermentorKirill, UserRoles.supermentor.ToString()).Wait();
-            userManager.AddToRoleAsync(supermentorLena, UserRoles.supermentor.ToString()).Wait();
+            candidateService.AddCandidate(fourthCandidateDTO);
         }
     }
 }

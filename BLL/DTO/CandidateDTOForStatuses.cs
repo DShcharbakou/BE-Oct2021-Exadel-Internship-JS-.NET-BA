@@ -20,5 +20,8 @@ namespace BLL.DTO
             ID = id;
         }
 
+        public CandidateDTOForStatuses()
+        { }
+
     }
 }

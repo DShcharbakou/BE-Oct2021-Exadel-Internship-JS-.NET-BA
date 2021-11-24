@@ -86,17 +86,19 @@ namespace BLL.Services
 
         public CandidateDTOForStatuses SetStatusInformationForCandidate(int candidateId)
         {
-            var candidate = new CandidateDTOForStatuses(candidateId);
-            candidate.IsInterviewedByHR = this.IsIntervHR(candidateId);
-            candidate.IsInterviewedByTech = this.IsIntervTech(candidateId);
-            candidate.SandboxCount = this.GetCountOfSandboxes(candidateId);
-            candidate.Status = this.GetCandidateStatus(candidateId);
+            var candidate = new CandidateDTOForStatuses(candidateId)
+            {
+                IsInterviewedByHR = this.IsIntervHR(candidateId),
+                IsInterviewedByTech = this.IsIntervTech(candidateId),
+                SandboxCount = this.GetCountOfSandboxes(candidateId),
+                Status = this.GetCandidateStatus(candidateId)
+            };
             return candidate;
         }
 
         public List<CandidateDTOForStatuses> GetCandidatesWithStatuses(int? teamId)
         {
-            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidatesWithStatusesSpecification(teamId)).Select(x => new FullCandidateDTO() { ID = x.CandidateID, StatusID = x.StatusID, FirstName = x.Candidate.FirstName }).ToList();
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidatesWithStatusesSpecification(teamId)).Select(x => new CandidateDTOForStatuses() { ID = x.CandidateID, StatusID = x.StatusID, FirstName = x.Candidate.FirstName }).ToList();
 
         }
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)

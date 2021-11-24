@@ -65,7 +65,7 @@ namespace UI.Controllers
             var candidate = _candidateService.GetCandidateById(id);
             var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
             formData.Specialization = _specializationService.GetSpecializationById(candidate.ID);
-            formData.Location = _cityService.GetCityById(candidate.ID);
+            formData.Location = _cityService.GetLocationById(candidate.ID);
             formData.EnglishLevel = _englishLevelService.GetEnglishLevelById(candidate.ID);
             return formData;
         }

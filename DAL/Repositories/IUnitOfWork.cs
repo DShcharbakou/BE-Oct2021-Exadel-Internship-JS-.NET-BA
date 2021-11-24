@@ -17,11 +17,11 @@ namespace DAL.Repositories
         IBaseRepository<Specialization> Specializations { get; }
         IBaseRepository<EnglishLevel> EnglishLevels { get; }
         IBaseRepository<Country> Countries { get; }
+        IBaseRepository<State> States { get; }
         IBaseRepository<City> Cities { get; }
         IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
         IBaseRepository<Sandbox> Sandboxes { get; }
         IBaseRepository<Status> Statuses { get; }
-
 
         void Save();
     }

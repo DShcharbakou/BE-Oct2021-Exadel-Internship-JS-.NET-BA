@@ -19,6 +19,7 @@ namespace DAL.Repositories
         private IBaseRepository<Specialization> specializationRep;
         private IBaseRepository<EnglishLevel> englishLevelRep;
         private IBaseRepository<Country> countryRep;
+        private IBaseRepository<State> stateRep;
         private IBaseRepository<City> cityRep;
         private IBaseRepository<CandidateSandbox> candidateSandboxRep;
         private IBaseRepository<Sandbox> sandboxRep;
@@ -138,6 +139,18 @@ namespace DAL.Repositories
                     this.countryRep = new BaseRepository<Country>(internshipDbContext);
                 }
                 return countryRep;
+            }
+        }
+        public IBaseRepository<State> States
+        {
+            get
+            {
+
+                if (this.stateRep == null)
+                {
+                    this.stateRep = new BaseRepository<State>(internshipDbContext);
+                }
+                return stateRep;
             }
         }
         public IBaseRepository<City> Cities

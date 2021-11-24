@@ -8,6 +8,6 @@ namespace BLL.Interfaces
 {
     public interface ICityService
     {
-        string GetCityById(int id);
+        string GetLocationById(int id);
     }
 }

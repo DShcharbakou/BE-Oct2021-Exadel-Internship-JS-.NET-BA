@@ -21,6 +21,7 @@ namespace UI.Controllers
         private readonly ISpecializationService _specializationService;
         private readonly IEnglishLevelService _englishLevelService;
         private readonly ICityService _cityService;
+        private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
         public MentorController(ICandidateService candidateService,
@@ -29,6 +30,7 @@ namespace UI.Controllers
                                 IEmployeeService employeeService,
                                 IEnglishLevelService englishLevelService,
                                 ICityService cityService,
+                                IMapper mapper,
                                 UserManager<User> userManager)
         {
             _candidateService = candidateService;
@@ -38,6 +40,7 @@ namespace UI.Controllers
             _specializationService = specializationService;
             _englishLevelService = englishLevelService;
             _cityService = cityService;
+            _mapper = mapper;
         }
 
         // GET: api/<MentorController>
@@ -60,12 +63,7 @@ namespace UI.Controllers
         public CandidateForMentorDTO GetFormData(int id)
         {
             var candidate = _candidateService.GetCandidateById(id);
-            CandidateForMentorDTO formData = new();
-            formData.FirstName = candidate.FirstName;
-            formData.LastName = candidate.LastName;
-            formData.Email = candidate.Email;
-            formData.Phone = candidate.Phone;
-            formData.Skype = candidate.Skype;
+            var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
             formData.Specialization = _specializationService.GetSpecializationById(candidate.ID);
             formData.Location = _cityService.GetCityById(candidate.ID);
             formData.EnglishLevel = _englishLevelService.GetEnglishLevelById(candidate.ID);

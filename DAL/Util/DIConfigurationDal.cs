@@ -16,6 +16,8 @@ namespace DAL.Util
             services.AddScoped<IBaseRepository<Topic>, BaseRepository<Topic>>();
             services.AddScoped<IBaseRepository<Interview>, BaseRepository<Interview>>();
             services.AddScoped<IBaseRepository<Skill>, BaseRepository<Skill>>();
+            services.AddScoped<IBaseRepository<CandidateSandbox>, BaseRepository<CandidateSandbox>>();
+            services.AddScoped<IBaseRepository<Sandbox>, BaseRepository<Sandbox>>();
         }
     }
 }

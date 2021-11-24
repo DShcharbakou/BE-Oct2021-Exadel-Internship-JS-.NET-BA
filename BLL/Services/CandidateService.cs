@@ -5,6 +5,12 @@ using BLL.Interfaces;
 using BLL.DTO;
 using AutoMapper;
 using System.Linq;
+using System;
+using System.Collections;
+using System.Text.RegularExpressions;
+using DAL.Repositories.Specifications;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace BLL.Services
 {
@@ -12,6 +18,7 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork _db;
         private readonly IMapper _mapper;
+
         public CandidateService(IUnitOfWork db, IMapper mapper)
         {
             _db = db;
@@ -33,7 +40,7 @@ namespace BLL.Services
         }
 
         //Вернуть список данных из форм кандидатов
-        public IEnumerable<CandidateDTO> GetAllCandidates()
+        public List<CandidateDTO> GetAllCandidates()
         {
             return _mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
         }
@@ -41,6 +48,21 @@ namespace BLL.Services
         public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
+        }
+
+        public int GetCountOfSandboxes(int candidateID)
+        {
+            return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
+        }
+
+        public int GetCountOfInterviewes(int candidateID)
+        {
+            return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+        }
+
+        public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)
+        {
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));
         }
 
     }

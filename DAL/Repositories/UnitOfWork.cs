@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+
+
+using System;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 namespace DAL.Repositories
@@ -18,7 +21,10 @@ namespace DAL.Repositories
         private IBaseRepository<Country> countryRep;
         private IBaseRepository<State> stateRep;
         private IBaseRepository<City> cityRep;
-
+        private IBaseRepository<CandidateSandbox> candidateSandboxRep;
+        private IBaseRepository<Sandbox> sandboxRep;
+        private IBaseRepository<Status> statusRep;
+        
         public UnitOfWork(DbContextOptions options)
         {
             internshipDbContext = new InternshipDbContext(options);
@@ -38,7 +44,7 @@ namespace DAL.Repositories
                 return candidateRep;
             }
         }
-       
+
         public IBaseRepository<Employee> Employees
         {
             get
@@ -50,7 +56,7 @@ namespace DAL.Repositories
                 return employeeRep;
             }
         }
-        
+
         public IBaseRepository<InternshipTeam> InternshipTeams
         {
             get
@@ -74,7 +80,7 @@ namespace DAL.Repositories
                 return interviewRep;
             }
         }
-        
+
         public IBaseRepository<Skill> Skills
         {
             get
@@ -159,6 +165,46 @@ namespace DAL.Repositories
                 return cityRep;
             }
         }
+        public IBaseRepository<CandidateSandbox> CandidatesSandboxes
+        {
+            get
+            {
+
+                if (this.candidateSandboxRep == null)
+                {
+                    this.candidateSandboxRep = new BaseRepository<CandidateSandbox>(internshipDbContext);
+                }
+                return candidateSandboxRep;
+            }
+        }
+
+
+        public IBaseRepository<Sandbox> Sandboxes
+        {
+            get
+            {
+
+                if (this.sandboxRep == null)
+                {
+                    this.sandboxRep = new BaseRepository<Sandbox>(internshipDbContext);
+                }
+                return sandboxRep;
+            }
+        }
+
+        public IBaseRepository<Status> Statuses
+        {
+            get
+            {
+
+                if (this.statusRep == null)
+                {
+                    this.statusRep = new BaseRepository<Status>(internshipDbContext);
+                }
+                return statusRep;
+            }
+        }
+
 
         public void Save()
         {

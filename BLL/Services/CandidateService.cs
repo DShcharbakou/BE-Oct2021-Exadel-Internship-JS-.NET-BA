@@ -65,7 +65,7 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));
         }
 
-        public IEnumerable<CandidateDTO> FindCandidate(string textSearch)
+        public IEnumerable<CandidateDTO> FindCandidates(string textSearch)
         {
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesSearchByAdmin(textSearch)));
         }

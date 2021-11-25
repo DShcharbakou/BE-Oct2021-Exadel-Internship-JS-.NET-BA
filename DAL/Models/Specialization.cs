@@ -9,5 +9,6 @@ namespace DAL.Models
   public class Specialization : BaseModel
     {
         public string Name { get; set; }
+        public bool IsActive { get; set; }
     }
 }

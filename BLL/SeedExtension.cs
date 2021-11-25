@@ -32,18 +32,21 @@ namespace BLL
             var dotNetSpecialization = new Specialization()
             {
                 Name = "dotnet",
+                IsActive = false,
             };
             unitOfWork.Specializations.Save(dotNetSpecialization);
 
             var javaScriptSpecialization = new Specialization()
             {
                 Name = "javascript",
+                IsActive = false,
             };
             unitOfWork.Specializations.Save(javaScriptSpecialization);
 
             var usinessAnalystaSpecialization = new Specialization()
             {
                 Name = "businessanalyst",
+                IsActive = false,
             };
             unitOfWork.Specializations.Save(usinessAnalystaSpecialization);
         }

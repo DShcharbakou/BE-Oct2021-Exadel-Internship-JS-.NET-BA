@@ -20,9 +20,9 @@ namespace DAL.Repositories
             _dbSet = _internshipDbContext.Set<T>();
         }
 
-        public virtual List<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return _dbSet.ToList();
+            return _dbSet;
         }
 
         public virtual T Get(int id)
@@ -30,7 +30,7 @@ namespace DAL.Repositories
             return _dbSet.SingleOrDefault(x => x.Id == id);
         }
 
-        public virtual IEnumerable<T> FindWithSpecificationPattern(IBaseSpecifications<T> baseSpecifications = null)
+        public virtual IQueryable<T> FindWithSpecificationPattern(IBaseSpecifications<T> baseSpecifications = null)
         {
             return SpecificationEvaluator<T>.GetQuery(_internshipDbContext.Set<T>().AsQueryable(), baseSpecifications);
         }

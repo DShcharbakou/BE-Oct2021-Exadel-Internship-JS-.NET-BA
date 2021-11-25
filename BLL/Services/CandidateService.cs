@@ -41,17 +41,21 @@ namespace BLL.Services
 
         public List<CandidateDTO> GetAllCandidates()
         {
-            return GetCandidatesWithStatusesInformation();
+            var result = GetCandidatesWithStatusesInformation().ToList();
+            result.ForEach(x => x.SandboxCount = GetCountOfSandboxes(x.ID));
+            return result;
         }
 
         public List<CandidateDTO> GetAllCandidatesWithoutStatuses()
         {
-            return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
+            return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll().ToList());
         }
 
         public CandidateDTO GetCandidateById(int id)
         {
-            return GetCandidateWithStatusesInformation(id);
+            var result = GetCandidatesWithStatusesInformation().FirstOrDefault(x => x.ID == id);
+            result.SandboxCount = GetCountOfSandboxes(result.ID);
+            return result;
         }
         public CandidateDTO GetCandidateByIdWithoutStatuses(int id)
         {
@@ -60,53 +64,32 @@ namespace BLL.Services
 
         private int GetCountOfSandboxes(int candidateID)
         {
-            return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
+            return _db.CandidatesSandboxes.GetAll().Where(x => x.CandidateID == candidateID).Count();
         }
+
         private int GetCountOfInterviewes(int candidateID)
           {
               return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
           }
 
-        public List<CandidateDTO> GetCandidatesWithStatusesInformation()
+        private IQueryable<CandidateDTO> GetCandidatesWithStatusesInformation()
         {
-            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification(null)).GroupBy(x => new { x.CandidateID, x.StatusID })
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
                 .Select(x => new CandidateDTO
                 {
-                    ID = x.Key.CandidateID,
-                    Status = x.First().Status.Name,
-                    FirstName = x.First().Candidate.FirstName,
-                    LastName = x.First().Candidate.LastName,
-                    Email = x.First().Candidate.Email,
-                    Phone = x.First().Candidate.Phone,
-                    Skype = x.First().Candidate.Skype,
-                    SpecializationID = x.First().Candidate.SpecializationID,
-                    CityID = x.First().Candidate.CityID,
-                    EnglishLevelID = x.First().Candidate.EnglishLevelID,
-                    IsInterviewedByHR = x.First().Candidate.Interviews.Count() > 0,
-                    IsInterviewedByTech = x.First().Candidate.Interviews.Count() > 1,
-                    SandboxCount = x.Count(),
-                }).ToList();
-        }
-
-        public CandidateDTO GetCandidateWithStatusesInformation(int candidateId)
-        {
-            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification(candidateId)).GroupBy(x => new { x.CandidateID, x.StatusID })
-                .Select(x => new CandidateDTO
-                {
-                    ID = x.Key.CandidateID,
-                    Status = x.First().Status.Name,
-                    FirstName = x.First().Candidate.FirstName,
-                    LastName = x.First().Candidate.LastName,
-                    Email = x.First().Candidate.Email,
-                    Phone = x.First().Candidate.Phone,
-                    Skype = x.First().Candidate.Skype,
-                    SpecializationID = x.First().Candidate.SpecializationID,
-                    CityID = x.First().Candidate.CityID,
-                    EnglishLevelID = x.First().Candidate.EnglishLevelID,
-                    IsInterviewedByHR = x.First().Candidate.Interviews.Count() > 0,
-                    IsInterviewedByTech = x.First().Candidate.Interviews.Count() > 1,
-                    SandboxCount = x.Count(),
-                }).FirstOrDefault();
+                    ID = x.CandidateID,
+                    Status = x.Status.Name,
+                    FirstName = x.Candidate.FirstName,
+                    LastName = x.Candidate.LastName,
+                    Email = x.Candidate.Email,
+                    Phone = x.Candidate.Phone,
+                    Skype = x.Candidate.Skype,
+                    SpecializationID = x.Candidate.SpecializationID,
+                    CityID = x.Candidate.CityID,
+                    EnglishLevelID = x.Candidate.EnglishLevelID,
+                    IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
+                });
         }
 
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)

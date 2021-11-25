@@ -19,13 +19,10 @@ namespace BLL.Services
 
         public string GetLocationById(int id)
         {
-            var city = _db.Cities.Get(id).CityName;
-            var stateId = _db.Cities.Get(id).State_Id;
-            var state = _db.States.Get(stateId).StateName;
-            var countryId = _db.States.Get(stateId).Country_Id;
-            var country = _db.Countries.Get(countryId).CountryName;
-            string location = $"{country}, {state}, {city}";
-            return location;
+            var city = _db.Cities.Get(id);
+            var state = _db.States.Get(city.State_Id);
+            var country = _db.Countries.Get(state.Country_Id);
+            return $"{country.CountryName}, {state.StateName}, {city.CityName}";
         }
     }
 }

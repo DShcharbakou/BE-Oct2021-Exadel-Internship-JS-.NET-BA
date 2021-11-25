@@ -58,11 +58,11 @@ namespace BLL.Services
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
 
-        public int GetCountOfSandboxes(int candidateID)
+        private int GetCountOfSandboxes(int candidateID)
         {
             return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
         }
-        public int GetCountOfInterviewes(int candidateID)
+        private int GetCountOfInterviewes(int candidateID)
           {
               return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
           }
@@ -90,7 +90,7 @@ namespace BLL.Services
 
         public CandidateDTO GetCandidateWithStatusesInformation(int candidateId)
         {
-            CandidateDTO result = _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification(candidateId)).GroupBy(x => new { x.CandidateID, x.StatusID })
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification(candidateId)).GroupBy(x => new { x.CandidateID, x.StatusID })
                 .Select(x => new CandidateDTO
                 {
                     ID = x.Key.CandidateID,
@@ -107,7 +107,6 @@ namespace BLL.Services
                     IsInterviewedByTech = x.First().Candidate.Interviews.Count() > 1,
                     SandboxCount = x.Count(),
                 }).FirstOrDefault();
-            return result;
         }
 
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)

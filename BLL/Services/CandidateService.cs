@@ -39,25 +39,57 @@ namespace BLL.Services
             _db.Save();
         }
 
-        //Вернуть список данных из форм кандидатов
-        public List<CandidateDTO> GetAllCandidates()
+        public List<CandidateDTO> GetAllCandidatesWithStatuses()
         {
-            return _mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
+            var result = GetCandidatesWithStatusesInformation().ToList();
+            result.ForEach(x => x.SandboxCount = GetCountOfSandboxes(x.ID));
+            return result;
         }
 
+        public List<CandidateDTO> GetAllCandidates()
+        {
+            return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll().ToList());
+        }
+
+        public CandidateDTO GetCandidateByIdWithStatuses(int id)
+        {
+            var result = GetCandidatesWithStatusesInformation().FirstOrDefault(x => x.ID == id);
+            result.SandboxCount = GetCountOfSandboxes(result.ID);
+            return result;
+        }
         public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
 
-        public int GetCountOfSandboxes(int candidateID)
+        private int GetCountOfSandboxes(int candidateID)
         {
-            return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
+            return _db.CandidatesSandboxes.GetAll().Where(x => x.CandidateID == candidateID).Count();
         }
 
-        public int GetCountOfInterviewes(int candidateID)
+        private int GetCountOfInterviewes(int candidateID)
+          {
+              return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+          }
+
+        private IQueryable<CandidateDTO> GetCandidatesWithStatusesInformation()
         {
-            return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
+                .Select(x => new CandidateDTO
+                {
+                    ID = x.CandidateID,
+                    Status = x.Status.Name,
+                    FirstName = x.Candidate.FirstName,
+                    LastName = x.Candidate.LastName,
+                    Email = x.Candidate.Email,
+                    Phone = x.Candidate.Phone,
+                    Skype = x.Candidate.Skype,
+                    SpecializationID = x.Candidate.SpecializationID,
+                    CityID = x.Candidate.CityID,
+                    EnglishLevelID = x.Candidate.EnglishLevelID,
+                    IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
+                });
         }
 
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)
@@ -65,5 +97,9 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));
         }
 
+        public IEnumerable<CandidateDTO> FindCandidates(string textSearch)
+        {
+            return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesSearchByAdmin(textSearch)));
+        }
     }
 }

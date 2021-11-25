@@ -27,18 +27,18 @@ namespace UI.Controllers
         }
 
         // GET: api/<HRController>
-        [HttpGet]
+        [HttpGet("Get All Candidates")]
         public List<CandidateDTO> Get()
         {
-            return candidateService.GetAllCandidates();
-            //should write methods(?) which will add data from queries
+            return candidateService.GetAllCandidatesWithStatuses();
+           
         }
 
         // GET api/<HRController>/5
         [HttpGet("ID")]
         public CandidateDTO Get(int id)
         {
-            return candidateService.GetCandidateById(id);
+            return candidateService.GetCandidateByIdWithStatuses(id);
         }
 
         /*
@@ -71,10 +71,5 @@ namespace UI.Controllers
         {
         }
 
-        // DELETE api/<HRController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

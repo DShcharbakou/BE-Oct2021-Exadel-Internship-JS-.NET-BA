@@ -27,7 +27,7 @@ namespace UI.Controllers
         }
 
         // GET: api/<HRController>
-        [HttpGet]
+        [HttpGet("Get All Candidates")]
         public List<CandidateDTO> Get()
         {
             return candidateService.GetAllCandidates();

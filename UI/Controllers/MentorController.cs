@@ -54,8 +54,8 @@ namespace UI.Controllers
             return candidates.ToList();
         }
 
-        // GET api/<MentorController>/5
         [HttpGet("{id}/form")]
+        [Authorize(Roles = "admin, mentor")]
         public CandidateForMentorDTO GetForm(int id)
         {
             var candidate = _candidateService.GetCandidateById(id);

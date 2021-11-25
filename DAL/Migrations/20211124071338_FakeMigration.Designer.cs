@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211124071338_FakeMigration")]
+    partial class FakeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,7 +269,7 @@ namespace DAL.Migrations
                     b.Property<int>("InterviewID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillID")
+                    b.Property<int>("TopicID")
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
@@ -276,9 +278,9 @@ namespace DAL.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.HasKey("InterviewID", "SkillID");
+                    b.HasKey("InterviewID", "TopicID");
 
-                    b.HasIndex("SkillID");
+                    b.HasIndex("TopicID");
 
                     b.ToTable("SkillKnowledges");
                 });
@@ -680,15 +682,15 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Skill", "Skill")
+                    b.HasOne("DAL.Models.Topic", "Topic")
                         .WithMany("SkillKnowledges")
-                        .HasForeignKey("SkillID")
+                        .HasForeignKey("TopicID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Interview");
 
-                    b.Navigation("Skill");
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("DAL.Models.State", b =>
@@ -857,8 +859,6 @@ namespace DAL.Migrations
                 {
                     b.Navigation("EmployeeSkills");
 
-                    b.Navigation("SkillKnowledges");
-
                     b.Navigation("TopicSkills");
                 });
 
@@ -874,6 +874,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Topic", b =>
                 {
+                    b.Navigation("SkillKnowledges");
+
                     b.Navigation("TopicSkills");
                 });
 #pragma warning restore 612, 618

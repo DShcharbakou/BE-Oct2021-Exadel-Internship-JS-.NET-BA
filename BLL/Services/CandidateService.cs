@@ -39,25 +39,25 @@ namespace BLL.Services
             _db.Save();
         }
 
-        public List<CandidateDTO> GetAllCandidates()
+        public List<CandidateDTO> GetAllCandidatesWithStatuses()
         {
             var result = GetCandidatesWithStatusesInformation().ToList();
             result.ForEach(x => x.SandboxCount = GetCountOfSandboxes(x.ID));
             return result;
         }
 
-        public List<CandidateDTO> GetAllCandidatesWithoutStatuses()
+        public List<CandidateDTO> GetAllCandidates()
         {
             return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll().ToList());
         }
 
-        public CandidateDTO GetCandidateById(int id)
+        public CandidateDTO GetCandidateByIdWithStatuses(int id)
         {
             var result = GetCandidatesWithStatusesInformation().FirstOrDefault(x => x.ID == id);
             result.SandboxCount = GetCountOfSandboxes(result.ID);
             return result;
         }
-        public CandidateDTO GetCandidateByIdWithoutStatuses(int id)
+        public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }

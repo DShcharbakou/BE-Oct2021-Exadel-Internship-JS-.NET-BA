@@ -30,7 +30,7 @@ namespace UI.Controllers
         [HttpGet("Get All Candidates")]
         public List<CandidateDTO> Get()
         {
-            return candidateService.GetAllCandidates();
+            return candidateService.GetAllCandidatesWithStatuses();
            
         }
 
@@ -38,7 +38,7 @@ namespace UI.Controllers
         [HttpGet("ID")]
         public CandidateDTO Get(int id)
         {
-            return candidateService.GetCandidateById(id);
+            return candidateService.GetCandidateByIdWithStatuses(id);
         }
 
         /*

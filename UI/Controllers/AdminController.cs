@@ -34,7 +34,7 @@ namespace UI.Controllers
         [HttpPost("SearchCandidates")]
         public IEnumerable<CandidateDTO> SerchCandidate([FromBody] string searchText)
         {
-            return _candidateService.FindCandidate(searchText);
+            return _candidateService.FindCandidates(searchText);
         }
 
         [HttpPost("addingUser")]

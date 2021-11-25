@@ -10,7 +10,7 @@ namespace BLL
         admin,
         recruiter,
         manager,
-        interviewer,
+        techInterviewer,
         mentor,
         supermentor
     }

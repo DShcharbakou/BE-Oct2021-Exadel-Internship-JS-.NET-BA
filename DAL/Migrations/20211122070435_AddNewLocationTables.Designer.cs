@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211122070435_AddNewLocationTables")]
+    partial class AddNewLocationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,8 +37,14 @@ namespace DAL.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Skype")
                         .HasColumnType("nvarchar(max)");
@@ -98,10 +106,10 @@ namespace DAL.Migrations
                     b.Property<int>("CandidateID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SandboxID")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("StatusID")
+                    b.Property<int>("SandboxID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -109,8 +117,6 @@ namespace DAL.Migrations
                     b.HasIndex("CandidateID");
 
                     b.HasIndex("SandboxID");
-
-                    b.HasIndex("StatusID");
 
                     b.ToTable("CandidatesSandboxes");
                 });
@@ -316,21 +322,6 @@ namespace DAL.Migrations
                     b.HasIndex("Country_Id");
 
                     b.ToTable("States");
-                });
-
-            modelBuilder.Entity("DAL.Models.Status", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("DAL.Models.TeamMentor", b =>
@@ -610,17 +601,9 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Status", "Status")
-                        .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Candidate");
 
                     b.Navigation("Sandbox");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("DAL.Models.City", b =>
@@ -863,11 +846,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.State", b =>
                 {
                     b.Navigation("Cities");
-                });
-
-            modelBuilder.Entity("DAL.Models.Status", b =>
-                {
-                    b.Navigation("CandidateSandboxes");
                 });
 
             modelBuilder.Entity("DAL.Models.Topic", b =>

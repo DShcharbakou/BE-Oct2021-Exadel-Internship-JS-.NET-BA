@@ -4,6 +4,8 @@ using BLL.Interfaces;
 using BLL.DTO;
 using AutoMapper;
 using DAL.Models;
+using DAL.Repositories.Specifications;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -39,6 +41,11 @@ namespace BLL.Services
         public IEnumerable<InternshipTeamDTO> GetList()
         {
             return _mapper.Map<IEnumerable<InternshipTeam>, List<InternshipTeamDTO>>(_db.InternshipTeams.GetAll());
+        }
+
+        public InternshipTeamDTO GetInternshipTeamByEmployeeId(int employeeid)
+        {
+            return _mapper.Map<InternshipTeam, InternshipTeamDTO>(_db.InternshipTeams.FindWithSpecificationPattern(new InternshipSpecification(employeeid)).LastOrDefault());
         }
     }
 }

@@ -10,7 +10,6 @@ namespace BLL.Interfaces
         CandidateDTO GetCandidateById(int id);
         void AddCandidate(CandidateDTO formData);
         void DeleteCandidate(int id);
-        IEnumerable<CandidateDTO> GetCandidatesFromTeam();
-        IEnumerable<CandidateDTO> FindCandidate(string textSearch);
+        IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId);
     }
 }

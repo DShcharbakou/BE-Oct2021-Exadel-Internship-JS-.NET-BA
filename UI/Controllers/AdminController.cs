@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using Microsoft.Extensions.Caching.Memory;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using BLL.DTO;
 
 namespace UI.Controllers
 {
@@ -22,9 +23,18 @@ namespace UI.Controllers
     public class AdminController : Controller
     {
         private IUserService _userService;
-        public AdminController(IUserService UserService)
+        private ICandidateService _candidateService;
+
+        public AdminController(IUserService UserService, ICandidateService candidateService)
         {
             _userService = UserService;
+            _candidateService = candidateService;
+        }
+
+        [HttpPost("SearchCandidates")]
+        public IEnumerable<CandidateDTO> SerchCandidate([FromBody] string searchText)
+        {
+            return _candidateService.FindCandidate(searchText);
         }
 
         [HttpPost("addingUser")]

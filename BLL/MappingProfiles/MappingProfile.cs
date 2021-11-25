@@ -14,10 +14,9 @@ namespace BLL.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<Candidate, CandidateDTO>()
-                .ForMember(cd => cd.ID, cd => cd.MapFrom(cd => cd.Id));
-            CreateMap<CandidateDTOForStatuses, CandidateDTO>();
-
+            CreateMap<Candidate, CandidateDTO>();
+              /*  .ForMember(cd => cd.ID,
+                 cd => cd.MapFrom(cd => cd.Id);*/
             CreateMap<CandidateDTO, Candidate>();
 
 

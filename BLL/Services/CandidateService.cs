@@ -41,11 +41,19 @@ namespace BLL.Services
 
         public List<CandidateDTO> GetAllCandidates()
         {
-           // var result = _mapper.Map(SetStatusInformationForCandidate(), _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.GetAll()));
-            return _mapper.Map<IEnumerable<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
+            return GetCandidatesWithStatusesInformation();
+        }
+
+        public List<CandidateDTO> GetAllCandidatesWithoutStatuses()
+        {
+            return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll());
         }
 
         public CandidateDTO GetCandidateById(int id)
+        {
+            return GetCandidateWithStatusesInformation(id);
+        }
+        public CandidateDTO GetCandidateByIdWithoutStatuses(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
@@ -54,53 +62,54 @@ namespace BLL.Services
         {
             return _db.Candidates.Get(candidateID).CandidateSandboxes.Count();
         }
-
-        public bool IsIntervHR(int id)
-        {
-            if (this.GetCountOfInterviewes(id) >= 1)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool IsIntervTech(int id)
-        {
-            if (this.GetCountOfInterviewes(id) >= 2)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public string GetCandidateStatus(int candidateId)
-        {
-            var statuses = _db.Statuses.FindWithSpecificationPattern(new StatusForCandidateSpecification(candidateId));
-            return statuses.FirstOrDefault().Name;
-        }
-
         public int GetCountOfInterviewes(int candidateID)
+          {
+              return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+          }
+
+        public List<CandidateDTO> GetCandidatesWithStatusesInformation()
         {
-            return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification(null)).GroupBy(x => new { x.CandidateID, x.StatusID })
+                .Select(x => new CandidateDTO
+                {
+                    ID = x.Key.CandidateID,
+                    Status = x.First().Status.Name,
+                    FirstName = x.First().Candidate.FirstName,
+                    LastName = x.First().Candidate.LastName,
+                    Email = x.First().Candidate.Email,
+                    Phone = x.First().Candidate.Phone,
+                    Skype = x.First().Candidate.Skype,
+                    SpecializationID = x.First().Candidate.SpecializationID,
+                    CityID = x.First().Candidate.CityID,
+                    EnglishLevelID = x.First().Candidate.EnglishLevelID,
+                    IsInterviewedByHR = x.First().Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.First().Candidate.Interviews.Count() > 1,
+                    SandboxCount = x.Count(),
+                }).ToList();
         }
 
-        public CandidateDTOForStatuses SetStatusInformationForCandidate(int candidateId)
+        public CandidateDTO GetCandidateWithStatusesInformation(int candidateId)
         {
-            var candidate = new CandidateDTOForStatuses(candidateId)
-            {
-                IsInterviewedByHR = this.IsIntervHR(candidateId),
-                IsInterviewedByTech = this.IsIntervTech(candidateId),
-                SandboxCount = this.GetCountOfSandboxes(candidateId),
-                Status = this.GetCandidateStatus(candidateId)
-            };
-            return candidate;
+            CandidateDTO result = _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification(candidateId)).GroupBy(x => new { x.CandidateID, x.StatusID })
+                .Select(x => new CandidateDTO
+                {
+                    ID = x.Key.CandidateID,
+                    Status = x.First().Status.Name,
+                    FirstName = x.First().Candidate.FirstName,
+                    LastName = x.First().Candidate.LastName,
+                    Email = x.First().Candidate.Email,
+                    Phone = x.First().Candidate.Phone,
+                    Skype = x.First().Candidate.Skype,
+                    SpecializationID = x.First().Candidate.SpecializationID,
+                    CityID = x.First().Candidate.CityID,
+                    EnglishLevelID = x.First().Candidate.EnglishLevelID,
+                    IsInterviewedByHR = x.First().Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.First().Candidate.Interviews.Count() > 1,
+                    SandboxCount = x.Count(),
+                }).FirstOrDefault();
+            return result;
         }
 
-        public List<CandidateDTOForStatuses> GetCandidatesWithStatuses(int? teamId)
-        {
-            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidatesWithStatusesSpecification(teamId)).Select(x => new CandidateDTOForStatuses() { ID = x.CandidateID, StatusID = x.StatusID, FirstName = x.Candidate.FirstName }).ToList();
-
-        }
         public IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId)
         {
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesForMentorSpecification(teamId)));

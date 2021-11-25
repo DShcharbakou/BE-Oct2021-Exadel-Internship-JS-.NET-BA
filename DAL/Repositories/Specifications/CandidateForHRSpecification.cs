@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Specifications
 {
-   public class CandidateForHRSpecification : BaseSpecifications<Candidate>
+   public class CandidateForHRSpecification : BaseSpecifications<CandidateSandbox>
     {
-        public CandidateForHRSpecification() : base()
+        public CandidateForHRSpecification(int? candidateId) : base()
         {
-            AddInclude(x => x.CandidateSandboxes);
-            //filtration by current sandbox
-            SetFilterCondition(x => x.CandidateSandboxes.Where(y => y.Sandbox.StartDate <= DateTime.UtcNow && y.Sandbox.EndDate >= DateTime.UtcNow).Select(x => x.Id).Contains(x.Id));
-            
+                AddInclude(x => x.Candidate);
+                AddInclude(x => x.Candidate.Interviews);
+                AddInclude(x => x.Status);
+                AddInclude(x => x.Sandbox);
+                SetFilterCondition(x => x.Sandbox.StartDate <= DateTime.UtcNow && x.Sandbox.EndDate >= DateTime.UtcNow);
+            if (candidateId.HasValue)
+            {
+                SetFilterCondition(x => x.CandidateID == candidateId);
+            }
         }
-    }
+
+   }
 }
+    

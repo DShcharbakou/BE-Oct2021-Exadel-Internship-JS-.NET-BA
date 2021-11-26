@@ -13,11 +13,11 @@ namespace DAL.Configurations
                 .WithMany(x => x.SkillKnowledges)
                 .HasForeignKey(x => x.InterviewID);
 
-            builder.HasOne(x => x.Topic)
+            builder.HasOne(x => x.Skill)
                 .WithMany(x => x.SkillKnowledges)
-                .HasForeignKey( x => x.TopicID);
+                .HasForeignKey( x => x.SkillID);
 
-            builder.HasKey(x => new { x.InterviewID, x.TopicID });
+            builder.HasKey(x => new { x.InterviewID, x.SkillID });
         }
     }
 }

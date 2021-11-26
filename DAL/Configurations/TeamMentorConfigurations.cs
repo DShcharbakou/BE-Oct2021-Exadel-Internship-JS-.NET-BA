@@ -12,7 +12,7 @@ namespace DAL.Configurations
         {
             builder.HasOne(x => x.InternshipTeam)
                 .WithMany(x => x.TeamMentors)
-                .HasForeignKey(x => x.EmployeeID);
+                .HasForeignKey(x => x.TeamID);
 
             builder.HasOne(x => x.Employee)
                 .WithMany(x => x.TeamMentors)

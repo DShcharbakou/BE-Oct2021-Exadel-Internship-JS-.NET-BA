@@ -15,6 +15,24 @@ namespace UI.Controllers
     [ApiController]
     public class MentorController : ControllerBase
     {
-       
+        private readonly ICandidateService _candidateService;
+        private readonly IMapper _mapper;
+        private readonly ISkillService _skillService;
+        public MentorController(ICandidateService candidateService, ISkillService skillService, IMapper mapper)
+        {
+            _candidateService = candidateService;
+            _skillService = skillService;
+            _mapper = mapper;
+        }
+
+        //[Authorize(Roles = "admin, mentor")]
+        [HttpGet("{id}/GetSkills")]
+        public List<SkillDTO> GetSkills(int id)
+        {
+            var candidate = _candidateService.GetCandidateById(id);
+            var skills = _skillService.GetListWithSpec(candidate.ID);
+            return skills;
+        }
+
     }
 }

@@ -55,7 +55,7 @@ namespace BLL.Services
                 foreach (var skill in interviewDb.SkillKnowledges)
                 {
                     SkillDTO skillDTO = new SkillDTO();
-                    skillDTO.Description = _db.Skills.Get(skill.SkillID).Description.ToString(); //skill.Skill.Description;
+                    skillDTO.Description = _db.Skills.Get(skill.SkillID).Description.ToString();
                     skillDTO.Level = skill.Level;
                     skillDTO.Comments = skill.Comment; 
                     skillList.Add(skillDTO);

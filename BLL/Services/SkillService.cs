@@ -3,6 +3,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Models;
 using DAL.Repositories;
+using DAL.Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,26 @@ namespace BLL.Services
         {
             return _mapper.Map<Skill, SkillDTO>(_db.Skills.Get(id));
         }
+
+        public List<SkillDTO> GetListWithSpec(int candidateId)
+        {
+            var candidate = _db.Candidates.FindWithSpecificationPattern(new CandidateInterviewsSpecification()).FirstOrDefault(x => x.Id == candidateId);
+            List<SkillDTO> skillList = new List<SkillDTO>();
+            foreach (var interview in candidate.Interviews)
+            {
+                var interviewDb = _db.Interviews.FindWithSpecificationPattern(new InterviewsLevelsSpecification()).FirstOrDefault(x => x.Id == interview.Id);
+                foreach (var skill in interviewDb.SkillKnowledges)
+                {
+                    SkillDTO skillDTO = new SkillDTO();
+                    skillDTO.Description = _db.Skills.Get(skill.SkillID).Description.ToString();
+                    skillDTO.Level = skill.Level;
+                    skillDTO.Comments = skill.Comment; 
+                    skillList.Add(skillDTO);
+                }
+            }
+            return skillList;
+        }
+
+        
     }
 }

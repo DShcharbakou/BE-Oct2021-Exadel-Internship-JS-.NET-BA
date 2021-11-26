@@ -45,12 +45,12 @@ namespace UI.Controllers
 
         [HttpGet("candidates")]
         [Authorize(Roles = "admin, mentor")]
-        public async Task<List<CandidateDTO>> GetCandidates()
+        public async Task<IEnumerable<CandidateDTO>> GetCandidates()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var employee = _employeeService.GetEmployeeByEmail(user.Email);
             var currentTeam = _internshipTeamService.GetInternshipTeamByEmployeeId(employee.Id);
-            var candidates = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
+            IEnumerable<CandidateDTO> candidates = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
             return candidates.ToList();
         }
 

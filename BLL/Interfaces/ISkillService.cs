@@ -13,5 +13,6 @@ namespace BLL.Interfaces
         SkillDTO GetStackById(int id);
         void AddSkill(SkillDTO stackDto);
         void DeleteSkill(int id);
+        List<SkillDTO> GetListWithSpec(int candidateId);
     }
 }

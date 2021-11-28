@@ -9,5 +9,7 @@ namespace BLL.DTO
     public class SkillDTO
     {
         public string Description { get; set; }
+        public int Level { get; set; }
+        public string Comments { get; set; }
     }
 }

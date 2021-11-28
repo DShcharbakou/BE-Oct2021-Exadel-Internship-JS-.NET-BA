@@ -13,5 +13,6 @@ namespace DAL.Models
 
         public ICollection<EmployeeSkill> EmployeeSkills { get; set; }
         public ICollection<TopicSkill> TopicSkills { get; set; }
+        public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
     }
 }

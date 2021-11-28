@@ -40,28 +40,16 @@ namespace UI.Controllers
             return candidateService.GetCandidateByIdWithStatuses(id);
         }
 
-        /*
-
-         // GET api/<HRController>/5
-         [HttpGet("{SpecializationId}")]
-         public string Get(int id)
-         {
-
-             return "value";
-         }
-        
-          // GET api/<HRController>/decline
-          [HttpGet("{Status}")] //тоже должен вернуть по идее список кандидатов
-          public string Get(string status)
-          {
-              return "value";
-          }
-        */
-
         // POST api/<HRController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("InterviewResults")]
+        public void Post([FromBody] HRInterviewDTO hrInterviewDTO)
         {
+
+        }
+        [HttpPost("InterviewResultsWithDeclineStatus")]
+        public void Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
+        {
+
         }
 
         // PUT api/<HRController>/5

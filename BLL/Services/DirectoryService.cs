@@ -39,7 +39,8 @@ namespace BLL.Services
 
         public List<EnglishLevelDTO> GetAllEnglishLevels()
         {
-            return _mapper.Map<List<EnglishLevel>, List<EnglishLevelDTO>>(_db.EnglishLevels.GetAll().ToList());
+            var t = _db.EnglishLevels.GetAll().ToList();
+            return _mapper.Map<List<EnglishLevel>, List<EnglishLevelDTO>>(t);
         }
 
         public SkillDirectoryDTO GetSkillById(int skillId)

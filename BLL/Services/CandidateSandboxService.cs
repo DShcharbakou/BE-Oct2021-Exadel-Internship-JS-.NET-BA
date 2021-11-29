@@ -27,13 +27,6 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<CandidateSandbox>, IEnumerable <CandidateSandboxDTO>>(_db.CandidatesSandboxes.GetAll());
         }
 
-       /* public void AddCandidateSandbox(CandidateSandboxDTO candidateSandboxDTO)
-        {
-            var candidateSandbox = _mapper.Map<CandidateSandbox>(candidateSandboxDTO);
-            _db.CandidatesSandboxes.Save(candidateSandbox);
-            _db.Save();
-        }*/
-
         public CandidateSandboxDTO GetCandidateSandboxById(int id)
         {
             return _mapper.Map<CandidateSandbox, CandidateSandboxDTO>(_db.CandidatesSandboxes.Get(id));
@@ -41,7 +34,6 @@ namespace BLL.Services
 
         public void AddGradeAndComment(CandidateSandboxDTO dto)
         {
-            //var candidateSandbox = _db.CandidatesSandboxes.GetAll().Where(x => x.CandidateID == dto.CandidateID && (x.Sandbox.StartDate <= DateTimeOffset.UtcNow && x.Sandbox.EndDate >= DateTimeOffset.UtcNow)).FirstOrDefault();
             var candidateSandbox = _db.CandidatesSandboxes.GetAll().Where(x => x.CandidateID == dto.CandidateID).FirstOrDefault();
             candidateSandbox.CandidateID = dto.CandidateID;
             candidateSandbox.Comment = dto.Comment;
@@ -49,7 +41,5 @@ namespace BLL.Services
             _db.CandidatesSandboxes.Save(candidateSandbox);
             _db.Save();
         }
-
-
     }
 }

@@ -8,6 +8,7 @@ namespace DAL.Models
         public int CandidateID { get; set; }
         public int EmployeeID { get; set; }
         public DateTimeOffset Date { get; set; }
+        public string Comment { get; set; }
 
         public Candidate Candidate { get; set; }
         public Employee Employee{ get; set; }

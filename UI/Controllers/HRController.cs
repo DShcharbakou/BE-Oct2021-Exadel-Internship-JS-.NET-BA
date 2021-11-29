@@ -5,6 +5,7 @@ using BLL.Services;
 using DAL;
 using DAL.Models;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,12 +17,13 @@ namespace UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HRController : Controller
+    public class HRController : BaseController
     {
 
         readonly ICandidateService candidateService;
 
-        public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate)
+        public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
+               UserManager<User> _userManager, IEmployeeService employeeService) : base(employeeService,mapper,_userManager)
         {
             candidateService = candidate;
         }
@@ -37,6 +39,7 @@ namespace UI.Controllers
         [HttpGet("ID")]
         public CandidateDTO Get(int id)
         {
+            var employID = GetEmploye();
             return candidateService.GetCandidateByIdWithStatuses(id);
         }
 

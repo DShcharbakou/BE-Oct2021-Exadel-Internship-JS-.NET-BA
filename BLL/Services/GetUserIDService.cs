@@ -20,9 +20,9 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public EmployeeDTO GetEmployeeByEmail(string email)
+        public int GetEmployeeIDByEmail(string email)
         {
-            return _mapper.Map<Employee, EmployeeDTO>(_db.Employees.GetAll().Where(x => x.Email == email).FirstOrDefault());
+            return _mapper.Map<Employee, EmployeeDTO>(_db.Employees.GetAll().Where(x => x.Email == email).FirstOrDefault()).Id;
         }
     }
 }

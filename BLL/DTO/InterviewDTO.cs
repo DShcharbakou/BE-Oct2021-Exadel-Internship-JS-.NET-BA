@@ -13,5 +13,6 @@ namespace BLL.DTO
         public DateTimeOffset Date { get; set; }
         public Candidate Candidate { get; set; }
         public Employee Employee { get; set; }
+        public string Comment { get; set; }
     }
 }

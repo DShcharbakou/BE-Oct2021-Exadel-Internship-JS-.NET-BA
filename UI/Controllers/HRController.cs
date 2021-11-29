@@ -39,7 +39,6 @@ namespace UI.Controllers
         [HttpGet("ID")]
         public CandidateDTO Get(int id)
         {
-            var employID = GetEmploye();
             return candidateService.GetCandidateByIdWithStatuses(id);
         }
 

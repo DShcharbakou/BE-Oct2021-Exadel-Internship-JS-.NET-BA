@@ -29,16 +29,16 @@ namespace UI.Controllers
         }
 
         //[Authorize(Roles = "admin, mentor")]
-        [HttpGet("{id}/GetSkills")]
-        public List<SkillDTO> GetSkills(int id)
+        [HttpGet("{id}/get-skills-for-mentors-team")]
+        public List<SkillDTO> GetSkillsForMentorsTeam(int id)
         {
             var candidate = _candidateService.GetCandidateById(id);
             var skills = _skillService.GetListWithSpec(candidate.ID);
             return skills;
         }
 
-        [HttpPost("{model}/Assessment")]
-        public ActionResult Assessment(AssessmentModel model)
+        [HttpPost("{model}/add-assessment")]
+        public ActionResult AddAssessment(AssessmentModel model)
         {
             var candidateSandboxDTO = _mapper.Map<CandidateSandboxDTO>(model);
             _candidateSandboxService.AddGradeAndComment(candidateSandboxDTO);

@@ -21,11 +21,15 @@ namespace UI.Controllers
     {
 
         readonly ICandidateService candidateService;
+        private readonly IEmployeeService _employeeService;
+        private readonly UserManager<User> _userManager;
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
-               UserManager<User> _userManager, IEmployeeService employeeService) : base(employeeService,mapper,_userManager)
+               UserManager<User> userManager, IEmployeeService employeeService) : base(employeeService, mapper, userManager)
         {
             candidateService = candidate;
+            _employeeService = employeeService;
+            _userManager = userManager;
         }
 
         // GET: api/<HRController>
@@ -41,7 +45,7 @@ namespace UI.Controllers
         {
             return candidateService.GetCandidateByIdWithStatuses(id);
         }
-
+        
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
         public void Post([FromBody] HRInterviewDTO hrInterviewDTO)
@@ -59,6 +63,5 @@ namespace UI.Controllers
         public void Put(int id, [FromBody] string value)
         {
         }
-
     }
 }

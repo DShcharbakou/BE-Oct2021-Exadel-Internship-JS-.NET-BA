@@ -26,13 +26,12 @@ namespace UI.Controllers
             _mapper = mapper;
         }
 
-        
+        [Authorize]
         protected async Task<EmployeeDTO> GetEmployee()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var employee = _employeeService.GetEmployeeByEmail(user.Email);
-            return _employeeService.GetEmployeeByEmail(employee.Email);
-           
+            var user =  await _userManager.FindByNameAsync(User.Identity.Name);
+            var emp = _employeeService.GetEmployeeByEmail(user.Email);
+            return emp;
         }
     }
 }

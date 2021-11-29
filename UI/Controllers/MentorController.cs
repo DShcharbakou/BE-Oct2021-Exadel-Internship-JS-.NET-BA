@@ -40,10 +40,7 @@ namespace UI.Controllers
         [HttpPost("{model}/Assessment")]
         public ActionResult Assessment(AssessmentModel model)
         {
-            CandidateSandboxDTO candidateSandboxDTO = new CandidateSandboxDTO();
-            candidateSandboxDTO.CandidateID = model.CandidateID;
-            candidateSandboxDTO.Comment = model.Comment;
-            candidateSandboxDTO.Grade = model.Grade;
+            var candidateSandboxDTO = _mapper.Map<CandidateSandboxDTO>(model);
             _candidateSandboxService.AddGradeAndComment(candidateSandboxDTO);
             return Ok();
         }

@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTO
+namespace UI.Models
 {
-  public class HRInterviewDTO
+    public class HRInterviewResults
     {
         public int EmployeeID { get; set; }
         public DateTimeOffset DateOfInterview { get; set; }
         public int CandidateID { get; set; }
-        public int EnglishLevel { get; set; }
-        public int CommunicationSkills { get; set; }
-        public int AbilityToListen { get; set; }
-        public int SelfConfidence { get; set; }
+        public int EnglishLevelMark { get; set; }
+        public int CommunicationSkillsMark { get; set; }
+        public int AbilityToListenMark { get; set; }
+        public int SelfConfidenceMark { get; set; }
         public string Comment { get; set; }
     }
 }

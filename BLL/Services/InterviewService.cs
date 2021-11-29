@@ -40,5 +40,10 @@ namespace BLL.Services
         {
             return _mapper.Map<IEnumerable<Interview>, List<InterviewDTO>>(_db.Interviews.GetAll());
         }
+
+        public void AddHRInterview(HRInterviewDTO hrInterviewDTO)
+        { 
+
+        }
     }
 }

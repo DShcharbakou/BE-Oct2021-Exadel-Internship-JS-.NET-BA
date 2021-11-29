@@ -23,13 +23,15 @@ namespace UI.Controllers
         readonly ICandidateService candidateService;
         private readonly IEmployeeService _employeeService;
         private readonly UserManager<User> _userManager;
+        readonly IInterviewService _interviewService;
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
-               UserManager<User> userManager, IEmployeeService employeeService) : base(employeeService, mapper, userManager)
+               UserManager<User> userManager, IEmployeeService employeeService, IInterviewService interviewService) : base(employeeService, mapper, userManager)
         {
             candidateService = candidate;
             _employeeService = employeeService;
             _userManager = userManager;
+            _interviewService = interviewService;
         }
 
         // GET: api/<HRController>
@@ -50,6 +52,7 @@ namespace UI.Controllers
         [HttpPost("InterviewResults")]
         public void Post([FromBody] HRInterviewDTO hrInterviewDTO)
         {
+            var empID = GetEmployeeID();
 
         }
         [HttpPost("InterviewResultsWithDeclineStatus")]

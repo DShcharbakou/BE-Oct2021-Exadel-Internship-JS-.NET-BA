@@ -48,6 +48,7 @@ namespace UI
             services.AddDbContext<InternshipDbContext>(x => x.UseSqlServer(connectionString));
 
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof(MappingProfilesUI.MappingProfileUI));
 
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UI.Models;
 
 namespace UI.Controllers
 {
@@ -16,12 +17,14 @@ namespace UI.Controllers
     public class MentorController : ControllerBase
     {
         private readonly ICandidateService _candidateService;
-        private readonly IMapper _mapper;
         private readonly ISkillService _skillService;
-        public MentorController(ICandidateService candidateService, ISkillService skillService, IMapper mapper)
+        private readonly ICandidateSandboxService _candidateSandboxService;
+        private readonly IMapper _mapper;
+        public MentorController(ICandidateService candidateService, ICandidateSandboxService candidateSandboxService, ISkillService skillService, IMapper mapper)
         {
             _candidateService = candidateService;
             _skillService = skillService;
+            _candidateSandboxService = candidateSandboxService;
             _mapper = mapper;
         }
 
@@ -32,6 +35,17 @@ namespace UI.Controllers
             var candidate = _candidateService.GetCandidateById(id);
             var skills = _skillService.GetListWithSpec(candidate.ID);
             return skills;
+        }
+
+        [HttpPost("{model}/Assessment")]
+        public ActionResult Assessment(AssessmentModel model)
+        {
+            CandidateSandboxDTO candidateSandboxDTO = new CandidateSandboxDTO();
+            candidateSandboxDTO.CandidateID = model.CandidateID;
+            candidateSandboxDTO.Comment = model.Comment;
+            candidateSandboxDTO.Grade = model.Grade;
+            _candidateSandboxService.AddGradeAndComment(candidateSandboxDTO);
+            return Ok();
         }
 
     }

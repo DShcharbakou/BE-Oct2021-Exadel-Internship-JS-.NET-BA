@@ -53,7 +53,7 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public async void Post([FromBody] HRInterviewResults hrInterviewresult)
+        public async Task Post([FromBody] HRInterviewResults hrInterviewresult)
         {
             var employee = await GetEmployee();
             int employeeID = employee.Id;

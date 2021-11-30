@@ -7,7 +7,6 @@ namespace UI.Models
 {
     public class HRInterviewResults
     {
-        public int EmployeeID { get; set; }
         public DateTimeOffset DateOfInterview { get; set; }
         public int CandidateID { get; set; }
         public int EnglishLevelMark { get; set; }

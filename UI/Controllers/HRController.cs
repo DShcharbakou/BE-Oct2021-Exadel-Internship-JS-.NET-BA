@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UI.Models;
 
 namespace UI.Controllers
 {
@@ -24,6 +25,7 @@ namespace UI.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly UserManager<User> _userManager;
         readonly IInterviewService _interviewService;
+       
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
                UserManager<User> userManager, IEmployeeService employeeService, IInterviewService interviewService) : base(employeeService, mapper, userManager)
@@ -51,10 +53,13 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public async void Post([FromBody] HRInterviewDTO hrInterviewDTO)
+        public async void Post([FromBody] HRInterviewResults hrInterviewresult)
         {
             var employee = await GetEmployee();
             int employeeID = employee.Id;
+            HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewresult);
+
+            
 
         }
         [HttpPost("InterviewResultsWithDeclineStatus")]

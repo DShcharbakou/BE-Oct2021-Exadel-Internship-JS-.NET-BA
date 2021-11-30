@@ -14,9 +14,9 @@ namespace UI.Controllers
 {
     public class BaseController : Controller
     {
-        private readonly IEmployeeService _employeeService;
-        private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
+        protected readonly IEmployeeService _employeeService;
+        protected readonly UserManager<User> _userManager;
+        protected readonly IMapper _mapper;
         public BaseController(  IEmployeeService employeeService,
                                 IMapper mapper,
                                 UserManager<User> userManager)

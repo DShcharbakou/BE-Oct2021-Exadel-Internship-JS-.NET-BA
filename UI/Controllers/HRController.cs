@@ -38,6 +38,7 @@ namespace UI.Controllers
         [HttpGet("GetAllCandidates")]
         public List<CandidateDTO> Get()
         {
+            var employee = GetEmployee();
             return candidateService.GetAllCandidatesWithStatuses();
         }
 
@@ -50,9 +51,10 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public void Post([FromBody] HRInterviewDTO hrInterviewDTO)
+        public async void Post([FromBody] HRInterviewDTO hrInterviewDTO)
         {
-            var empID = GetEmployeeID();
+            var employee = await GetEmployee();
+            int employeeID = employee.Id;
 
         }
         [HttpPost("InterviewResultsWithDeclineStatus")]

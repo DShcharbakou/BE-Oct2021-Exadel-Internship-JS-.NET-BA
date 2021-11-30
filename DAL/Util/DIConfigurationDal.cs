@@ -9,7 +9,7 @@ namespace DAL.Util
         public static void ConfigureServices(IServiceCollection services)
         {
              //DI need to know about AddTransient, AddSingleton, AddScoped
-            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+            services.AddTransient<IUnitOfWork, UnitOfWork>(); 
         }
     }
 }

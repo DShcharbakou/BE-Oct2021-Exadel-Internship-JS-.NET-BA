@@ -30,16 +30,8 @@ namespace UI.Controllers
         protected async Task<EmployeeDTO> GetEmployee()
         {
             var user =  await _userManager.FindByNameAsync(User.Identity.Name);
-            var emp = _employeeService.GetEmployeeByEmail(user.Email);
-            return emp;
-        }
-
-        [Authorize]
-        protected async Task<int> GetEmployeeID()
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var emp = _employeeService.GetEmployeeByEmail(user.Email);
-            return emp.Id;
+            return _employeeService.GetEmployeeByEmail(user.Email);
+           // return emp;
         }
     }
 }

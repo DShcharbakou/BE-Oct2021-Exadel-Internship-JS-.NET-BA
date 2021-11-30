@@ -49,13 +49,12 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public async Task<OkResult> Post([FromBody] HRInterviewResults hrInterviewresult) //it doesn't work correctly, need to change
+        public async Task Post([FromBody] HRInterviewResults hrInterviewresult) //it doesn't work correctly, need to change
         {
             HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewresult);
             var employee = await GetEmployee();
             hRInterview.EmployeeID = employee.Id;
             _interviewService.AddHRInterview(hRInterview);
-            return Ok();
         }
 
         [HttpPost("InterviewResultsWithDeclineStatus")]

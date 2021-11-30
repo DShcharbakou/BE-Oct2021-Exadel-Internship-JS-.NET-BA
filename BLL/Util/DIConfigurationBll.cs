@@ -24,6 +24,7 @@ namespace BLL.Util
             services.AddScoped<ISpecializationService, SpecializationService>();
             services.AddScoped<IEnglishLevelService, EnglishLevelService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

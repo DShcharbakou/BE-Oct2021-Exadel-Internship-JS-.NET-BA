@@ -36,9 +36,9 @@ namespace UI.Controllers
 
         // GET: api/<HRController>
         [HttpGet("GetAllCandidates")]
-        public List<CandidateDTO> Get()
+        public List<CandidateDTOForGetAll> Get()
         {
-            var employee = GetEmployee();
+            //var employee = GetEmployee();
             return candidateService.GetAllCandidatesWithStatuses();
         }
 

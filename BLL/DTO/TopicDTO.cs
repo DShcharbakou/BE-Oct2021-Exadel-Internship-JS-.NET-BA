@@ -8,6 +8,7 @@ namespace BLL.DTO
 {
     public class TopicDTO
     {
+        public int Id { get; set; }
         public string Description { get; set; }
     }
 }

@@ -9,8 +9,9 @@ namespace BLL.Interfaces
 {
     public interface ISkillService
     {
-        IEnumerable<SkillDTO> GetList();
-        SkillDTO GetStackById(int id);
+        IEnumerable<Skill2DTO> GetListSkill2DTO();
+        Skill2DTO GetSkillById(int id);
+        IEnumerable<SkillDTO> GetListSkillDTO();
         void AddSkill(SkillDTO stackDto);
         void DeleteSkill(int id);
         List<SkillDTO> GetListWithSpec(int candidateId);

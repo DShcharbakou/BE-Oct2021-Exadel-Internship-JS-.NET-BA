@@ -10,6 +10,5 @@ namespace BLL.DTO
     {
         public string Description { get; set; }
         public int Level { get; set; }
-        //public string Comment { get; set; }
     }
 }

@@ -22,8 +22,6 @@ namespace UI.Controllers
     {
 
         readonly ICandidateService candidateService;
-        private readonly IEmployeeService _employeeService;
-        private readonly UserManager<User> _userManager;
         readonly IInterviewService _interviewService;
        
 
@@ -31,8 +29,6 @@ namespace UI.Controllers
                UserManager<User> userManager, IEmployeeService employeeService, IInterviewService interviewService) : base(employeeService, mapper, userManager)
         {
             candidateService = candidate;
-            _employeeService = employeeService;
-            _userManager = userManager;
             _interviewService = interviewService;
         }
 
@@ -53,25 +49,22 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public async Task Post([FromBody] HRInterviewResults hrInterviewresult)
+        public async Task<OkResult> Post([FromBody] HRInterviewResults hrInterviewresult) //it doesn't work correctly, need to change
         {
-            var employee = await GetEmployee();
-            int employeeID = employee.Id;
             HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewresult);
-
-            
-
+            var employee = await GetEmployee();
+            hRInterview.EmployeeID = employee.Id;
+            _interviewService.AddHRInterview(hRInterview);
+            return Ok();
         }
+
         [HttpPost("InterviewResultsWithDeclineStatus")]
         public void Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
-        {
-
-        }
+        { }
 
         // PUT api/<HRController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
-        {
-        }
+        { }
     }
 }

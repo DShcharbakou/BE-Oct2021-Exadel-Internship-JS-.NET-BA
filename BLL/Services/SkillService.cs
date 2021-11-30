@@ -57,7 +57,6 @@ namespace BLL.Services
                     SkillDTO skillDTO = new SkillDTO();
                     skillDTO.Description = _db.Skills.Get(skill.SkillID).Description.ToString();
                     skillDTO.Level = skill.Level;
-                    //skillDTO.Comments = skill.Comment; 
                     skillList.Add(skillDTO);
                 }
             }

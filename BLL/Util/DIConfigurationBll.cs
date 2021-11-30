@@ -12,13 +12,13 @@ namespace BLL.Util
         {
             // DI need to know about AddTransient, AddSingleton, AddScoped
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddTransient<ICandidateService, CandidateService>();
-            services.AddTransient<IEmployeeService, EmployeeService>();
-            services.AddTransient<IInternshipTeamService, InternshipTeamService>();
-            services.AddTransient<ITopicService, TopicService>();
-            services.AddTransient<IInterviewService, InterviewService>();
-            services.AddTransient<ISkillService, SkillService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<ICandidateService, CandidateService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IInternshipTeamService, InternshipTeamService>();
+            services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IInterviewService, InterviewService>();
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISandboxService, SandboxService>();
             services.AddScoped<ISpecializationService, SpecializationService>();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class EnglishLevelDirectoryDTO
+    public class EnglishLevelDTO
     {
         public int Id { get; set; }
         public string LevelName { get; set; }

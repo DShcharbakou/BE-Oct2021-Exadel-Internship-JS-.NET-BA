@@ -35,11 +35,15 @@ namespace BLL.Services
             _db.Save();
         }
 
-        public IEnumerable<SkillDTO> GetListSkillDTO()
+        public IEnumerable<SkillDTO> GetList()
         {
             return _mapper.Map<IEnumerable<Skill>, List<SkillDTO>>(_db.Skills.GetAll());
         }
 
+        public SkillDTO GetSkillById(int id)
+        {
+            return _mapper.Map<Skill, SkillDTO>(_db.Skills.Get(id));
+        }
 
         public List<SkillDTO> GetListWithSpec(int candidateId)
         {
@@ -59,15 +63,16 @@ namespace BLL.Services
             return skillList;
         }
 
-        public IEnumerable<Skill2DTO> GetListSkill2DTO()
+        public List<CommentsDTO> GetAllComments(int candidateId)
         {
-            return _mapper.Map<IEnumerable<Skill>, List<Skill2DTO>>(_db.Skills.GetAll());
+            var candidate = _db.Candidates.FindWithSpecificationPattern(new CandidateInterviewsSpecification()).FirstOrDefault(x => x.Id == candidateId);
+            List<CommentsDTO> commentsList = new List<CommentsDTO>();
+            foreach (var interview in candidate.Interviews)
+            {
+                CommentsDTO comment = new CommentsDTO() { Id = interview.Id, Comment = interview.Comment };
+                commentsList.Add(comment);
+            }
+            return commentsList;
         }
-        public Skill2DTO GetSkillById(int id)
-        {
-            return _mapper.Map<Skill, Skill2DTO>(_db.Skills.Get(id));
-        }
-
-
     }
 }

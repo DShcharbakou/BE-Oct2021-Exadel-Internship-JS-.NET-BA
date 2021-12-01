@@ -57,7 +57,10 @@ namespace BLL.Services
         public void DeleteUser(string email)
         {
             var user = _userManager.FindByNameAsync(email).Result;
-            _userManager.DeleteAsync(user);
+            if (user == null)
+                throw new Exception($"The user with email {email} wasn't fount");
+            else
+                _userManager.DeleteAsync(user);
         }
     }
 }

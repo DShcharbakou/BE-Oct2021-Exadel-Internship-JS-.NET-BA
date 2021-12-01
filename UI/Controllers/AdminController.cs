@@ -24,14 +24,16 @@ namespace UI.Controllers
     {
         private IUserService _userService;
         private ICandidateService _candidateService;
+        private ISpecializationService _SpecializationService;
 
-        public AdminController(IUserService UserService, ICandidateService candidateService)
+        public AdminController(IUserService UserService, ICandidateService candidateService, ISpecializationService SpecializationService)
         {
             _userService = UserService;
             _candidateService = candidateService;
+            _SpecializationService = SpecializationService;
         }
 
-        [HttpPost("SearchCandidates")]
+        [HttpPost("searchCandidates")]
         public IEnumerable<CandidateDTO> SerchCandidate([FromBody] string searchText)
         {
             return _candidateService.FindCandidates(searchText);
@@ -44,9 +46,21 @@ namespace UI.Controllers
         }
 
         [HttpPost("deleteUser")]
-        public void UserDelete([FromBody] AddingUser user)
+        public void UserDelete([FromBody] string email)
         {
-            _userService.DeleteUser(user.email);
+            _userService.DeleteUser(email);
+        }
+
+        [HttpGet("getAllSpecializations")]
+        public IEnumerable<SpecializationDTO> GetAllSpecialization()
+        {
+            return _SpecializationService.GetAllSpecialization();
+        }
+
+        [HttpPost("SaveSpecializations")]
+        public void SaveAllSpecialization([FromBody] List<SpecializationDTO> specializations)
+        {
+            _SpecializationService.SaveSpecialization(specializations);
         }
     }
 }

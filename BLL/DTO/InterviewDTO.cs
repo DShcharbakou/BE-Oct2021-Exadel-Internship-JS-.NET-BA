@@ -10,8 +10,10 @@ namespace BLL.DTO
 {
     public class InterviewDTO
     {
+        public int? ID { get; set; }
         public DateTimeOffset Date { get; set; }
         public Candidate Candidate { get; set; }
         public Employee Employee { get; set; }
+        public string Comment { get; set; }
     }
 }

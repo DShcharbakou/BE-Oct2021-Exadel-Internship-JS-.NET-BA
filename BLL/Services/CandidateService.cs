@@ -40,9 +40,9 @@ namespace BLL.Services
             _db.Save();
         }
 
-        public List<CandidateDTO> GetAllCandidatesWithStatuses()
+        public List<CandidateDTOForGetAll> GetAllCandidatesWithStatuses()
         {
-            var result = GetCandidatesWithStatusesInformation().ToList();
+            var result = GetAllCandidatesWithStatusesInformation().ToList();
             result.ForEach(x => x.SandboxCount = GetCountOfSandboxes(x.ID));
             return result;
         }
@@ -88,6 +88,20 @@ namespace BLL.Services
                     SpecializationID = x.Candidate.SpecializationID,
                     CityID = x.Candidate.CityID,
                     EnglishLevelID = x.Candidate.EnglishLevelID,
+                    IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
+                });
+        }
+
+        private IQueryable<CandidateDTOForGetAll> GetAllCandidatesWithStatusesInformation()
+        {
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
+                .Select(x => new CandidateDTOForGetAll
+                {
+                    ID = x.CandidateID,
+                    Status = x.Status.Name,
+                    FirstName = x.Candidate.FirstName,
+                    LastName = x.Candidate.LastName,
                     IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
                     IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
                 });

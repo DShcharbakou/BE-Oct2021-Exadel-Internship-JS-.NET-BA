@@ -8,5 +8,6 @@ namespace BLL.Interfaces
         EmployeeDTO GetEmployeeById(int id);
         void DeleteEmployee(int id);
         EmployeeDTO GetEmployeeByEmail(string email);
+       
     }
 }

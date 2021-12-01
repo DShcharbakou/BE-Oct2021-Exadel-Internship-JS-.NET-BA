@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class SkillDTO
+  public  class HRInterviewDTOWithDecline : HRInterviewDTO
     {
-        public string Description { get; set; }
-        public int Level { get; set; }
+        public string Status { get; set; }
     }
 }

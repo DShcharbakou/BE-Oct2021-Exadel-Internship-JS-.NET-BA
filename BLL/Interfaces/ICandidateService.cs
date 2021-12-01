@@ -8,7 +8,7 @@ namespace BLL.Interfaces
     {
         List<CandidateDTO> GetAllCandidates();
         CandidateDTO GetCandidateById(int id);
-        List<CandidateDTO> GetAllCandidatesWithStatuses();
+        List<CandidateDTOForGetAll> GetAllCandidatesWithStatuses();
         CandidateDTO GetCandidateByIdWithStatuses(int id);
         void AddCandidate(CandidateDTO formData);
         void DeleteCandidate(int id);

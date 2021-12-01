@@ -65,6 +65,8 @@ namespace BLL.MappingProfiles
                 .ForMember(cd => cd.Id,
                            cd => cd.MapFrom(cd => cd.Id));
             CreateMap<EnglishLevelDTO, EnglishLevel>();
+
+            CreateMap<HRInterviewDTO, Interview>();
         }
     }
 }

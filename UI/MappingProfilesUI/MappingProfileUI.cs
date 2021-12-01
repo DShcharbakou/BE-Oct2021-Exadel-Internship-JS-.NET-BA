@@ -13,6 +13,8 @@ namespace UI.MappingProfilesUI
         public MappingProfileUI()
         {
             CreateMap<AssessmentModel, CandidateSandboxDTO>();
+
+            CreateMap<HRInterviewResults, HRInterviewDTO>();
         }
     }
 }

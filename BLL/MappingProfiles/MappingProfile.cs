@@ -40,8 +40,8 @@ namespace BLL.MappingProfiles
 
             CreateMap<CandidateDTO, CandidateForMentorDTO>();
 
-            CreateMap<EnglishLevel, EnglishLevelDTO>();
-            CreateMap<EnglishLevelDTO, EnglishLevel>();
+            CreateMap<EnglishLevel, EnglishLevelDirectoryDTO>();
+            CreateMap<EnglishLevelDirectoryDTO, EnglishLevel>();
 
             CreateMap<Skill, SkillDirectoryDTO>();
             CreateMap<SkillDirectoryDTO, Skill>();

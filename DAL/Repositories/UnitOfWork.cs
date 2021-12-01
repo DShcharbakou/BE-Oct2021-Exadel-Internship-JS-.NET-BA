@@ -24,6 +24,7 @@ namespace DAL.Repositories
         private IBaseRepository<CandidateSandbox> candidateSandboxRep;
         private IBaseRepository<Sandbox> sandboxRep;
         private IBaseRepository<Status> statusRep;
+       // private IBaseRepository<SkillKnowledge> skillKnowledgeRep;
         
         public UnitOfWork(DbContextOptions options)
         {
@@ -202,6 +203,18 @@ namespace DAL.Repositories
                 return statusRep;
             }
         }
+        //public IBaseRepository<SkillKnowledge> SkillKnowledges
+        //{
+        //    get
+        //    {
+
+        //        if (this.skillKnowledgeRep == null)
+        //        {
+        //            this.skillKnowledgeRep = new BaseRepository<SkillKnowledge>(internshipDbContext);
+        //        }
+        //        return skillKnowledgeRep;
+        //    }
+        //}
 
 
         public void Save()

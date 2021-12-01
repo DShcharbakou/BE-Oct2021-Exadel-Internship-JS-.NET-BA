@@ -15,6 +15,7 @@ namespace UI.MappingProfilesUI
             CreateMap<AssessmentModel, CandidateSandboxDTO>();
 
             CreateMap<HRInterviewResults, HRInterviewDTO>();
+            CreateMap<InterviewMarksWithSkillID, InterviewMarksWithSkillIDDTO>();
         }
     }
 }

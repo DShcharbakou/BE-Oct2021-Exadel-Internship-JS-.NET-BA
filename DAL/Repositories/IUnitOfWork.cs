@@ -22,6 +22,7 @@ namespace DAL.Repositories
         IBaseRepository<CandidateSandbox> CandidatesSandboxes { get; }
         IBaseRepository<Sandbox> Sandboxes { get; }
         IBaseRepository<Status> Statuses { get; }
+       // IBaseRepository<SkillKnowledge> SkillKnowledges { get; }
 
         void Save();
     }

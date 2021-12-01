@@ -43,9 +43,9 @@ namespace UI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("candidates")]
+        [HttpGet("get-candidates-for-mentor")]
         [Authorize(Roles = "admin, mentor")]
-        public async Task<IEnumerable<CandidateDTO>> GetCandidates()
+        public async Task<IEnumerable<CandidateDTO>> GetCandidatesForMentor()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var employee = _employeeService.GetEmployeeByEmail(user.Email);

@@ -22,15 +22,14 @@ namespace UI.Controllers
             _skillService = skillService;
         }
 
-        //[Authorize]
         [HttpGet("get-all-skills")]
-        public List<Skill2DTO> GetAllSkills()
+        public List<SkillDTO> GetAllSkills()
         {
-            return _skillService.GetListSkill2DTO().ToList();
+            return _skillService.GetList().ToList();
         }
 
         [HttpGet("{id}/get-skill-by-id")]
-        public Skill2DTO GetSkillById(int id)
+        public SkillDTO GetSkillById(int id)
         {
             return _skillService.GetSkillById(id);
         }

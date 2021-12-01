@@ -65,11 +65,7 @@ namespace UI.Controllers
             return formData;
         }
 
-        [HttpGet("get-candidates-for-tech")]
-        public List<CandidateForTechDTO> GetCandidatesForTech()
-        {
-            return _candidateService.GetAllCandidatesWithHrInterview().ToList();
-
+        
         [HttpPost("RegisterCandidate")]
         public IActionResult RegisterCandidate(CandidateDTO model)
         {
@@ -83,6 +79,12 @@ namespace UI.Controllers
                 return BadRequest("Requested candidate is exist in database");
             }
 
+        }
+
+        [HttpGet("get-candidates-for-tech")]
+        public List<CandidateForTechDTO> GetCandidatesForTech()
+        {
+            return _candidateService.GetAllCandidatesWithHrInterview().ToList();
         }
     }
 }

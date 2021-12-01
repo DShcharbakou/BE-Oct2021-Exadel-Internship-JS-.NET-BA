@@ -69,6 +69,20 @@ namespace UI.Controllers
         public List<CandidateForTechDTO> GetCandidatesForTech()
         {
             return _candidateService.GetAllCandidatesWithHrInterview().ToList();
+
+        [HttpPost("RegisterCandidate")]
+        public IActionResult RegisterCandidate(CandidateDTO model)
+        {
+            if (_candidateService.FindCandidates(model.Email).Count() < 1)
+            {
+                _candidateService.AddCandidate(model);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Requested candidate is exist in database");
+            }
+
         }
     }
 }

@@ -28,6 +28,7 @@ namespace BLL.Services
         public void AddCandidate(CandidateDTO formData)
         {
             var candidate = _mapper.Map<Candidate>(formData);
+            candidate.RegDate = DateTime.Now;
             _db.Candidates.Save(candidate);
             _db.Save();
         }

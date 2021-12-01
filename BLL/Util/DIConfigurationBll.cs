@@ -20,7 +20,10 @@ namespace BLL.Util
             services.AddTransient<ISkillService, SkillService>();
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<IDirectoryService, DirectoryService>();
+            services.AddScoped<ISpecializationService, SpecializationService>();
             services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
+            services.AddScoped<IEnglishLevelService, EnglishLevelService>();
+            services.AddScoped<ICityService, CityService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

@@ -19,11 +19,8 @@ namespace BLL.Util
             services.AddTransient<IInterviewService, InterviewService>();
             services.AddTransient<ISkillService, SkillService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IAuthenticationService, AuthenticationService>();
-            services.AddTransient<ISandboxService, SandboxService>();
-            services.AddTransient<ISpecializationService, SpecializationService>();
-            services.AddTransient<IEnglishLevelService, EnglishLevelService>();
-            services.AddTransient<ICityService, CityService>();
+            services.AddScoped<IDirectoryService, DirectoryService>();
+            services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

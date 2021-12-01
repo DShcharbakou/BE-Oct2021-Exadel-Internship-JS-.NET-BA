@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class TopicDTO
+    public class CityDTO
     {
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string CityName { get; set; }
+        public int State_Id { get; set; }
     }
 }

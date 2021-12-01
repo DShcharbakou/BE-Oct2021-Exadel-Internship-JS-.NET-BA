@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DirectoryController : Controller
     {
@@ -18,7 +18,7 @@ namespace UI.Controllers
             _directoryService = directoryService;
         }
 
-        [HttpGet("GetSpecializationById/{id}")]
+        [HttpGet("GetSpecializationById")]
         public SpecializationDTO GetSpecializationById(int specializationId)
         {
             return _directoryService.GetSpecializationById(specializationId);
@@ -30,7 +30,7 @@ namespace UI.Controllers
             return _directoryService.GetAllSpecializations();
         }
 
-        [HttpGet("GetEnglishLevelById/{id}")]
+        [HttpGet("GetEnglishLevelById")]
         public EnglishLevelDTO GetEnglishLevelById(int englishLevelId)
         {
             return _directoryService.GetEnglishLevelById(englishLevelId);
@@ -42,7 +42,7 @@ namespace UI.Controllers
             return _directoryService.GetAllEnglishLevels();
         }
 
-        [HttpGet("GetCityById/{id}")]
+        [HttpGet("GetCityById")]
         public CityDTO GetCityById(int cityId)
         {
             return _directoryService.GetCityById(cityId);
@@ -54,7 +54,7 @@ namespace UI.Controllers
             return _directoryService.GetAllCities();
         }
 
-        [HttpGet("GetCountryById/{id}")]
+        [HttpGet("GetCountryById")]
         public CountryDTO GetCountryById(int countryId)
         {
             return _directoryService.GetCountryById(countryId);
@@ -66,7 +66,7 @@ namespace UI.Controllers
             return _directoryService.GetAllCountries();
         }
 
-        [HttpGet("GetSkillById/{id}")]
+        [HttpGet("GetSkillById")]
         public SkillDirectoryDTO GetSkillById(int skillId)
         {
             return _directoryService.GetSkillById(skillId);
@@ -78,7 +78,7 @@ namespace UI.Controllers
             return _directoryService.GetAllSkills();
         }
 
-        [HttpGet("GetTopicById/{id}")]
+        [HttpGet("GetTopicById")]
         public TopicDTO GetTopicById(int topicId)
         {
             return _directoryService.GetTopicById(topicId);
@@ -90,7 +90,7 @@ namespace UI.Controllers
             return _directoryService.GetAllTopics();
         }
 
-        [HttpGet("GetStateById/{id}")]
+        [HttpGet("GetStateById")]
         public StateDTO GetStateById(int stateId)
         {
             return _directoryService.GetStateById(stateId);

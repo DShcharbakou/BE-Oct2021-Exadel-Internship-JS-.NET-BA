@@ -54,8 +54,7 @@ namespace UI.Controllers
             return candidates.ToList();
         }
 
-        [HttpGet("{id}/form")]
-        //[Authorize(Roles = "admin, mentor")]
+        [HttpGet("{id}/get-form")]
         public CandidateForMentorDTO GetForm(int id)
         {
             var candidate = _candidateService.GetCandidateById(id);
@@ -64,6 +63,12 @@ namespace UI.Controllers
             formData.Location = _cityService.GetLocationById(candidate.ID);
             formData.EnglishLevel = _englishLevelService.GetEnglishLevelById(candidate.ID);
             return formData;
+        }
+
+        [HttpGet("get-candidates-for-tech")]
+        public List<CandidateForTechDTO> GetCandidatesForTech()
+        {
+            return _candidateService.GetAllCandidatesWithHrInterview().ToList();
         }
     }
 }

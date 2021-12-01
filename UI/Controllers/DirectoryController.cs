@@ -31,13 +31,13 @@ namespace UI.Controllers
         }
 
         [HttpGet("GetEnglishLevelById")]
-        public EnglishLevelDirectoryDTO GetEnglishLevelById(int englishLevelId)
+        public EnglishLevelDTO GetEnglishLevelById(int englishLevelId)
         {
             return _directoryService.GetEnglishLevelById(englishLevelId);
         }
 
         [HttpGet("GetAllEnglishLevels")]
-        public List<EnglishLevelDirectoryDTO> GetAllEnglishLevels()
+        public List<EnglishLevelDTO> GetAllEnglishLevels()
         {
             return _directoryService.GetAllEnglishLevels();
         }

@@ -47,6 +47,16 @@ namespace DAL.Repositories
             }
         }
 
+        public virtual void BulkSave(IList<T> model)
+        {
+            _dbSet.AddRange(model);
+        }
+
+        public virtual void RemoveAll()
+        {
+            _dbSet.RemoveRange(_dbSet);
+        }
+
         public virtual void Remove(T model)
         {
             _internshipDbContext.Remove(model);

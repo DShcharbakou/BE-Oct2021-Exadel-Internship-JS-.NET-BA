@@ -40,6 +40,24 @@ namespace BLL.MappingProfiles
 
             CreateMap<CandidateDTO, CandidateForMentorDTO>();
 
+            CreateMap<EnglishLevel, EnglishLevelDTO>();
+            CreateMap<EnglishLevelDTO, EnglishLevel>();
+
+            CreateMap<Skill, SkillDirectoryDTO>();
+            CreateMap<SkillDirectoryDTO, Skill>();
+
+            CreateMap<Specialization, SpecializationDTO>();
+            CreateMap<SpecializationDTO, Specialization>();
+
+            CreateMap<Country, CountryDTO>();
+            CreateMap<CountryDTO, Country>();
+
+            CreateMap<State, StateDTO>();
+            CreateMap<StateDTO, State>();
+
+            CreateMap<City, CityDTO>();
+            CreateMap<CityDTO, City>();
+
             CreateMap<CandidateSandboxDTO, CandidateSandbox>();
             CreateMap<CandidateSandbox, CandidateSandboxDTO>();
 

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class SkillDTO
+    public class CommentsDTO
     {
-        public string Description { get; set; }
-        public int Level { get; set; }
+        public int Id { get; set; }
+        public string Comment { get; set; }
     }
 }

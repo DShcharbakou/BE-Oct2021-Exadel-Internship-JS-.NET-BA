@@ -40,7 +40,7 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Skill>, List<SkillDTO>>(_db.Skills.GetAll());
         }
 
-        public SkillDTO GetStackById(int id)
+        public SkillDTO GetSkillById(int id)
         {
             return _mapper.Map<Skill, SkillDTO>(_db.Skills.Get(id));
         }
@@ -63,6 +63,16 @@ namespace BLL.Services
             return skillList;
         }
 
-        
+        public List<CommentsDTO> GetAllComments(int candidateId)
+        {
+            var candidate = _db.Candidates.FindWithSpecificationPattern(new CandidateInterviewsSpecification()).FirstOrDefault(x => x.Id == candidateId);
+            List<CommentsDTO> commentsList = new List<CommentsDTO>();
+            foreach (var interview in candidate.Interviews)
+            {
+                CommentsDTO comment = new CommentsDTO() { Id = interview.Id, Comment = interview.Comment };
+                commentsList.Add(comment);
+            }
+            return commentsList;
+        }
     }
 }

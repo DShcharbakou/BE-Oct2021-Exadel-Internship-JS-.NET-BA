@@ -48,9 +48,7 @@ namespace BLL.MappingProfiles
                            cd => cd.MapFrom(cd => cd.Id));
             CreateMap<EnglishLevelDTO, EnglishLevel>();
 
-            CreateMap<Skill, Skill2DTO>().ForMember(cd => cd.Id,
-                           cd => cd.MapFrom(cd => cd.Id));
-            CreateMap<Skill2DTO, Skill>();
+            CreateMap<HRInterviewDTO, Interview>();
         }
     }
 }

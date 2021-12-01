@@ -21,6 +21,7 @@ namespace BLL.Util
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<ISandboxService, SandboxService>();
+            services.AddTransient<ICandidateSandboxService, CandidateSandboxService>();
             services.AddTransient<ISpecializationService, SpecializationService>();
             services.AddTransient<IEnglishLevelService, EnglishLevelService>();
             services.AddTransient<ICityService, CityService>();

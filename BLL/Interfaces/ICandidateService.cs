@@ -8,6 +8,8 @@ namespace BLL.Interfaces
     {
         List<CandidateDTO> GetAllCandidates();
         CandidateDTO GetCandidateById(int id);
+        List<CandidateDTOForGetAll> GetAllCandidatesWithStatuses();
+        CandidateDTO GetCandidateByIdWithStatuses(int id);
         void AddCandidate(CandidateDTO formData);
         void DeleteCandidate(int id);
         IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId);

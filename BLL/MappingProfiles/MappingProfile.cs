@@ -38,6 +38,18 @@ namespace BLL.MappingProfiles
             CreateMap<Sandbox, SandboxDTO>();
             CreateMap<SandboxDTO, Sandbox>();
 
+            CreateMap<CandidateDTO, CandidateForMentorDTO>();
+
+            CreateMap<CandidateSandboxDTO, CandidateSandbox>();
+            CreateMap<CandidateSandbox, CandidateSandboxDTO>();
+
+            CreateMap<EnglishLevel, EnglishLevelDTO>()
+                .ForMember(cd => cd.Id,
+                           cd => cd.MapFrom(cd => cd.Id));
+            CreateMap<EnglishLevelDTO, EnglishLevel>();
+
+            CreateMap<HRInterviewDTO, Interview>();
+            
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
         }

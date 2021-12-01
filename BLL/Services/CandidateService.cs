@@ -39,25 +39,25 @@ namespace BLL.Services
             _db.Save();
         }
 
-        public List<CandidateDTO> GetAllCandidates()
+        public List<CandidateDTOForGetAll> GetAllCandidatesWithStatuses()
         {
-            var result = GetCandidatesWithStatusesInformation().ToList();
+            var result = GetAllCandidatesWithStatusesInformation().ToList();
             result.ForEach(x => x.SandboxCount = GetCountOfSandboxes(x.ID));
             return result;
         }
 
-        public List<CandidateDTO> GetAllCandidatesWithoutStatuses()
+        public List<CandidateDTO> GetAllCandidates()
         {
             return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll().ToList());
         }
 
-        public CandidateDTO GetCandidateById(int id)
+        public CandidateDTO GetCandidateByIdWithStatuses(int id)
         {
             var result = GetCandidatesWithStatusesInformation().FirstOrDefault(x => x.ID == id);
             result.SandboxCount = GetCountOfSandboxes(result.ID);
             return result;
         }
-        public CandidateDTO GetCandidateByIdWithoutStatuses(int id)
+        public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
@@ -87,6 +87,20 @@ namespace BLL.Services
                     SpecializationID = x.Candidate.SpecializationID,
                     CityID = x.Candidate.CityID,
                     EnglishLevelID = x.Candidate.EnglishLevelID,
+                    IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
+                });
+        }
+
+        private IQueryable<CandidateDTOForGetAll> GetAllCandidatesWithStatusesInformation()
+        {
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
+                .Select(x => new CandidateDTOForGetAll
+                {
+                    ID = x.CandidateID,
+                    Status = x.Status.Name,
+                    FirstName = x.Candidate.FirstName,
+                    LastName = x.Candidate.LastName,
                     IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
                     IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
                 });

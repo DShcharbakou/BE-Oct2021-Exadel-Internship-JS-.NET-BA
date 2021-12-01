@@ -45,7 +45,7 @@ namespace BLL.Services
 
         public InternshipTeamDTO GetInternshipTeamByEmployeeId(int employeeid)
         {
-            return _mapper.Map<InternshipTeam, InternshipTeamDTO>(_db.InternshipTeams.FindWithSpecificationPattern(new InternshipSpecification(employeeid)).LastOrDefault());
+            return _mapper.Map<InternshipTeam, InternshipTeamDTO>(_db.InternshipTeams.FindWithSpecificationPattern(new InternshipSpecification(employeeid)).FirstOrDefault());
         }
     }
 }

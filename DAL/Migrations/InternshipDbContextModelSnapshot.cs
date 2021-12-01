@@ -98,6 +98,12 @@ namespace DAL.Migrations
                     b.Property<int>("CandidateID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Grade")
+                        .HasColumnType("int");
+
                     b.Property<int>("SandboxID")
                         .HasColumnType("int");
 
@@ -203,6 +209,9 @@ namespace DAL.Migrations
                     b.Property<int>("CandidateID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset>("Date")
                         .HasColumnType("datetimeoffset");
 
@@ -259,18 +268,15 @@ namespace DAL.Migrations
                     b.Property<int>("InterviewID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TopicID")
+                    b.Property<int>("SkillID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.HasKey("InterviewID", "TopicID");
+                    b.HasKey("InterviewID", "SkillID");
 
-                    b.HasIndex("TopicID");
+                    b.HasIndex("SkillID");
 
                     b.ToTable("SkillKnowledges");
                 });
@@ -314,6 +320,8 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeID", "TeamID");
+
+                    b.HasIndex("TeamID");
 
                     b.ToTable("TeamsMentors");
                 });
@@ -641,15 +649,15 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Topic", "Topic")
+                    b.HasOne("DAL.Models.Skill", "Skill")
                         .WithMany("SkillKnowledges")
-                        .HasForeignKey("TopicID")
+                        .HasForeignKey("SkillID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Interview");
 
-                    b.Navigation("Topic");
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("DAL.Models.TeamMentor", b =>
@@ -662,7 +670,7 @@ namespace DAL.Migrations
 
                     b.HasOne("DAL.Models.InternshipTeam", "InternshipTeam")
                         .WithMany("TeamMentors")
-                        .HasForeignKey("EmployeeID")
+                        .HasForeignKey("TeamID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -802,6 +810,8 @@ namespace DAL.Migrations
                 {
                     b.Navigation("EmployeeSkills");
 
+                    b.Navigation("SkillKnowledges");
+
                     b.Navigation("TopicSkills");
                 });
 
@@ -812,8 +822,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Topic", b =>
                 {
-                    b.Navigation("SkillKnowledges");
-
                     b.Navigation("TopicSkills");
                 });
 #pragma warning restore 612, 618

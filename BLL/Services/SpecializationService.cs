@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Models;
@@ -39,5 +39,9 @@ namespace BLL.Services
             _db.Save();
         }
 
+        public string GetSpecializationById(int id)
+        {
+            return _db.Specializations.Get(id).Name;
+        }
     }
 }

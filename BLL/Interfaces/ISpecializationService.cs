@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
 using BLL.DTO;
-using DAL.Repositories.Specifications;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
@@ -8,5 +11,6 @@ namespace BLL.Interfaces
     {
         IEnumerable<SpecializationDTO> GetAllSpecialization();
         void SaveSpecialization(List<SpecializationDTO> specialization);
+        string GetSpecializationById(int id);
     }
 }

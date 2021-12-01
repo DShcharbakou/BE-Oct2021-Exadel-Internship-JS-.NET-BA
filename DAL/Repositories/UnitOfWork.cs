@@ -30,8 +30,6 @@ namespace DAL.Repositories
             internshipDbContext = new InternshipDbContext(options);
         }
 
-
-        //---------------------------------------------
         public IBaseRepository<Candidate> Candidates
         {
             get

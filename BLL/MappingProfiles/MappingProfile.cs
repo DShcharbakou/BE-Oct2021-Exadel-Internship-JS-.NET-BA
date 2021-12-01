@@ -57,6 +57,14 @@ namespace BLL.MappingProfiles
 
             CreateMap<City, CityDTO>();
             CreateMap<CityDTO, City>();
+
+            CreateMap<CandidateSandboxDTO, CandidateSandbox>();
+            CreateMap<CandidateSandbox, CandidateSandboxDTO>();
+
+            CreateMap<EnglishLevel, EnglishLevelDTO>()
+                .ForMember(cd => cd.Id,
+                           cd => cd.MapFrom(cd => cd.Id));
+            CreateMap<EnglishLevelDTO, EnglishLevel>();
         }
     }
 }

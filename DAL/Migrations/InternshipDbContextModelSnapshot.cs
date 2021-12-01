@@ -122,15 +122,13 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("State_Id")
+                    b.Property<int>("CountryID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("State_Id");
+                    b.HasKey("Id");
 
                     b.ToTable("Cities");
                 });
@@ -142,13 +140,7 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CountryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Phonecode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Shortname")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -290,35 +282,12 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Specializations");
-                });
-
-            modelBuilder.Entity("DAL.Models.State", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Country_Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StateName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Country_Id");
-
-                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("DAL.Models.Status", b =>
@@ -626,17 +595,6 @@ namespace DAL.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("DAL.Models.City", b =>
-                {
-                    b.HasOne("DAL.Models.State", "State")
-                        .WithMany("Cities")
-                        .HasForeignKey("State_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("State");
-                });
-
             modelBuilder.Entity("DAL.Models.EmployeeSkill", b =>
                 {
                     b.HasOne("DAL.Employee", "Employee")
@@ -692,17 +650,6 @@ namespace DAL.Migrations
                     b.Navigation("Interview");
 
                     b.Navigation("Topic");
-                });
-
-            modelBuilder.Entity("DAL.Models.State", b =>
-                {
-                    b.HasOne("DAL.Models.Country", "Country")
-                        .WithMany("States")
-                        .HasForeignKey("Country_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("DAL.Models.TeamMentor", b =>
@@ -834,11 +781,6 @@ namespace DAL.Migrations
                     b.Navigation("SandboxTeams");
                 });
 
-            modelBuilder.Entity("DAL.Models.Country", b =>
-                {
-                    b.Navigation("States");
-                });
-
             modelBuilder.Entity("DAL.Models.InternshipTeam", b =>
                 {
                     b.Navigation("SandboxTeams");
@@ -861,11 +803,6 @@ namespace DAL.Migrations
                     b.Navigation("EmployeeSkills");
 
                     b.Navigation("TopicSkills");
-                });
-
-            modelBuilder.Entity("DAL.Models.State", b =>
-                {
-                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("DAL.Models.Status", b =>

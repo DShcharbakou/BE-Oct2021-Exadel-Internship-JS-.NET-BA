@@ -23,10 +23,10 @@ namespace BLL.Interfaces
         StateDTO GetStateById(int stateId);
         List<StateDTO> GetAllStates();
         CityDTO GetCityById(int cityId);
-
         string GetLocationById(int cityId);
         List<CityDTO> GetAllCities();
-        //StatusDTO GetStatusById(int statusId);
-        //List<StatusDTO> GetAllStatuses();
+        List<CityDTO> GetAllCitiesByCountryId(int countryId);
+        StatusDTO GetStatusById(int statusId);
+        List<StatusDTO> GetAllStatuses();
     }
 }

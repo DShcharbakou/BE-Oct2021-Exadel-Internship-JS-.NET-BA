@@ -3,6 +3,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Models;
 using DAL.Repositories;
+using DAL.Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,14 +114,28 @@ namespace BLL.Services
             return _mapper.Map<List<City>, List<CityDTO>>(_db.Cities.GetAll().ToList());
         }
 
-        //public StatusDTO GetStatusById(int statusId)
-        //{
-        //    return _mapper.Map<Status, StatusDTO>(_db.Statuses.Get(statusId));
-        //}
+        public List<CityDTO> GetAllCitiesByCountryId(int countryId)
+        {
+            var statesInCountry = _db.States.GetAll().Where(x => x.Country_Id == countryId).ToList();
 
-        //public List<StatusDTO> GetAllStatuses()
-        //{
-        //    return _mapper.Map<List<Status>, List<StatusDTO>>(_db.Statuses.GetAll().ToList());
-        //}
+            List<City> citiesInCountry = new List<City>() { };
+
+            foreach(var state in statesInCountry)
+            {
+                citiesInCountry.AddRange(_db.Cities.GetAll().Where(x => x.State_Id == state.Id).ToList());
+            }
+
+            return _mapper.Map<List<City>, List<CityDTO>>(citiesInCountry);
+        }
+
+        public StatusDTO GetStatusById(int statusId)
+        {
+            return _mapper.Map<Status, StatusDTO>(_db.Statuses.Get(statusId));
+        }
+
+        public List<StatusDTO> GetAllStatuses()
+        {
+            return _mapper.Map<List<Status>, List<StatusDTO>>(_db.Statuses.GetAll().ToList());
+        }
     }
 }

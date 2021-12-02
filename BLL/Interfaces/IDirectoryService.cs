@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     {
         SpecializationDTO GetSpecializationById(int specializationId);
         List<SpecializationDTO> GetAllSpecializations();
+        void SaveSpecialization(List<SpecializationDTO> specializationsDto);
         EnglishLevelDTO GetEnglishLevelById(int englishLevelById);
         List<EnglishLevelDTO> GetAllEnglishLevels();
         SkillDirectoryDTO GetSkillById(int skillId);

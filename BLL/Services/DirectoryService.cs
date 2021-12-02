@@ -32,6 +32,19 @@ namespace BLL.Services
             return _mapper.Map<List<Specialization>, List<SpecializationDTO>>(_db.Specializations.GetAll().ToList());
         }
 
+        public void SaveSpecialization(List<SpecializationDTO> specializationsDto)
+        {
+            _db.Specializations.RemoveAll();
+            var specializations = new List<Specialization>();
+            foreach (var specializationDto in specializationsDto)
+            {
+                specializations.Add(_mapper.Map<Specialization>(specializationDto));
+            }
+
+            _db.Specializations.BulkSave(specializations);
+            _db.Save();
+        }
+
         public EnglishLevelDTO GetEnglishLevelById(int englishLevelById)
         {
             return _mapper.Map<EnglishLevel, EnglishLevelDTO>(_db.EnglishLevels.Get(englishLevelById));

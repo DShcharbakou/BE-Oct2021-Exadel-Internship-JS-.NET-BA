@@ -21,17 +21,22 @@ namespace BLL.Services
             _db = db;
             _mapper = mapper;
         }
-      /*  public void AddSkillKnowledge(SkillKnowledgeDTO skillKnowledgeDto)
+       public void AddSkillKnowledge(SkillKnowledgeDTO skillKnowledgeDto)
         {
-            var skill = _mapper.Map<SkillKnowledge>(skillKnowledgeDto);
-            _db.SkillKnowledges.Save(skillKnowledgeDto);
+            var skillKnowledge = _mapper.Map<SkillKnowledge>(skillKnowledgeDto);
+            var interview = _db.Interviews.FindWithSpecificationPattern(new InterviewsLevelsSpecification()).FirstOrDefault(x => x.Id == skillKnowledgeDto.InterviewID);
+            interview.SkillKnowledges.FirstOrDefault(x => x.SkillID == skillKnowledgeDto.SkillID).Level = skillKnowledgeDto.Level;
+            interview.SkillKnowledges.Add(skillKnowledge);
+            _db.Interviews.Save(interview);
             _db.Save();
         }
 
-        public IEnumerable<SkillKnowledgeDTO> GetList()
-        {
-            return _mapper.Map<IEnumerable<SkillKnowledge>, List<SkillKnowledgeDTO>>(_db.SkillKnowledges.GetAll());
-        }     
-      */
+
+        /* 
+                public IEnumerable<SkillKnowledgeDTO> GetList()
+                {
+                    return _mapper.Map<IEnumerable<SkillKnowledge>, List<SkillKnowledgeDTO>>(_db.SkillKnowledges.GetAll());
+                }     
+              */
     }
 }

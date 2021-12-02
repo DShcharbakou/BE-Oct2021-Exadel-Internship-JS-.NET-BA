@@ -45,7 +45,7 @@ namespace BLL.Services
             return _mapper.Map<Skill, SkillDTO>(_db.Skills.Get(id));
         }
 
-        public List<SkillDTO> GetListWithSpec(int candidateId)
+        public List<SkillDTO> GetAllSkills(int candidateId)
         {
             var candidate = _db.Candidates.FindWithSpecificationPattern(new CandidateInterviewsSpecification()).FirstOrDefault(x => x.Id == candidateId);
             List<SkillDTO> skillList = new List<SkillDTO>();
@@ -73,6 +73,28 @@ namespace BLL.Services
                 commentsList.Add(comment);
             }
             return commentsList;
+        }
+
+        public List<SkillDTO> GetSoftSkills(int candidateId)
+        {
+            var candidate = _db.Candidates.FindWithSpecificationPattern(new CandidateInterviewsSpecification()).FirstOrDefault(x => x.Id == candidateId);
+            List<SkillDTO> skillList = new List<SkillDTO>();
+            foreach (var interview in candidate.Interviews)
+            {
+                var interviewDb = _db.Interviews.FindWithSpecificationPattern(new InterviewsLevelsSpecification()).FirstOrDefault(x => x.Id == interview.Id);
+                foreach (var skill in interviewDb.SkillKnowledges)
+                {
+                    var skillType = _db.Skills.Get(skill.SkillID);
+                    if (skillType.Type == SkillType.SoftSkill)
+                    {
+                        SkillDTO skillDTO = new SkillDTO();
+                        skillDTO.Description = _db.Skills.Get(skill.SkillID).Description.ToString();
+                        skillDTO.Level = skill.Level;
+                        skillList.Add(skillDTO);
+                    }
+                }
+            }
+            return skillList;
         }
     }
 }

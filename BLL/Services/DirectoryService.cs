@@ -39,8 +39,7 @@ namespace BLL.Services
 
         public List<EnglishLevelDTO> GetAllEnglishLevels()
         {
-            var t = _db.EnglishLevels.GetAll().ToList();
-            return _mapper.Map<List<EnglishLevel>, List<EnglishLevelDTO>>(t);
+            return _mapper.Map<List<EnglishLevel>, List<EnglishLevelDTO>>(_db.EnglishLevels.GetAll().ToList());
         }
 
         public SkillDirectoryDTO GetSkillById(int skillId)
@@ -86,6 +85,14 @@ namespace BLL.Services
         public CityDTO GetCityById(int cityId)
         {
             return _mapper.Map<City, CityDTO>(_db.Cities.Get(cityId));
+        }
+
+        public string GetLocationById(int cityId)
+        {
+            var city = _db.Cities.Get(cityId);
+            var state = _db.States.Get(city.State_Id);
+            var country = _db.Countries.Get(state.Country_Id);
+            return $"{country.CountryName}, {state.StateName}, {city.CityName}";
         }
 
         public List<CityDTO> GetAllCities()

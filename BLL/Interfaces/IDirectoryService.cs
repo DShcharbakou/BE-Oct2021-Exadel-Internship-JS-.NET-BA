@@ -22,6 +22,8 @@ namespace BLL.Interfaces
         StateDTO GetStateById(int stateId);
         List<StateDTO> GetAllStates();
         CityDTO GetCityById(int cityId);
+
+        string GetLocationById(int cityId);
         List<CityDTO> GetAllCities();
         //StatusDTO GetStatusById(int statusId);
         //List<StatusDTO> GetAllStatuses();

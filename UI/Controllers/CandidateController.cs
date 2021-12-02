@@ -23,6 +23,7 @@ namespace UI.Controllers
         private readonly ICityService _cityService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly IDirectoryService _directoryService;
 
         public CandidateController(ICandidateService candidateService,
                                 ISpecializationService specializationService,
@@ -31,7 +32,8 @@ namespace UI.Controllers
                                 IEnglishLevelService englishLevelService,
                                 ICityService cityService,
                                 IMapper mapper,
-                                UserManager<User> userManager)
+                                UserManager<User> userManager,
+                                IDirectoryService directoryService)
         {
             _candidateService = candidateService;
             _userManager = userManager;
@@ -41,6 +43,7 @@ namespace UI.Controllers
             _englishLevelService = englishLevelService;
             _cityService = cityService;
             _mapper = mapper;
+            _directoryService = directoryService;
         }
 
         [HttpGet("get-candidates-for-mentor")]
@@ -60,9 +63,9 @@ namespace UI.Controllers
         {
             var candidate = _candidateService.GetCandidateById(id);
             var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
-            formData.Specialization = _specializationService.GetSpecializationById(candidate.ID);
-            formData.Location = _cityService.GetLocationById(candidate.ID);
-            formData.EnglishLevel = _englishLevelService.GetEnglishLevelById(candidate.ID);
+            formData.Specialization = _directoryService.GetSpecializationById(candidate.SpecializationID).Name;
+            formData.Location = _directoryService.GetLocationById(candidate.CityID);
+            formData.EnglishLevel = _directoryService.GetEnglishLevelById(candidate.EnglishLevelID).LevelName;
             return formData;
         }
 

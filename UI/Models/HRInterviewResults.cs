@@ -9,7 +9,7 @@ namespace UI.Models
     {
         public DateTimeOffset DateOfInterview { get; set; }
         public int CandidateID { get; set; }
-        public List<InterviewMarksWithSkillID> Marks { get; set; }
+        public List<List<InterviewMarksWithSkillID>> Marks { get; set; }
         public string Comment { get; set; }
     }
 }

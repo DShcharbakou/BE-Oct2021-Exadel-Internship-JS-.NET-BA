@@ -23,20 +23,23 @@ namespace UI.Controllers
 
         readonly ICandidateService candidateService;
         readonly IInterviewService _interviewService;
-       
+        readonly ISkillKnowledgeService _skillKnowledgeService;
+
+
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
-               UserManager<User> userManager, IEmployeeService employeeService, IInterviewService interviewService) : base(employeeService, mapper, userManager)
+               UserManager<User> userManager, IEmployeeService employeeService,IInterviewService interviewService,
+               ISkillKnowledgeService skillKnowledgeService) : base(employeeService, mapper, userManager)
         {
             candidateService = candidate;
             _interviewService = interviewService;
+            _skillKnowledgeService = skillKnowledgeService;
         }
 
         // GET: api/<HRController>
         [HttpGet("GetAllCandidates")]
         public List<CandidateDTOForGetAll> Get()
         {
-            //var employee = GetEmployee();
             return candidateService.GetAllCandidatesWithStatuses();
         }
 
@@ -55,6 +58,15 @@ namespace UI.Controllers
             var employee = await GetEmployee();
             hRInterview.EmployeeID = employee.Id;
             _interviewService.AddHRInterview(hRInterview);
+
+            var tempSkillKnowledge = _mapper.Map<SkillKnowledgeWithMarksListDTO>(hrInterviewresult);//получаю объект с листом оценок и скиллов
+            var marks = _mapper.Map<InterviewMarksWithSkillIDDTO>(tempSkillKnowledge.MarksList);//перекидываю лист с оценками и скиллами в новые??? листы. но у меня будет таким образом только один лист заполняться, а не создаваться новые и соответственно заполняться
+            //add new map in map profile for mapping from list to objects
+            var skillKnowledge = _mapper.Map<SkillKnowledgeDTO>(tempSkillKnowledge);
+            skillKnowledge.SkillID = marks.SkillID;
+            skillKnowledge.Level = marks.SkillLevel;
+            
+            _skillKnowledgeService.AddSkillKnowledge(skillKnowledge);
         }
 
         [HttpPost("InterviewResultsWithDeclineStatus")]

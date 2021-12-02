@@ -31,6 +31,11 @@ namespace BLL.Services
             _db.Save();
         }
 
+        public void AddTempSkillKnowledge(SkillKnowledgeWithMarksListDTO skillKnowledgeList)
+        {
+
+        }
+
 
         /* 
                 public IEnumerable<SkillKnowledgeDTO> GetList()

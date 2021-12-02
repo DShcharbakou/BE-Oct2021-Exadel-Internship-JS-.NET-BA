@@ -18,19 +18,13 @@ namespace UI.Controllers
         private readonly ICandidateService _candidateService;
         private readonly IEmployeeService _employeeService;
         private readonly IInternshipTeamService _internshipTeamService;
-        private readonly ISpecializationService _specializationService;
-        private readonly IEnglishLevelService _englishLevelService;
-        private readonly ICityService _cityService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IDirectoryService _directoryService;
 
         public CandidateController(ICandidateService candidateService,
-                                ISpecializationService specializationService,
                                 IInternshipTeamService internshipTeamService,
                                 IEmployeeService employeeService,
-                                IEnglishLevelService englishLevelService,
-                                ICityService cityService,
                                 IMapper mapper,
                                 UserManager<User> userManager,
                                 IDirectoryService directoryService)
@@ -39,9 +33,6 @@ namespace UI.Controllers
             _userManager = userManager;
             _employeeService = employeeService;
             _internshipTeamService = internshipTeamService;
-            _specializationService = specializationService;
-            _englishLevelService = englishLevelService;
-            _cityService = cityService;
             _mapper = mapper;
             _directoryService = directoryService;
         }

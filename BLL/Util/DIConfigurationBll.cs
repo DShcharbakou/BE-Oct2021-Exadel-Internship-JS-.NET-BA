@@ -22,12 +22,8 @@ namespace BLL.Util
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<ISandboxService, SandboxService>();
             services.AddTransient<ICandidateSandboxService, CandidateSandboxService>();
-            services.AddTransient<ISpecializationService, SpecializationService>();
-            services.AddTransient<ICityService, CityService>();
             services.AddScoped<IDirectoryService, DirectoryService>();
-            services.AddScoped<ISpecializationService, SpecializationService>();
             services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
-            services.AddScoped<ICityService, CityService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

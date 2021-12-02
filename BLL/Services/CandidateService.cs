@@ -126,7 +126,7 @@ namespace BLL.Services
                     FirstName = x.Candidate.FirstName,
                     LastName = x.Candidate.LastName,
                     IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
-                    IsInterviewedByTech = x.Candidate.Interviews.Count() < 1,
+                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
                 });
         }
     }

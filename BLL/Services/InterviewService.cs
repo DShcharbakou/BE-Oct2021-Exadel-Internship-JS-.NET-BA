@@ -4,6 +4,7 @@ using BLL.Interfaces;
 using BLL.DTO;
 using AutoMapper;
 using DAL.Models;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -47,5 +48,15 @@ namespace BLL.Services
             _db.Interviews.Save(interview);
             _db.Save();
         }
+
+        public void SaveCommentForTech(TechSkillsDTO model)
+        {
+            var secondInterview = _mapper.Map<InterviewDTO>(_db.Interviews.GetAll().Where(x => x.CandidateID == model.CandidateId).LastOrDefault());
+            secondInterview.Comment = model.TechComment;
+            var mapped = _mapper.Map<Interview>(secondInterview);
+            _db.Interviews.Save(mapped);
+            _db.Save();
+        }
+
     }
 }

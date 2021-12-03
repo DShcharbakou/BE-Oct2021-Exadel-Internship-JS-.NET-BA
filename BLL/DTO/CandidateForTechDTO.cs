@@ -13,5 +13,6 @@ namespace BLL.DTO
         public string LastName { get; set; }
         public bool? IsInterviewedByHR { get; set; }
         public bool? IsInterviewedByTech { get; set; }
+        public string Status { get; set; }
     }
 }

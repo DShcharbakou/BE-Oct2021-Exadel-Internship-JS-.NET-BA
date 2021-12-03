@@ -119,7 +119,7 @@ namespace BLL.Services
 
         public IEnumerable<CandidateForTechDTO> GetAllCandidatesWithHrInterview()
         {
-            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
+            var candidates =  _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
                 .Select(x => new CandidateForTechDTO
                 {
                     Id = x.CandidateID,
@@ -127,7 +127,17 @@ namespace BLL.Services
                     LastName = x.Candidate.LastName,
                     IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
                     IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
+                    Status = x.Status.Name,
                 });
+            List<CandidateForTechDTO> newList = new List<CandidateForTechDTO>();
+            foreach (var c in candidates)
+            {
+                if (c.IsInterviewedByTech == false && c.Status == "Accepted")
+                {
+                    newList.Add(c);
+                }
+            }
+            return newList;
         }
     }
 }

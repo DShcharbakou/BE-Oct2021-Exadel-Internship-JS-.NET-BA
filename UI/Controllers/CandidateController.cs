@@ -78,7 +78,6 @@ namespace UI.Controllers
             {
                 return BadRequest("Requested candidate is exist in database");
             }
-
         }
 
         [HttpGet("get-candidates-for-tech")]

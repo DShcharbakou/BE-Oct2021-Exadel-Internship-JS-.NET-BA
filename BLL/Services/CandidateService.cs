@@ -69,9 +69,9 @@ namespace BLL.Services
         }
 
         private int GetCountOfInterviewes(int candidateID)
-          {
-              return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
-          }
+        {
+            return _db.Interviews.GetAll().Where(interv => interv.CandidateID == candidateID).Count();
+        }
 
         private IQueryable<CandidateDTO> GetCandidatesWithStatusesInformation()
         {
@@ -115,6 +115,19 @@ namespace BLL.Services
         public IEnumerable<CandidateDTO> FindCandidates(string textSearch)
         {
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesSearchByAdmin(textSearch)));
+        }
+
+        public IEnumerable<CandidateForTechDTO> GetAllCandidatesWithHrInterview()
+        {
+            return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
+                .Select(x => new CandidateForTechDTO
+                {
+                    Id = x.CandidateID,
+                    FirstName = x.Candidate.FirstName,
+                    LastName = x.Candidate.LastName,
+                    IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
+                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
+                });
         }
     }
 }

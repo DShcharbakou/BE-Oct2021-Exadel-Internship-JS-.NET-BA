@@ -48,8 +48,7 @@ namespace UI.Controllers
             return candidates.ToList();
         }
 
-        [HttpGet("{id}/form")]
-        //[Authorize(Roles = "admin, mentor")]
+        [HttpGet("{id}/get-form")]
         public CandidateForMentorDTO GetForm(int id)
         {
             var candidate = _candidateService.GetCandidateById(id);
@@ -60,6 +59,7 @@ namespace UI.Controllers
             return formData;
         }
 
+        
         [HttpPost("RegisterCandidate")]
         public IActionResult RegisterCandidate(CandidateDTO model)
         {
@@ -72,6 +72,13 @@ namespace UI.Controllers
             {
                 return BadRequest("Requested candidate is exist in database");
             }
+
+        }
+
+        [HttpGet("get-candidates-for-tech")]
+        public List<CandidateForTechDTO> GetCandidatesForTech()
+        {
+            return _candidateService.GetAllCandidatesWithHrInterview().ToList();
         }
     }
 }

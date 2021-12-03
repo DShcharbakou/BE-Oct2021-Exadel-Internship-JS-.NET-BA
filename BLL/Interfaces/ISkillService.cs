@@ -13,7 +13,8 @@ namespace BLL.Interfaces
         IEnumerable<SkillDTO> GetList();
         void AddSkill(SkillDTO skillDto);
         void DeleteSkill(int id);
-        List<SkillDTO> GetListWithSpec(int candidateId);
+        List<SkillDTO> GetAllSkills(int candidateId);
         List<CommentsDTO> GetAllComments(int candidateId);
+        List<SkillDTO> GetSoftSkills(int candidateId);
     }
 }

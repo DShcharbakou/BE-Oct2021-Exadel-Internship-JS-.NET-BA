@@ -13,5 +13,6 @@ namespace BLL.Interfaces
         void AddInterview(InterviewDTO interviewDto);
         void DeleteInterview(int id);
         void AddHRInterview(HRInterviewDTO hRInterview);
+        void SaveCommentForTech(TechSkillsDTO model);
     }
 }

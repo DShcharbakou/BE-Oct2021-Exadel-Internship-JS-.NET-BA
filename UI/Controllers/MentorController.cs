@@ -26,19 +26,10 @@ namespace UI.Controllers
             _mapper = mapper;
         }
 
-        //[Authorize(Roles = "admin, mentor")]
-        [HttpGet("{id}/get-skills-for-mentors-candidate")]
-        public List<SkillDTO> GetSkillsForMentorsCandidate(int id)
-        {
-            var skills = _skillService.GetListWithSpec(id);
-            return skills;
-        }
-
         [HttpGet("{id}/get-comments-for-candidate")]
         public List<CommentsDTO> GetComments(int id)
         {
-            var comments = _skillService.GetAllComments(id);
-            return comments;
+            return _skillService.GetAllComments(id);
         }
 
         [HttpPost("{model}/add-assessment")]

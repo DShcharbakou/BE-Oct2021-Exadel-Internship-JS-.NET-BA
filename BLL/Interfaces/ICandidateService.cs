@@ -14,6 +14,6 @@ namespace BLL.Interfaces
         void DeleteCandidate(int id);
         IEnumerable<CandidateDTO> GetCandidatesFromTeam(int teamId);
         IEnumerable<CandidateDTO> FindCandidates(string textSearch);
-        IEnumerable<CandidateForTechDTO> GetAllCandidatesWithHrInterview();
+        IEnumerable<CandidateDTO> GetAllCandidatesForCurrentTech(EmployeeDTO employee);
     }
 }

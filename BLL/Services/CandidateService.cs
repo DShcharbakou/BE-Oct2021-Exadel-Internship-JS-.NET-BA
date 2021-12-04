@@ -117,27 +117,32 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesSearchByAdmin(textSearch)));
         }
 
-        public IEnumerable<CandidateForTechDTO> GetAllCandidatesWithHrInterview()
+        public IEnumerable<CandidateDTO> GetAllCandidatesForCurrentTech(EmployeeDTO employee)
         {
-            var candidates =  _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
-                .Select(x => new CandidateForTechDTO
-                {
-                    Id = x.CandidateID,
-                    FirstName = x.Candidate.FirstName,
-                    LastName = x.Candidate.LastName,
-                    IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
-                    IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
-                    Status = x.Status.Name,
-                });
-            List<CandidateForTechDTO> newList = new List<CandidateForTechDTO>();
+            var allInterviewWithCurrentTech = _db.Interviews.FindWithSpecificationPattern(new EmployeeSpecification()).Where(x=>x.EmployeeID == employee.Id).ToList();
+            List<int> candidatesIdWhereCurrentTech = new List<int>();
+            List<CandidateDTO> filteredList = new List<CandidateDTO>();
+            List<CandidateDTO> finalList = new List<CandidateDTO>();
+            foreach (var interview in allInterviewWithCurrentTech)
+            {
+                candidatesIdWhereCurrentTech.Add(_db.Candidates.Get(interview.CandidateID).Id);
+            }
+            var candidates = GetCandidatesWithStatusesInformation();
             foreach (var c in candidates)
             {
                 if (c.IsInterviewedByTech == false && c.Status == "Accepted")
                 {
-                    newList.Add(c);
+                    filteredList.Add(c);
                 }
             }
-            return newList;
+            foreach (var cand in filteredList)
+            {
+                if (candidatesIdWhereCurrentTech.Contains(cand.ID))
+                {
+                    finalList.Add(cand);
+                }
+            } return finalList;
         }
     }
 }
+

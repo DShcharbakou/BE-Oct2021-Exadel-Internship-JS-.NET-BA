@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace UI.Controllers
 {
@@ -22,14 +23,19 @@ namespace UI.Controllers
         private readonly IEnglishLevelService _englishLevelService;
         private readonly ICityService _cityService;
         private readonly IMapper _mapper;
+        private readonly IInterviewService _interviewService;
+        private readonly ISandboxService _sandboxService;
+        private readonly ICandidateSandboxService _candidateSandboxService;
         private readonly UserManager<User> _userManager;
-
         public CandidateController(ICandidateService candidateService,
                                 ISpecializationService specializationService,
                                 IInternshipTeamService internshipTeamService,
                                 IEmployeeService employeeService,
                                 IEnglishLevelService englishLevelService,
                                 ICityService cityService,
+                                IInterviewService interviewService,
+                                ISandboxService sandboxService,
+                                ICandidateSandboxService candidateSandboxService,
                                 IMapper mapper,
                                 UserManager<User> userManager)
         {
@@ -40,6 +46,9 @@ namespace UI.Controllers
             _specializationService = specializationService;
             _englishLevelService = englishLevelService;
             _cityService = cityService;
+            _interviewService = interviewService;
+            _sandboxService = sandboxService;
+            _candidateSandboxService = candidateSandboxService;
             _mapper = mapper;
         }
 
@@ -81,9 +90,15 @@ namespace UI.Controllers
         }
 
         [HttpGet("get-candidates-for-tech")]
-        public List<CandidateForTechDTO> GetCandidatesForTech()
+        [Authorize(Roles = "admin, techInterviewer")]
+        public async Task<IEnumerable<CandidateDTO>> GetCandidatesForTech()
         {
-            return _candidateService.GetAllCandidatesWithHrInterview().ToList();
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var employee = _employeeService.GetEmployeeByEmail(user.Email);
+            var candidates = _candidateService.GetAllCandidatesForCurrentTech(employee);
+            return candidates;
         }
+
+
     }
 }

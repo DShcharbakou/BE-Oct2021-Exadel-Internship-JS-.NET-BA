@@ -49,6 +49,7 @@ namespace UI
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddAutoMapper(typeof(MappingProfilesUI.MappingProfileUI));
+            services.AddAutoMapper(typeof(MarksMappingProfile));
 
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<InternshipDbContext>();

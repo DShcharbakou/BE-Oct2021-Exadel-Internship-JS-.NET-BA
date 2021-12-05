@@ -8,7 +8,7 @@ namespace BLL.DTO
 {
   public  class SkillKnowledgeDTO
     {
-        public int InterviewID { get; set; }
+        public int? InterviewID { get; set; }
         public int SkillID { get; set; }
         public int Level { get; set; }
     }

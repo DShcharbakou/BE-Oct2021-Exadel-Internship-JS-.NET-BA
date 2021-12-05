@@ -52,21 +52,49 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public async Task Post([FromBody] HRInterviewResults hrInterviewresult) //it doesn't work correctly, need to change
+        public async Task Post([FromBody] HRInterviewResults hrInterviewResultsUI) //it doesn't work correctly, need to change
         {
-            HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewresult);
+            HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewResultsUI);
             var employee = await GetEmployee();
             hRInterview.EmployeeID = employee.Id;
             _interviewService.AddHRInterview(hRInterview);
 
-            var tempSkillKnowledge = _mapper.Map<SkillKnowledgeWithMarksListDTO>(hrInterviewresult);//получаю объект с листом оценок и скиллов
-            var marks = _mapper.Map<InterviewMarksWithSkillIDDTO>(tempSkillKnowledge.MarksList);//перекидываю лист с оценками и скиллами в новые??? листы. но у меня будет таким образом только один лист заполняться, а не создаваться новые и соответственно заполняться
-            //add new map in map profile for mapping from list to objects
+            var tempSkillKnowledge = new List<SkillKnowledgeWithMarksListDTO>();
+
+            foreach (var tempMarksList in hRInterview.Marks)
+            {
+                var mapResult = _mapper.Map<SkillKnowledgeWithMarksListDTO>(hRInterview);
+                _mapper.Map(tempMarksList, mapResult);
+
+                tempSkillKnowledge.Add(mapResult);
+            }
+
+            var marks = new List<InterviewMarksWithSkillIDDTO>();
+            foreach (var tempMark in tempSkillKnowledge)
+            {
+                var mappingResult = _mapper.Map<InterviewMarksWithSkillIDDTO>(tempSkillKnowledge);
+                _mapper.Map(tempMark, mappingResult);
+
+                marks.Add(mappingResult);
+            }
             var skillKnowledge = _mapper.Map<SkillKnowledgeDTO>(tempSkillKnowledge);
+            foreach (var intervMarks in marks)
+            { 
+
+            }
+
             skillKnowledge.SkillID = marks.SkillID;
             skillKnowledge.Level = marks.SkillLevel;
-            
-            _skillKnowledgeService.AddSkillKnowledge(skillKnowledge);
+
+
+            //var tempSkillKnowledge = _mapper.Map<SkillKnowledgeWithMarksListDTO>(hRInterview);//получаю объект с листом оценок и скиллов
+            //var marks = _mapper.Map<InterviewMarksWithSkillIDDTO>(tempSkillKnowledge.MarksList);//перекидываю лист с оценками и скиллами в новые??? листы. но у меня будет таким образом только один лист заполняться, а не создаваться новые и соответственно заполняться
+            //add new map in map profile for mapping from list to objects
+            //var skillKnowledge = _mapper.Map<SkillKnowledgeDTO>(tempSkillKnowledge);
+            //skillKnowledge.SkillID = marks.SkillID;
+            //skillKnowledge.Level = marks.SkillLevel;
+
+            //_skillKnowledgeService.AddSkillKnowledge(skillKnowledge);
         }
 
         [HttpPost("InterviewResultsWithDeclineStatus")]

@@ -67,7 +67,8 @@ namespace BLL.MappingProfiles
             CreateMap<EnglishLevelDTO, EnglishLevel>();
 
             CreateMap<HRInterviewDTO, Interview>();
-            
+            CreateMap<HRInterviewDTO, SkillKnowledgeWithMarksListDTO>();
+
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
         }

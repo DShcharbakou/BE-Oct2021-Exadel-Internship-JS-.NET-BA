@@ -12,7 +12,7 @@ namespace BLL.DTO
         public int EmployeeID { get; set; }
         public DateTimeOffset DateOfInterview { get; set; }
         public int CandidateID { get; set; }
-        public List<List<InterviewMarksWithSkillIDDTO>> Marks { get; set; }
+        public List<InterviewMarksWithSkillIDDTO> Marks { get; set; }
         public string Comment { get; set; }
     }
 }

@@ -21,19 +21,17 @@ namespace BLL.Services
             _db = db;
             _mapper = mapper;
         }
-       public void AddSkillKnowledge(SkillKnowledgeDTO skillKnowledgeDto)
+        public void AddSkillKnowledge(IEnumerable<SkillKnowledgeDTO> skillKnowledgeDtoList)
         {
-            var skillKnowledge = _mapper.Map<SkillKnowledge>(skillKnowledgeDto);
-            var interview = _db.Interviews.FindWithSpecificationPattern(new InterviewsLevelsSpecification()).FirstOrDefault(x => x.Id == skillKnowledgeDto.InterviewID);
-            interview.SkillKnowledges.FirstOrDefault(x => x.SkillID == skillKnowledgeDto.SkillID).Level = skillKnowledgeDto.Level;
-            interview.SkillKnowledges.Add(skillKnowledge);
-            _db.Interviews.Save(interview);
-            _db.Save();
-        }
-
-        public void AddTempSkillKnowledge(SkillKnowledgeWithMarksListDTO skillKnowledgeList)
-        {
-
+            foreach (var skillKnowledgeDto in skillKnowledgeDtoList)
+            {
+                var skillKnowledge = _mapper.Map<SkillKnowledge>(skillKnowledgeDto);
+                var interview = _db.Interviews.FindWithSpecificationPattern(new InterviewsLevelsSpecification()).FirstOrDefault(x => x.Id == skillKnowledgeDto.InterviewID);
+                interview.SkillKnowledges.FirstOrDefault(x => x.SkillID == skillKnowledgeDto.SkillID).Level = skillKnowledgeDto.Level;
+                interview.SkillKnowledges.Add(skillKnowledge);
+                _db.Interviews.Save(interview);
+                _db.Save();
+            }
         }
 
 

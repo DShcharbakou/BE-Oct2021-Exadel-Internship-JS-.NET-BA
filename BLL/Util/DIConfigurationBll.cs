@@ -30,6 +30,7 @@ namespace BLL.Util
             services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
             services.AddScoped<IEnglishLevelService, EnglishLevelService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ISkillKnowledgeService, SkillKnowledgeService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

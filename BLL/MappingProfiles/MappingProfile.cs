@@ -65,23 +65,35 @@ namespace BLL.MappingProfiles
                 .ForMember(cd => cd.Id,
                            cd => cd.MapFrom(cd => cd.Id));
             CreateMap<EnglishLevelDTO, EnglishLevel>();
-
-            CreateMap<HRInterviewDTO, Interview>();
-            CreateMap<HRInterviewDTO, SkillKnowledgeWithMarksListDTO>();
-
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
 
-            CreateMap<InterviewMarksWithSkillIDDTO, SkillKnowledgeDTO>();
-            CreateMap<SkillKnowledgeWithMarksListDTO, IEnumerable<SkillKnowledge>>()
-                    .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledge
+            CreateMap<HRInterviewDTO, Interview>();
+           // CreateMap<HRInterviewDTO, InterviewMarksWithSkillIDDTO>();
+            CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
+                    .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledgeDTO
                     {
-                        InterviewID = sourse.InterviewID.Value,
+                        InterviewID = sourse.ID.Value,
                         Level = p.SkillLevel,
                         SkillID = p.SkillID
                     }));
+           
         }
 
     }
-    }
+   //public class SkillKnowledgeWithMarksListDTOConverter : ITypeConverter<SkillKnowledgeWithMarksListDTOConverter, IEnumerable<SkillKnowledgeWithMarksListDTOConverter>>
+   // {
+   //     public IEnumerable<SkillKnowledgeDTO> Convert(IEnumerable<SkillKnowledgeWithMarksListDTOConverter> source, IEnumerable<SkillKnowledgeDTO> destination, ResolutionContext context)
+   //     {
+   //         foreach (var item in source)
+   //         {
+   //             foreach (var item2 in context.Mapper.Map<IEnumerable<SkillKnowledgeDTO>>(item))
+   //             {
+   //                 yield return item2;
+   //             }
+   //         }
+   //     }
+   // }
+
+}
 

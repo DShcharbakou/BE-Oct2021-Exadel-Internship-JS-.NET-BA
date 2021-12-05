@@ -59,32 +59,22 @@ namespace UI.Controllers
             hRInterview.EmployeeID = employee.Id;
             _interviewService.AddHRInterview(hRInterview);
 
-            var tempSkillKnowledge = new List<SkillKnowledgeWithMarksListDTO>();
-
-            foreach (var tempMarksList in hRInterview.Marks)
-            {
-                var mapResult = _mapper.Map<SkillKnowledgeWithMarksListDTO>(hRInterview);
-                _mapper.Map(tempMarksList, mapResult);
-
-                tempSkillKnowledge.Add(mapResult);
-            }
-
             var marks = new List<InterviewMarksWithSkillIDDTO>();
-            foreach (var tempMark in tempSkillKnowledge)
+            foreach (var tempMark in hRInterview.Marks)
             {
-                var mappingResult = _mapper.Map<InterviewMarksWithSkillIDDTO>(tempSkillKnowledge);
+                var mappingResult = _mapper.Map<InterviewMarksWithSkillIDDTO>(hRInterview);
                 _mapper.Map(tempMark, mappingResult);
 
                 marks.Add(mappingResult);
             }
-            var skillKnowledge = _mapper.Map<SkillKnowledgeDTO>(tempSkillKnowledge);
+            var skillKnowledge = _mapper.Map<SkillKnowledgeDTO>(hRInterview);
             foreach (var intervMarks in marks)
             { 
 
             }
 
-            skillKnowledge.SkillID = marks.SkillID;
-            skillKnowledge.Level = marks.SkillLevel;
+            //skillKnowledge.SkillID = marks.SkillID;
+           // skillKnowledge.Level = marks.SkillLevel;
 
 
             //var tempSkillKnowledge = _mapper.Map<SkillKnowledgeWithMarksListDTO>(hRInterview);//получаю объект с листом оценок и скиллов

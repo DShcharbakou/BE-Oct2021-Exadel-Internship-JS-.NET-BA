@@ -71,6 +71,17 @@ namespace BLL.MappingProfiles
 
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
+
+            CreateMap<InterviewMarksWithSkillIDDTO, SkillKnowledgeDTO>();
+            CreateMap<SkillKnowledgeWithMarksListDTO, IEnumerable<SkillKnowledge>>()
+                    .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledge
+                    {
+                        InterviewID = sourse.InterviewID.Value,
+                        Level = p.SkillLevel,
+                        SkillID = p.SkillID
+                    }));
         }
+
     }
-}
+    }
+

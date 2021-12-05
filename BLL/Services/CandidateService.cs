@@ -130,17 +130,11 @@ namespace BLL.Services
             var candidates = GetCandidatesWithStatusesInformation();
             foreach (var c in candidates)
             {
-                if (c.IsInterviewedByTech == false && c.Status == "Accepted")
-                {
-                    filteredList.Add(c);
-                }
+                if (c.IsInterviewedByTech == false && c.Status != "Declined") { filteredList.Add(c); }
             }
             foreach (var cand in filteredList)
             {
-                if (candidatesIdWhereCurrentTech.Contains(cand.ID))
-                {
-                    finalList.Add(cand);
-                }
+                if (candidatesIdWhereCurrentTech.Contains(cand.ID)){ finalList.Add(cand); }
             } return finalList;
         }
     }

@@ -23,9 +23,6 @@ namespace UI.Controllers
         private readonly IEnglishLevelService _englishLevelService;
         private readonly ICityService _cityService;
         private readonly IMapper _mapper;
-        private readonly IInterviewService _interviewService;
-        private readonly ISandboxService _sandboxService;
-        private readonly ICandidateSandboxService _candidateSandboxService;
         private readonly UserManager<User> _userManager;
         public CandidateController(ICandidateService candidateService,
                                 ISpecializationService specializationService,
@@ -33,9 +30,6 @@ namespace UI.Controllers
                                 IEmployeeService employeeService,
                                 IEnglishLevelService englishLevelService,
                                 ICityService cityService,
-                                IInterviewService interviewService,
-                                ISandboxService sandboxService,
-                                ICandidateSandboxService candidateSandboxService,
                                 IMapper mapper,
                                 UserManager<User> userManager)
         {
@@ -46,9 +40,6 @@ namespace UI.Controllers
             _specializationService = specializationService;
             _englishLevelService = englishLevelService;
             _cityService = cityService;
-            _interviewService = interviewService;
-            _sandboxService = sandboxService;
-            _candidateSandboxService = candidateSandboxService;
             _mapper = mapper;
         }
 

@@ -7,7 +7,6 @@ namespace DAL.Configurations
 {
     class TopicSkillConfigurations : IEntityTypeConfiguration<TopicSkill>
     {
-
         public void Configure(EntityTypeBuilder<TopicSkill> builder)
         {
             builder.HasOne(x => x.Topic)

@@ -116,16 +116,7 @@ namespace BLL.Services
 
         public List<CityDTO> GetAllCitiesByCountryId(int countryId)
         {
-            var statesInCountry = _db.States.GetAll().Where(x => x.Country_Id == countryId).ToList();
-
-            List<City> citiesInCountry = new List<City>() { };
-
-            foreach(var state in statesInCountry)
-            {
-                citiesInCountry.AddRange(_db.Cities.GetAll().Where(x => x.State_Id == state.Id).ToList());
-            }
-
-            return _mapper.Map<List<City>, List<CityDTO>>(citiesInCountry);
+            return _mapper.Map<List<City>, List<CityDTO>>(_db.Cities.FindWithSpecificationPattern(new CitySpecification()).Where(x => x.State.Country_Id == countryId).ToList());
         }
 
         public StatusDTO GetStatusById(int statusId)

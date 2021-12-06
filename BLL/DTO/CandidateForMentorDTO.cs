@@ -13,5 +13,7 @@ namespace BLL.DTO
         public string Specialization { get; set; }
         public string Location { get; set; }
         public string EnglishLevel { get; set; }
+        public string CommentByMentor { get; set; }
+        public int Grade { get; set; }
     }
 }

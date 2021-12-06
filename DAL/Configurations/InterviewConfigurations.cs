@@ -12,11 +12,13 @@ namespace DAL.Configurations
         {
             builder.HasOne(x => x.Candidate)
                 .WithMany(x => x.Interviews)
-                .HasForeignKey(x => x.CandidateID);
+                .HasForeignKey(x => x.CandidateID)
+                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.Employee)
                 .WithMany(x => x.Interviews)
-                .HasForeignKey(x => x.EmployeeID);
+                .HasForeignKey(x => x.EmployeeID)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

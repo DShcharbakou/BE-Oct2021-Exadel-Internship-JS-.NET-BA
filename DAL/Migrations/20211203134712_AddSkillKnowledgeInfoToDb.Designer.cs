@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211203134712_AddSkillKnowledgeInfoToDb")]
+    partial class AddSkillKnowledgeInfoToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,21 +310,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specializations");
-                });
-
-            modelBuilder.Entity("DAL.Models.SpecializationSandbox", b =>
-                {
-                    b.Property<int>("SandboxID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecializationID")
-                        .HasColumnType("int");
-
-                    b.HasKey("SandboxID", "SpecializationID");
-
-                    b.HasIndex("SpecializationID");
-
-                    b.ToTable("SpecializationSandbox");
                 });
 
             modelBuilder.Entity("DAL.Models.State", b =>
@@ -630,19 +617,19 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Candidate", "Candidate")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("CandidateID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Sandbox", "Sandbox")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("SandboxID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Status", "Status")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("StatusID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Candidate");
@@ -657,7 +644,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.State", "State")
                         .WithMany("Cities")
                         .HasForeignKey("State_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("State");
@@ -668,13 +655,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Employee", "Employee")
                         .WithMany("EmployeeSkills")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Skill", "Skill")
                         .WithMany("EmployeeSkills")
                         .HasForeignKey("SkillID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -687,13 +674,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Candidate", "Candidate")
                         .WithMany("Interviews")
                         .HasForeignKey("CandidateID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Employee", "Employee")
                         .WithMany("Interviews")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Candidate");
@@ -706,13 +693,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Interview", "Interview")
                         .WithMany("SkillKnowledges")
                         .HasForeignKey("InterviewID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Skill", "Skill")
                         .WithMany("SkillKnowledges")
                         .HasForeignKey("SkillID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Interview");
@@ -720,31 +707,12 @@ namespace DAL.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("DAL.Models.SpecializationSandbox", b =>
-                {
-                    b.HasOne("DAL.Models.Sandbox", "Sandbox")
-                        .WithMany("SpecializationSandboxes")
-                        .HasForeignKey("SandboxID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.Specialization", "Specialization")
-                        .WithMany("SpecializationSandboxes")
-                        .HasForeignKey("SpecializationID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Sandbox");
-
-                    b.Navigation("Specialization");
-                });
-
             modelBuilder.Entity("DAL.Models.State", b =>
                 {
                     b.HasOne("DAL.Models.Country", "Country")
                         .WithMany("States")
                         .HasForeignKey("Country_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Country");
@@ -755,13 +723,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Employee", "Employee")
                         .WithMany("TeamMentors")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.InternshipTeam", "InternshipTeam")
                         .WithMany("TeamMentors")
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -774,13 +742,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Skill", "Skill")
                         .WithMany("TopicSkills")
                         .HasForeignKey("SkillID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Topic", "Topic")
                         .WithMany("TopicSkills")
                         .HasForeignKey("TopicID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Skill");
@@ -793,13 +761,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.CandidateSandbox", "CandidateSandbox")
                         .WithMany("SandboxTeams")
                         .HasForeignKey("CandidateSandboxID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.InternshipTeam", "InternshipTeam")
                         .WithMany("SandboxTeams")
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CandidateSandbox");
@@ -899,8 +867,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.Sandbox", b =>
                 {
                     b.Navigation("CandidateSandboxes");
-
-                    b.Navigation("SpecializationSandboxes");
                 });
 
             modelBuilder.Entity("DAL.Models.Skill", b =>
@@ -910,11 +876,6 @@ namespace DAL.Migrations
                     b.Navigation("SkillKnowledges");
 
                     b.Navigation("TopicSkills");
-                });
-
-            modelBuilder.Entity("DAL.Models.Specialization", b =>
-                {
-                    b.Navigation("SpecializationSandboxes");
                 });
 
             modelBuilder.Entity("DAL.Models.State", b =>

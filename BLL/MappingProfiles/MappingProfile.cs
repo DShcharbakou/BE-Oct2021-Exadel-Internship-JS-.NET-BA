@@ -82,6 +82,9 @@ namespace BLL.MappingProfiles
                         Level = p.SkillLevel,
                         SkillID = p.SkillID
                     }));
+
+            CreateMap<Status, StatusDTO>();
+            CreateMap<StatusDTO, Status>();
         }
 
     }

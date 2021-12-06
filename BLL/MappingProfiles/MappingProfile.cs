@@ -78,7 +78,7 @@ namespace BLL.MappingProfiles
             //CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
             //    .ConvertUsing<HRInterviewDTOConverter>();
 
-
+            CreateMap<SkillKnowledgeDTO, SkillKnowledge>();
             CreateMap<HRInterviewDTO, InterviewMarksWithSkillIDDTO>();
             CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
                     .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledgeDTO

@@ -45,7 +45,7 @@ namespace BLL.Services
         public void AddHRInterview(HRInterviewDTO hrInterviewDTO) //it doesn't work correctly, need to change
         {
             var interview = _mapper.Map<Interview>(hrInterviewDTO);
-            _db.Interviews.Save(interview);
+            _db.Interviews.SaveWithReturningID(interview);
             _db.Save();
         }
 

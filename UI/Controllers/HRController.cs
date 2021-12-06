@@ -58,6 +58,7 @@ namespace UI.Controllers
             var employee = await GetEmployee();
             hRInterview.EmployeeID = employee.Id;
             _interviewService.AddHRInterview(hRInterview);
+            var IntervID = hRInterview.ID;
 
             var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);// skillKnowledge aren't written to db table. save interview works correctly
             _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);

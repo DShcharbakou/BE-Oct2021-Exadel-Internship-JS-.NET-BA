@@ -3,6 +3,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Models;
 using DAL.Repositories;
+using DAL.Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,11 @@ namespace BLL.Services
             candidateSandbox.Grade = dto.Grade;
             _db.CandidatesSandboxes.Save(candidateSandbox);
             _db.Save();
+        }
+
+        public CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId)
+        {
+            return _mapper.Map<CandidateSandboxDTO>(_db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification()).Where(x => x.CandidateID == candidateId).FirstOrDefault());
         }
     }
 }

@@ -103,10 +103,8 @@ namespace BLL.Services
 
         public string GetLocationById(int cityId)
         {
-            var city = _db.Cities.Get(cityId);
-            var state = _db.States.Get(city.State_Id);
-            var country = _db.Countries.Get(state.Country_Id);
-            return $"{country.CountryName}, {state.StateName}, {city.CityName}";
+            var city = _db.Cities.FindWithSpecificationPattern(new CitySpecification()).FirstOrDefault(x => x.Id == cityId);
+            return $"{city.State.Country.CountryName}, {city.State.StateName}, {city.CityName}";
         }
 
         public List<CityDTO> GetAllCities()

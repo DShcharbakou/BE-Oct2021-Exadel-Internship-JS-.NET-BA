@@ -48,14 +48,15 @@ namespace UI.Controllers
             var employee = _employeeService.GetEmployeeByEmail(user.Email);
             var currentTeam = _internshipTeamService.GetInternshipTeamByEmployeeId(employee.Id);
             IEnumerable<CandidateDTO> candidates = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
-            return _mapper.Map<IEnumerable<CandidateDTO>, IEnumerable<CandidateForMentorList>>(candidates);
+            var mapped = _mapper.Map<IEnumerable<CandidateDTO>, IEnumerable<CandidateForMentorList>>(candidates);
+            return mapped;
         }
 
         [HttpGet("{id}/get-form")]
-        public CandidateForMentorDTO GetForm(int id)
+        public CandidateWithCommentsDTO GetForm(int id)
         {
             var candidate = _candidateService.GetCandidateByIdWithStatuses(id);
-            var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
+            var formData = _mapper.Map<CandidateWithCommentsDTO>(candidate);
             formData.Specialization = _directoryService.GetSpecializationById(candidate.SpecializationID).Name;
             formData.Location = _directoryService.GetLocationById(candidate.CityID);
             formData.EnglishLevel = _directoryService.GetEnglishLevelById(candidate.EnglishLevelID).LevelName;
@@ -65,7 +66,6 @@ namespace UI.Controllers
             return formData;
         }
 
-        
         [HttpPost("RegisterCandidate")]
         public IActionResult RegisterCandidate(CandidateDTO model)
         {
@@ -82,12 +82,13 @@ namespace UI.Controllers
 
         [HttpGet("get-candidates-for-tech")]
         [Authorize(Roles = "admin, techInterviewer")]
-        public async Task<IEnumerable<CandidateDTO>> GetCandidatesForTech()
+        public async Task<IEnumerable<CandidateForTechDTO>> GetCandidatesForTech()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var employee = _employeeService.GetEmployeeByEmail(user.Email);
             var candidates = _candidateService.GetAllCandidatesForCurrentTech(employee);
-            return candidates;
+            var mapped = _mapper.Map<IEnumerable<CandidateDTO>, IEnumerable<CandidateForTechDTO>>(candidates);
+            return mapped;
         }
 
 

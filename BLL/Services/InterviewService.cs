@@ -42,11 +42,12 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Interview>, List<InterviewDTO>>(_db.Interviews.GetAll());
         }
 
-        public void AddHRInterview(HRInterviewDTO hrInterviewDTO) //it doesn't work correctly, need to change
+        public int AddHRInterview(HRInterviewDTO hrInterviewDTO)
         {
             var interview = _mapper.Map<Interview>(hrInterviewDTO);
-            _db.Interviews.SaveWithReturningID(interview);
+            var intID = _db.Interviews.SaveWithReturningID(interview);
             _db.Save();
+            return intID;
         }
 
         public void SaveCommentForTech(TechSkillsDTO model)

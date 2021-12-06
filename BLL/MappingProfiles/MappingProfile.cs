@@ -83,7 +83,7 @@ namespace BLL.MappingProfiles
             CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
                     .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledgeDTO
                     {
-                       // InterviewID = sourse.ID.Value,
+                        InterviewID = sourse.ID.HasValue ? sourse.ID.Value : null,
                         Level = p.SkillLevel,
                         SkillID = p.SkillID
                     }));

@@ -5,6 +5,7 @@ using BLL.DTO;
 using AutoMapper;
 using DAL.Models;
 using System.Linq;
+using DAL.Repositories.Specifications;
 
 namespace BLL.Services
 {
@@ -46,6 +47,16 @@ namespace BLL.Services
         {
             var interview = _mapper.Map<Interview>(hrInterviewDTO);
             _db.Interviews.Save(interview);
+            _db.Save();
+            return interview.Id;
+        }
+        public int AddHRInterviewWithDecline(HRInterviewDTOWithDecline hrInterviewDTOWithDecline)
+        {
+            var interview = _mapper.Map<Interview>(hrInterviewDTOWithDecline);
+            _db.Interviews.Save(interview);
+            //var candSand = _db.Interviews.FindWithSpecificationPattern(new InterviewStatusSpecification()).FirstOrDefault(x => x.CandidateID == interview.CandidateID);
+            //var cand = candSand.Candidate.CandidateSandboxes.Where(x => x.Status.Id == hrInterviewDTOWithDecline.StatusID);
+            //hrInterviewDTOWithDecline.StatusID
             _db.Save();
             return interview.Id;
         }

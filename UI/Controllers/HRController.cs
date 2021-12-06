@@ -59,14 +59,22 @@ namespace UI.Controllers
             hRInterview.EmployeeID = employee.Id;
             hRInterview.ID = _interviewService.AddHRInterview(hRInterview);
 
-
             var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
             _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
         }
 
         [HttpPost("InterviewResultsWithDeclineStatus")]
-        public void Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
-        { }
+        public async Task Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
+        {
+            HRInterviewDTOWithDecline hRInterviewWithDecline = _mapper.Map<HRInterviewDTOWithDecline>(hrInterviewDTODecline);
+            var employee = await GetEmployee();
+            hRInterviewWithDecline.EmployeeID = employee.Id;
+            //hRInterviewWithDecline.StatusID
+            hRInterviewWithDecline.ID = _interviewService.AddHRInterview(hRInterviewWithDecline);
+
+            var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterviewWithDecline);
+            _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
+        }
 
         // PUT api/<HRController>/5
         [HttpPut("{id}")]

@@ -21,13 +21,15 @@ namespace UI.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IDirectoryService _directoryService;
+        private readonly ICandidateSandboxService _candidateSandboxService;
 
         public CandidateController(ICandidateService candidateService,
                                 IInternshipTeamService internshipTeamService,
                                 IEmployeeService employeeService,
                                 IMapper mapper,
                                 UserManager<User> userManager,
-                                IDirectoryService directoryService)
+                                IDirectoryService directoryService,
+                                ICandidateSandboxService candidateSandboxService)
         {
             _candidateService = candidateService;
             _userManager = userManager;
@@ -35,27 +37,31 @@ namespace UI.Controllers
             _internshipTeamService = internshipTeamService;
             _mapper = mapper;
             _directoryService = directoryService;
+            _candidateSandboxService = candidateSandboxService;
         }
 
         [HttpGet("get-candidates-for-mentor")]
         [Authorize(Roles = "admin, mentor")]
-        public async Task<IEnumerable<CandidateDTO>> GetCandidatesForMentor()
+        public async Task<IEnumerable<CandidateForMentorList>> GetCandidatesForMentor()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var employee = _employeeService.GetEmployeeByEmail(user.Email);
             var currentTeam = _internshipTeamService.GetInternshipTeamByEmployeeId(employee.Id);
             IEnumerable<CandidateDTO> candidates = _candidateService.GetCandidatesFromTeam(currentTeam.TeamNumber);
-            return candidates.ToList();
+            return _mapper.Map<IEnumerable<CandidateDTO>, IEnumerable<CandidateForMentorList>>(candidates);
         }
 
         [HttpGet("{id}/get-form")]
         public CandidateForMentorDTO GetForm(int id)
         {
-            var candidate = _candidateService.GetCandidateById(id);
+            var candidate = _candidateService.GetCandidateByIdWithStatuses(id);
             var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
             formData.Specialization = _directoryService.GetSpecializationById(candidate.SpecializationID).Name;
             formData.Location = _directoryService.GetLocationById(candidate.CityID);
             formData.EnglishLevel = _directoryService.GetEnglishLevelById(candidate.EnglishLevelID).LevelName;
+            var candidateSandbox = _candidateSandboxService.GetCandidateSandboxByCandidateId(id);
+            formData.CommentByMentor = candidateSandbox.Comment;
+            formData.Grade = candidateSandbox.Grade;
             return formData;
         }
 

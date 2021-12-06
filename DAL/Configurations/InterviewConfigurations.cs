@@ -18,7 +18,7 @@ namespace DAL.Configurations
             builder.HasOne(x => x.Employee)
                 .WithMany(x => x.Interviews)
                 .HasForeignKey(x => x.EmployeeID)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

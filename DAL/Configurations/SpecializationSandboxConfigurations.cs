@@ -15,7 +15,7 @@ namespace DAL.Configurations
                 .OnDelete(DeleteBehavior.NoAction); ;
 
             builder.HasOne(x => x.Specialization)
-                .WithMany(x => x.specializationSandboxes)
+                .WithMany(x => x.SpecializationSandboxes)
                 .HasForeignKey(x => x.SpecializationID)
                 .OnDelete(DeleteBehavior.NoAction);
 

@@ -70,6 +70,9 @@ namespace BLL.MappingProfiles
             
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
+
+            CreateMap<Status, StatusDTO>();
+            CreateMap<StatusDTO, Status>();
         }
     }
 }

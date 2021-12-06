@@ -12,6 +12,7 @@ namespace DAL.Models
         public string Skype { get; set; }
         public int SpecializationID { get; set; }
         public int CityID { get; set; }
+        public int CountryID { get; set; }
         public int EnglishLevelID { get; set; }
         public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }

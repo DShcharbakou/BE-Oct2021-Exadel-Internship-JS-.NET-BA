@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     {
         SpecializationDTO GetSpecializationById(int specializationId);
         List<SpecializationDTO> GetAllSpecializations();
+        void SaveSpecialization(List<SpecializationDTO> specializationsDto);
         EnglishLevelDTO GetEnglishLevelById(int englishLevelById);
         List<EnglishLevelDTO> GetAllEnglishLevels();
         SkillDirectoryDTO GetSkillById(int skillId);
@@ -22,8 +23,10 @@ namespace BLL.Interfaces
         StateDTO GetStateById(int stateId);
         List<StateDTO> GetAllStates();
         CityDTO GetCityById(int cityId);
+        string GetLocationById(int cityId);
         List<CityDTO> GetAllCities();
-        //StatusDTO GetStatusById(int statusId);
-        //List<StatusDTO> GetAllStatuses();
+        List<CityDTO> GetAllCitiesByCountryId(int countryId);
+        StatusDTO GetStatusById(int statusId);
+        List<StatusDTO> GetAllStatuses();
     }
 }

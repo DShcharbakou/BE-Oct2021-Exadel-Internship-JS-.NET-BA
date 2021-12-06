@@ -3,6 +3,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Models;
 using DAL.Repositories;
+using DAL.Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,19 @@ namespace BLL.Services
             return _mapper.Map<List<Specialization>, List<SpecializationDTO>>(_db.Specializations.GetAll().ToList());
         }
 
+        public void SaveSpecialization(List<SpecializationDTO> specializationsDto)
+        {
+            _db.Specializations.RemoveAll();
+            var specializations = new List<Specialization>();
+            foreach (var specializationDto in specializationsDto)
+            {
+                specializations.Add(_mapper.Map<Specialization>(specializationDto));
+            }
+
+            _db.Specializations.BulkSave(specializations);
+            _db.Save();
+        }
+
         public EnglishLevelDTO GetEnglishLevelById(int englishLevelById)
         {
             return _mapper.Map<EnglishLevel, EnglishLevelDTO>(_db.EnglishLevels.Get(englishLevelById));
@@ -39,8 +53,7 @@ namespace BLL.Services
 
         public List<EnglishLevelDTO> GetAllEnglishLevels()
         {
-            var t = _db.EnglishLevels.GetAll().ToList();
-            return _mapper.Map<List<EnglishLevel>, List<EnglishLevelDTO>>(t);
+            return _mapper.Map<List<EnglishLevel>, List<EnglishLevelDTO>>(_db.EnglishLevels.GetAll().ToList());
         }
 
         public SkillDirectoryDTO GetSkillById(int skillId)
@@ -88,19 +101,30 @@ namespace BLL.Services
             return _mapper.Map<City, CityDTO>(_db.Cities.Get(cityId));
         }
 
+        public string GetLocationById(int cityId)
+        {
+            var city = _db.Cities.FindWithSpecificationPattern(new CitySpecification()).FirstOrDefault(x => x.Id == cityId);
+            return $"{city.State.Country.CountryName}, {city.State.StateName}, {city.CityName}";
+        }
+
         public List<CityDTO> GetAllCities()
         {
             return _mapper.Map<List<City>, List<CityDTO>>(_db.Cities.GetAll().ToList());
         }
 
-        //public StatusDTO GetStatusById(int statusId)
-        //{
-        //    return _mapper.Map<Status, StatusDTO>(_db.Statuses.Get(statusId));
-        //}
+        public List<CityDTO> GetAllCitiesByCountryId(int countryId)
+        {
+            return _mapper.Map<List<City>, List<CityDTO>>(_db.Cities.FindWithSpecificationPattern(new CitySpecification()).Where(x => x.State.Country_Id == countryId).ToList());
+        }
 
-        //public List<StatusDTO> GetAllStatuses()
-        //{
-        //    return _mapper.Map<List<Status>, List<StatusDTO>>(_db.Statuses.GetAll().ToList());
-        //}
+        public StatusDTO GetStatusById(int statusId)
+        {
+            return _mapper.Map<Status, StatusDTO>(_db.Statuses.Get(statusId));
+        }
+
+        public List<StatusDTO> GetAllStatuses()
+        {
+            return _mapper.Map<List<Status>, List<StatusDTO>>(_db.Statuses.GetAll().ToList());
+        }
     }
 }

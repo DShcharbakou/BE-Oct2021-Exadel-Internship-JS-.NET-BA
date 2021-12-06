@@ -18,6 +18,7 @@ namespace BLL.DTO
         public string Skype { get; set; }
         public int SpecializationID { get; set; }
         public int CityID { get; set; }
+        public int CountryID { get; set; }
         public int EnglishLevelID { get; set; }
         public bool? IsInterviewedByHR { get; set; }
         public bool? IsInterviewedByTech { get; set; }

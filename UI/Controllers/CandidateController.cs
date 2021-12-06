@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 
 namespace UI.Controllers
 {
@@ -19,28 +18,23 @@ namespace UI.Controllers
         private readonly ICandidateService _candidateService;
         private readonly IEmployeeService _employeeService;
         private readonly IInternshipTeamService _internshipTeamService;
-        private readonly ISpecializationService _specializationService;
-        private readonly IEnglishLevelService _englishLevelService;
-        private readonly ICityService _cityService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly IDirectoryService _directoryService;
+
         public CandidateController(ICandidateService candidateService,
-                                ISpecializationService specializationService,
                                 IInternshipTeamService internshipTeamService,
                                 IEmployeeService employeeService,
-                                IEnglishLevelService englishLevelService,
-                                ICityService cityService,
                                 IMapper mapper,
-                                UserManager<User> userManager)
+                                UserManager<User> userManager,
+                                IDirectoryService directoryService)
         {
             _candidateService = candidateService;
             _userManager = userManager;
             _employeeService = employeeService;
             _internshipTeamService = internshipTeamService;
-            _specializationService = specializationService;
-            _englishLevelService = englishLevelService;
-            _cityService = cityService;
             _mapper = mapper;
+            _directoryService = directoryService;
         }
 
         [HttpGet("get-candidates-for-mentor")]
@@ -59,9 +53,9 @@ namespace UI.Controllers
         {
             var candidate = _candidateService.GetCandidateById(id);
             var formData = _mapper.Map<CandidateForMentorDTO>(candidate);
-            formData.Specialization = _specializationService.GetSpecializationById(candidate.ID);
-            formData.Location = _cityService.GetLocationById(candidate.ID);
-            formData.EnglishLevel = _englishLevelService.GetEnglishLevelById(candidate.ID);
+            formData.Specialization = _directoryService.GetSpecializationById(candidate.SpecializationID).Name;
+            formData.Location = _directoryService.GetLocationById(candidate.CityID);
+            formData.EnglishLevel = _directoryService.GetEnglishLevelById(candidate.EnglishLevelID).LevelName;
             return formData;
         }
 

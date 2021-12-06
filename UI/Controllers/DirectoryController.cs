@@ -102,16 +102,22 @@ namespace UI.Controllers
             return _directoryService.GetAllStates();
         }
 
-        //[HttpGet("GetStatusById/{id}")]
-        //public StatusDTO GetStatusById(int statusId)
-        //{
-        //    return _directoryService.GetStatusById(statusId);
-        //}
+        [HttpGet("GetAllCitiesByCountryId")]
+        public List<CityDTO> GetAllCitiesByCountryId(int countryId)
+        {
+            return _directoryService.GetAllCitiesByCountryId(countryId);
+        }
 
-        //[HttpGet("GetAllStatuses")]
-        //public List<StatusDTO> GetAllStatuses()
-        //{
-        //    return _directoryService.GetAllStatuses();
-        //}
+        [HttpGet("GetStatusById")]
+        public StatusDTO GetStatusById(int statusId)
+        {
+            return _directoryService.GetStatusById(statusId);
+        }
+
+        [HttpGet("GetAllStatuses")]
+        public List<StatusDTO> GetAllStatuses()
+        {
+            return _directoryService.GetAllStatuses();
+        }
     }
 }

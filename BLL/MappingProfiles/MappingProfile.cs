@@ -38,7 +38,7 @@ namespace BLL.MappingProfiles
             CreateMap<Sandbox, SandboxDTO>();
             CreateMap<SandboxDTO, Sandbox>();
 
-            CreateMap<CandidateDTO, CandidateForMentorDTO>();
+            CreateMap<CandidateDTO, CandidateWithCommentsDTO>();
 
             CreateMap<EnglishLevel, EnglishLevelDTO>();
             CreateMap<EnglishLevelDTO, EnglishLevel>();
@@ -74,6 +74,8 @@ namespace BLL.MappingProfiles
             CreateMap<Status, StatusDTO>();
             CreateMap<StatusDTO, Status>();
             CreateMap<CandidateDTO, CandidateForMentorList>();
+            CreateMap<CandidateDTO, CandidateDTOForGetAll>();
+            CreateMap<CandidateDTO, CandidateForTechDTO>();
         }
     }
 }

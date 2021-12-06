@@ -119,23 +119,10 @@ namespace BLL.Services
 
         public IEnumerable<CandidateDTO> GetAllCandidatesForCurrentTech(EmployeeDTO employee)
         {
-            var allInterviewWithCurrentTech = _db.Interviews.FindWithSpecificationPattern(new EmployeeSpecification()).Where(x=>x.EmployeeID == employee.Id).ToList();
-            List<int> candidatesIdWhereCurrentTech = new List<int>();
-            List<CandidateDTO> filteredList = new List<CandidateDTO>();
-            List<CandidateDTO> finalList = new List<CandidateDTO>();
-            foreach (var interview in allInterviewWithCurrentTech)
-            {
-                candidatesIdWhereCurrentTech.Add(_db.Candidates.Get(interview.CandidateID).Id);
-            }
-            var candidates = GetCandidatesWithStatusesInformation();
-            foreach (var c in candidates)
-            {
-                if (c.IsInterviewedByTech == false && c.Status != "Declined") { filteredList.Add(c); }
-            }
-            foreach (var cand in filteredList)
-            {
-                if (candidatesIdWhereCurrentTech.Contains(cand.ID)){ finalList.Add(cand); }
-            } return finalList;
+            var interviewQuery = _db.Interviews.FindWithSpecificationPattern().Where(x => x.EmployeeID == employee.Id);
+            var candidatesQuery = GetCandidatesWithStatusesInformation().Where(x => !x.IsInterviewedByTech.Value && x.Status != StatusType.Declined.ToString());
+            var candidatesDTOList = interviewQuery.Join(candidatesQuery, x => x.CandidateID, y => y.ID, (x, y) => y).ToList();
+            return candidatesDTOList;
         }
     }
 }

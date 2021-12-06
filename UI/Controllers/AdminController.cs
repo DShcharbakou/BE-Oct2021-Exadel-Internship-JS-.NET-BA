@@ -22,15 +22,18 @@ namespace UI.Controllers
     [Route("[controller]")]
     public class AdminController : Controller
     {
-        private IUserService _userService;
-        private ICandidateService _candidateService;
-        private ISpecializationService _SpecializationService;
+        private readonly IUserService _userService;
+        private readonly ICandidateService _candidateService;
+        private readonly IDirectoryService _directoryService;
 
-        public AdminController(IUserService UserService, ICandidateService candidateService, ISpecializationService SpecializationService)
+        public AdminController(
+            IUserService userService, 
+            ICandidateService candidateService,
+            IDirectoryService directoryService)
         {
-            _userService = UserService;
+            _userService = userService;
             _candidateService = candidateService;
-            _SpecializationService = SpecializationService;
+            _directoryService = directoryService;
         }
 
         [HttpPost("searchCandidates")]
@@ -54,13 +57,13 @@ namespace UI.Controllers
         [HttpGet("getAllSpecializations")]
         public IEnumerable<SpecializationDTO> GetAllSpecialization()
         {
-            return _SpecializationService.GetAllSpecialization();
+            return _directoryService.GetAllSpecializations();
         }
 
         [HttpPost("SaveSpecializations")]
         public void SaveAllSpecialization([FromBody] List<SpecializationDTO> specializations)
         {
-            _SpecializationService.SaveSpecialization(specializations);
+            _directoryService.SaveSpecialization(specializations);
         }
     }
 }

@@ -73,6 +73,7 @@ namespace BLL.MappingProfiles
 
             CreateMap<Status, StatusDTO>();
             CreateMap<StatusDTO, Status>();
+            CreateMap<CandidateDTO, CandidateForMentorList>();
         }
     }
 }

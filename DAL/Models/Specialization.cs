@@ -10,6 +10,6 @@ namespace DAL.Models
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public ICollection<SpecializationSandbox> specializationSandboxes { get; set; }
+        public ICollection<SpecializationSandbox> SpecializationSandboxes { get; set; }
     }
 }

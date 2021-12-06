@@ -11,13 +11,15 @@ namespace DAL.Configurations
         {
             builder.HasOne(x => x.CandidateSandbox)
                 .WithMany(x => x.SandboxTeams)
-                .HasForeignKey(x => x.CandidateSandboxID);
+                .HasForeignKey(x => x.CandidateSandboxID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.InternshipTeam)
                 .WithMany(x => x.SandboxTeams)
-                .HasForeignKey(x => x.TeamID);
+                .HasForeignKey(x => x.TeamID)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasKey(x => new { x.TeamID, x.CandidateSandboxID});
+            builder.HasKey(x => new { x.TeamID, x.CandidateSandboxID });
         }
     }
 }

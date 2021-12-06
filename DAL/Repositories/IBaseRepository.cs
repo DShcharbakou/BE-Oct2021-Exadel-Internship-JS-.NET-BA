@@ -11,6 +11,7 @@ namespace DAL.Repositories
         T Get(int id);
         IQueryable<T> FindWithSpecificationPattern(IBaseSpecifications<T> baseSpecifications = null);
         void Save(T model);
+        int SaveWithReturningID(T model);
         void BulkSave(IList<T> model);
         void RemoveAll();
         void Remove(T model);

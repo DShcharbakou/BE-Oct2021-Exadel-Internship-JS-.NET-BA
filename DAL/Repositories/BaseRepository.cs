@@ -46,18 +46,6 @@ namespace DAL.Repositories
                 _dbSet.Add(model);
             }
         }
-        public virtual int SaveWithReturningID(T model)
-        {
-            if (model.Id > 0)
-            {
-                _dbSet.Update(model);
-            }
-            else
-            {
-                _dbSet.Add(model);
-            }
-            return model.Id;
-        }
 
         public virtual void BulkSave(IList<T> model)
         {

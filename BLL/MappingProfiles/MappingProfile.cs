@@ -73,11 +73,6 @@ namespace BLL.MappingProfiles
             CreateMap<InterviewMarksWithSkillIDDTO, SkillKnowledgeDTO>();
             CreateMap<HRInterviewDTO, SkillKnowledgeDTO>();
 
-
-
-            //CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
-            //    .ConvertUsing<HRInterviewDTOConverter>();
-
             CreateMap<SkillKnowledgeDTO, SkillKnowledge>();
             CreateMap<HRInterviewDTO, InterviewMarksWithSkillIDDTO>();
             CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
@@ -90,34 +85,5 @@ namespace BLL.MappingProfiles
         }
 
     }
-
-    //public class SkillKnowledeWithMarksListDTOConverter : ITypeConverter<IEnumerable<HRInterviewDTO>, IEnumerable<SkillKnowledge>>
-    //{
-    //    public IEnumerable<SkillKnowledge> Convert(IEnumerable<HRInterviewDTO> source, IEnumerable<SkillKnowledge> destination, ResolutionContext context)
-    //    {
-    //        foreach (var item in source)
-    //        {
-    //            foreach (var item2 in context.Mapper.Map<IEnumerable<SkillKnowledge>>(item))
-    //            {
-    //                yield return item2;
-    //            }
-    //        }
-    //    }
-    //}
-
-        //class HRInterviewDTOConverter : ITypeConverter<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>
-        //{
-        //    public IEnumerable<SkillKnowledgeDTO> Convert(
-        //            HRInterviewDTO source,
-        //            IEnumerable<SkillKnowledgeDTO> destination,
-        //            ResolutionContext context)
-        //    {
-        //        foreach (var dto in source.Marks.Select(e => context.Mapper.Map<SkillKnowledgeDTO>(e)))
-        //        {
-        //            context.Mapper.Map(source, dto);
-        //            yield return dto;
-        //        }
-        //    }
-        //}
 }
 

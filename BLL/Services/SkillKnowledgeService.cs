@@ -27,8 +27,15 @@ namespace BLL.Services
             {
                 var skillKnowledge = _mapper.Map<SkillKnowledge>(skillKnowledgeDto);
                 var interview = _db.Interviews.FindWithSpecificationPattern(new InterviewsLevelsSpecification()).FirstOrDefault(x => x.Id == skillKnowledgeDto.InterviewID);
-                interview.SkillKnowledges.FirstOrDefault(x => x.SkillID == skillKnowledgeDto.SkillID).Level = skillKnowledgeDto.Level;
-                interview.SkillKnowledges.Add(skillKnowledge);
+                var temInterv = interview.SkillKnowledges.FirstOrDefault(x => x.SkillID == skillKnowledgeDto.SkillID);
+                if (temInterv != null)
+                {
+                    temInterv.Level = skillKnowledgeDto.Level;
+                }
+                else
+                {
+                    interview.SkillKnowledges.Add(skillKnowledge);
+                }
                 _db.Interviews.Save(interview);
                 _db.Save();
             }

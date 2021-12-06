@@ -60,7 +60,7 @@ namespace UI.Controllers
             hRInterview.ID = _interviewService.AddHRInterview(hRInterview);
 
 
-            var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);// skillKnowledge aren't written to db table. save interview works correctly
+            var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
             _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
         }
 

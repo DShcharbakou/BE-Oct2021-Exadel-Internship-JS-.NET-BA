@@ -45,9 +45,9 @@ namespace BLL.Services
         public int AddHRInterview(HRInterviewDTO hrInterviewDTO)
         {
             var interview = _mapper.Map<Interview>(hrInterviewDTO);
-            var intID = _db.Interviews.SaveWithReturningID(interview);
+            _db.Interviews.Save(interview);
             _db.Save();
-            return intID;
+            return interview.Id;
         }
 
         public void SaveCommentForTech(TechSkillsDTO model)

@@ -12,7 +12,8 @@ namespace DAL.Configurations
         {
             builder.HasOne(x => x.State)
                 .WithMany(x => x.Cities)
-                .HasForeignKey(x => x.State_Id);
+                .HasForeignKey(x => x.State_Id)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -163,17 +163,32 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Candidate>, IEnumerable<CandidateDTO>>(_db.Candidates.FindWithSpecificationPattern(new CandidatesSearchByAdmin(textSearch)));
         }
 
-        public IEnumerable<CandidateForTechDTO> GetAllCandidatesWithHrInterview()
+        private IQueryable<CandidateDTO> GetCandidatesWithStatusesForTech()
         {
             return _db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification())
-                .Select(x => new CandidateForTechDTO
+                .Select(x => new CandidateDTO
                 {
-                    Id = x.CandidateID,
+                    ID = x.CandidateID,
+                    Status = x.Status.Name,
                     FirstName = x.Candidate.FirstName,
                     LastName = x.Candidate.LastName,
+                    Email = x.Candidate.Email,
+                    Phone = x.Candidate.Phone,
+                    Skype = x.Candidate.Skype,
+                    SpecializationID = x.Candidate.SpecializationID,
+                    CityID = x.Candidate.CityID,
+                    EnglishLevelID = x.Candidate.EnglishLevelID,
                     IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
                     IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,
                 });
+        }
+
+        public IEnumerable<CandidateDTO> GetAllCandidatesForCurrentTech(EmployeeDTO employee)
+        {
+            var interviewQuery = _db.Interviews.FindWithSpecificationPattern().Where(x => x.EmployeeID == employee.Id);
+            var candidatesQuery = GetCandidatesWithStatusesForTech().Where(x => !x.IsInterviewedByTech.Value && x.Status != StatusType.Declined.ToString());
+            var candidatesDTOList = interviewQuery.Join(candidatesQuery, x => x.CandidateID, y => y.ID, (x, y) => y).ToList();
+            return candidatesDTOList;
         }
     }
 }

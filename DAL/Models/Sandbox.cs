@@ -12,5 +12,6 @@ namespace DAL.Models
         public DateTimeOffset EndDate { get; set; }
 
         public ICollection<CandidateSandbox> CandidateSandboxes { get; set; }
+        public ICollection<SpecializationSandbox> SpecializationSandboxes { get; set; }
     }
 }

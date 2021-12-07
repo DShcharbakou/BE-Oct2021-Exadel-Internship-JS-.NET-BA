@@ -12,11 +12,13 @@ namespace DAL.Configurations
         {
             builder.HasOne(x => x.Topic)
                 .WithMany(x => x.TopicSkills)
-                .HasForeignKey(x => x.TopicID);
+                .HasForeignKey(x => x.TopicID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.Skill)
                 .WithMany(x => x.TopicSkills)
-                .HasForeignKey(x => x.SkillID);
+                .HasForeignKey(x => x.SkillID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasKey(x => new { x.SkillID, x.TopicID });
         }

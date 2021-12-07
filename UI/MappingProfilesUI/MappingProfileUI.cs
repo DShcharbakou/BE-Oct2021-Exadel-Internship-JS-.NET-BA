@@ -17,7 +17,7 @@ namespace UI.MappingProfilesUI
             CreateMap<HRInterviewResults, HRInterviewDTO>();
             CreateMap<InterviewMarksWithSkillID, InterviewMarksWithSkillIDDTO>();
 
-            CreateMap<HRInterviewResultsWithDecline, HRInterviewDTOWithDecline>();
+            CreateMap<HRInterviewResultsWithStatus, HRInterviewDTOWithStatus>();
         }
     }
 }

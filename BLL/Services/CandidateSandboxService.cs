@@ -3,6 +3,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Models;
 using DAL.Repositories;
+using DAL.Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,24 @@ namespace BLL.Services
             candidateSandbox.Grade = dto.Grade;
             _db.CandidatesSandboxes.Save(candidateSandbox);
             _db.Save();
+        }
+
+        public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTODecline)
+        {
+
+            var candSand = _db.Interviews.FindWithSpecificationPattern(new InterviewStatusSpecification()).FirstOrDefault(x => x.CandidateID == hrInterviewDTODecline.CandidateID);
+            var cand = candSand.Candidate.CandidateSandboxes.FirstOrDefault(x => x.CandidateID == candSand.CandidateID);
+            if (cand != null)
+            {
+                cand.StatusID = hrInterviewDTODecline.StatusID;
+            }
+            else
+            {
+                candSand.Candidate.CandidateSandboxes.Add(cand);
+            }
+            _db.CandidatesSandboxes.Save(cand);
+            _db.Save();
+
         }
     }
 }

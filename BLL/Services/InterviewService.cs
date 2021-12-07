@@ -50,16 +50,6 @@ namespace BLL.Services
             _db.Save();
             return interview.Id;
         }
-        public int AddHRInterviewWithDecline(HRInterviewDTOWithDecline hrInterviewDTOWithDecline)
-        {
-            var interview = _mapper.Map<Interview>(hrInterviewDTOWithDecline);
-            _db.Interviews.Save(interview);
-            //var candSand = _db.Interviews.FindWithSpecificationPattern(new InterviewStatusSpecification()).FirstOrDefault(x => x.CandidateID == interview.CandidateID);
-            //var cand = candSand.Candidate.CandidateSandboxes.Where(x => x.Status.Id == hrInterviewDTOWithDecline.StatusID);
-            //hrInterviewDTOWithDecline.StatusID
-            _db.Save();
-            return interview.Id;
-        }
 
         public void SaveCommentForTech(TechSkillsDTO model)
         {

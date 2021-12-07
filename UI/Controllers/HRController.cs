@@ -25,15 +25,17 @@ namespace UI.Controllers
         readonly ICandidateService candidateService;
         readonly IInterviewService _interviewService;
         readonly ISkillKnowledgeService _skillKnowledgeService;
+        readonly ICandidateSandboxService _candidateSandboxService;
         
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
                UserManager<User> userManager, IEmployeeService employeeService,IInterviewService interviewService,
-               ISkillKnowledgeService skillKnowledgeService) : base(employeeService, mapper, userManager)
+               ISkillKnowledgeService skillKnowledgeService, ICandidateSandboxService candidateSandboxService) : base(employeeService, mapper, userManager)
         {
             candidateService = candidate;
             _interviewService = interviewService;
             _skillKnowledgeService = skillKnowledgeService;
+            _candidateSandboxService = candidateSandboxService;
         }
 
         // GET: api/<HRController>
@@ -64,16 +66,11 @@ namespace UI.Controllers
         }
 
         [HttpPost("InterviewResultsWithDeclineStatus")]
-        public async Task Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
+        public async Task Post([FromBody] HRInterviewDTOWithStatus hrInterviewDTODecline)
         {
-            HRInterviewDTOWithDecline hRInterviewWithDecline = _mapper.Map<HRInterviewDTOWithDecline>(hrInterviewDTODecline);
-            var employee = await GetEmployee();
-            hRInterviewWithDecline.EmployeeID = employee.Id;
-            //hRInterviewWithDecline.StatusID
-            hRInterviewWithDecline.ID = _interviewService.AddHRInterview(hRInterviewWithDecline);
+            await Post(hrInterviewDTODecline);
+            _candidateSandboxService.SetStatus(hrInterviewDTODecline);
 
-            var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterviewWithDecline);
-            _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
         }
 
         // PUT api/<HRController>/5

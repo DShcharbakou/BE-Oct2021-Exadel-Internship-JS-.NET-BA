@@ -40,13 +40,5 @@ namespace BLL.Services
                 _db.Save();
             }
         }
-
-
-        /* 
-                public IEnumerable<SkillKnowledgeDTO> GetList()
-                {
-                    return _mapper.Map<IEnumerable<SkillKnowledge>, List<SkillKnowledgeDTO>>(_db.SkillKnowledges.GetAll());
-                }     
-              */
     }
 }

@@ -10,8 +10,8 @@ namespace BLL.Interfaces
     public interface ICandidateSandboxService
     {
         IEnumerable<CandidateSandboxDTO> GetList();
-        //void AddCandidateSandbox(CandidateSandboxDTO candidateSandboxDTO);
         CandidateSandboxDTO GetCandidateSandboxById(int id);
         void AddGradeAndComment(CandidateSandboxDTO dto);
+        public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTODecline);
     }
 }

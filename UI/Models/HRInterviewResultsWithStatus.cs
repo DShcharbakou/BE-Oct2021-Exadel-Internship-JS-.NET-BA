@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class HRInterviewResultsWithDecline: HRInterviewResults
+    public class HRInterviewResultsWithStatus: HRInterviewResults
     {
        public int StatusID { get; set; }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-  public  class HRInterviewDTOWithDecline : HRInterviewDTO
+  public  class HRInterviewDTOWithStatus : HRInterviewDTO
     {
         public int StatusID { get; set; }
     }

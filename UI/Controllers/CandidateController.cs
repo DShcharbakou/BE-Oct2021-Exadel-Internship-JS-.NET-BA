@@ -21,15 +21,13 @@ namespace UI.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IDirectoryService _directoryService;
-        private readonly IFileService _fileService;
 
         public CandidateController(ICandidateService candidateService,
                                 IInternshipTeamService internshipTeamService,
                                 IEmployeeService employeeService,
                                 IMapper mapper,
                                 UserManager<User> userManager,
-                                IDirectoryService directoryService,
-                                IFileService fileService)
+                                IDirectoryService directoryService)
         {
             _candidateService = candidateService;
             _userManager = userManager;
@@ -37,7 +35,6 @@ namespace UI.Controllers
             _internshipTeamService = internshipTeamService;
             _mapper = mapper;
             _directoryService = directoryService;
-            _fileService = fileService;
         }
 
         [HttpGet("get-candidates-for-mentor")]

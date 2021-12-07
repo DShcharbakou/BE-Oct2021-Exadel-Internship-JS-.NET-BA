@@ -13,7 +13,6 @@ namespace BLL.Interfaces
         List<CandidateDTOForGetAll> GetAllCandidatesWithStatuses();
         CandidateDTO GetCandidateByIdWithStatuses(int? id);
         int AddCandidate(CandidateDTO formData);
-        CandidateDTO GetCandidateByIdWithStatuses(int id);
         void SaveCV(AddFileDTO model);
         string GetDocumentUrl(int candidateId);
         void DeleteCandidate(int id);

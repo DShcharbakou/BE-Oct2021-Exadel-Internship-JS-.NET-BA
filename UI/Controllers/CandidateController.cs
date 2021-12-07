@@ -93,6 +93,11 @@ namespace UI.Controllers
             return mapped;
         }
 
-
+        [HttpPost("SaveCV")]
+        public IActionResult SaveCV(AddFileDTO model)
+        {
+            _candidateService.SaveCV(model);
+            return Ok();
+        }
     }
 }

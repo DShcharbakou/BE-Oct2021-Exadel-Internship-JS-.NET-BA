@@ -24,6 +24,5 @@ namespace BLL.DTO
         public bool? IsInterviewedByTech { get; set; }
         public string Status { get; set; }
         public int SandboxCount { get; set; }
-        
     }
 }

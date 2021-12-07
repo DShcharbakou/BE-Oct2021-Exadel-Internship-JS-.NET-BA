@@ -16,6 +16,7 @@ namespace DAL.Models
         public int EnglishLevelID { get; set; }
         public DateTimeOffset RegDate { get; set; }
         public bool IsArchived { get; set; }
+        public string FileUrl { get; set; }
 
         public ICollection<Interview> Interviews { get; set; }
 

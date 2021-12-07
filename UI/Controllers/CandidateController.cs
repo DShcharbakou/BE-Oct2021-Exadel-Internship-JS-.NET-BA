@@ -21,13 +21,15 @@ namespace UI.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IDirectoryService _directoryService;
+        private readonly IFileService _fileService;
 
         public CandidateController(ICandidateService candidateService,
                                 IInternshipTeamService internshipTeamService,
                                 IEmployeeService employeeService,
                                 IMapper mapper,
                                 UserManager<User> userManager,
-                                IDirectoryService directoryService)
+                                IDirectoryService directoryService,
+                                IFileService fileService)
         {
             _candidateService = candidateService;
             _userManager = userManager;
@@ -35,6 +37,7 @@ namespace UI.Controllers
             _internshipTeamService = internshipTeamService;
             _mapper = mapper;
             _directoryService = directoryService;
+            _fileService = fileService;
         }
 
         [HttpGet("get-candidates-for-mentor")]
@@ -79,6 +82,13 @@ namespace UI.Controllers
         public List<CandidateForTechDTO> GetCandidatesForTech()
         {
             return _candidateService.GetAllCandidatesWithHrInterview().ToList();
+        }
+
+        [HttpPost("SaveCV")]
+        public IActionResult SaveCV(AddFileDTO model)
+        {
+            _candidateService.SaveCV(model);
+            return Ok();
         }
     }
 }

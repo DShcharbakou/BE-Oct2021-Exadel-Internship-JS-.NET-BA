@@ -13,5 +13,6 @@ namespace BLL.Interfaces
         //void AddCandidateSandbox(CandidateSandboxDTO candidateSandboxDTO);
         CandidateSandboxDTO GetCandidateSandboxById(int id);
         void AddGradeAndComment(CandidateSandboxDTO dto);
+        CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId);
     }
 }

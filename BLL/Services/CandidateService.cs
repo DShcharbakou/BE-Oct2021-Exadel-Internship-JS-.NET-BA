@@ -11,18 +11,23 @@ using System.Text.RegularExpressions;
 using DAL.Repositories.Specifications;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace BLL.Services
 {
     public class CandidateService : ICandidateService
     {
+        public const string DocumentsUrlFolder = "/documents/";
         private readonly IUnitOfWork _db;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CandidateService(IUnitOfWork db, IMapper mapper)
+        public CandidateService(IUnitOfWork db, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public void AddCandidate(CandidateDTO formData)
@@ -31,6 +36,42 @@ namespace BLL.Services
             candidate.RegDate = DateTime.Now;
             _db.Candidates.Save(candidate);
             _db.Save();
+        }
+
+        public async void SaveCV(AddFileDTO model)
+        {
+            var candidate = GetCandidateDALById(model.CandidateId);
+
+            if (model.AddedFile != null)
+            {
+                var webPath = _webHostEnvironment.WebRootPath;
+
+                var path = Path.Combine(webPath, "documents");
+                if (Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                var pathTo = Path.Combine(path, $"{model.CandidateId}.pdf");
+
+                using (var fileStream = new FileStream(pathTo, FileMode.OpenOrCreate))
+                {
+                    await model.AddedFile.CopyToAsync(fileStream);
+                }
+                
+                candidate.FileUrl = $"{DocumentsUrlFolder}{model.CandidateId}.pdf";
+            }
+
+            _db.Candidates.Save(candidate);
+            _db.Save();
+        }
+
+        public string GetDocumentUrl(int candidateId)
+        {
+            var documentUrl = _db.Candidates.Get(candidateId)?.FileUrl;
+            return !string.IsNullOrWhiteSpace(documentUrl)
+                ? documentUrl
+                : "";
         }
 
         public void DeleteCandidate(int id)
@@ -61,6 +102,11 @@ namespace BLL.Services
         public CandidateDTO GetCandidateById(int id)
         {
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
+        }
+
+        public Candidate GetCandidateDALById(int candidateId)
+        {
+            return _db.Candidates.Get(candidateId);
         }
 
         private int GetCountOfSandboxes(int candidateID)

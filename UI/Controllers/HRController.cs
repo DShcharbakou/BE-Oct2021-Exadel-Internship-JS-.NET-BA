@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.DTO;
 using BLL.Interfaces;
+using BLL.MappingProfiles;
 using BLL.Services;
 using DAL;
 using DAL.Models;
@@ -23,20 +24,22 @@ namespace UI.Controllers
 
         readonly ICandidateService candidateService;
         readonly IInterviewService _interviewService;
-       
+        readonly ISkillKnowledgeService _skillKnowledgeService;
+        
 
         public HRController(IUnitOfWork db,IMapper mapper, ICandidateService candidate,
-               UserManager<User> userManager, IEmployeeService employeeService, IInterviewService interviewService) : base(employeeService, mapper, userManager)
+               UserManager<User> userManager, IEmployeeService employeeService,IInterviewService interviewService,
+               ISkillKnowledgeService skillKnowledgeService) : base(employeeService, mapper, userManager)
         {
             candidateService = candidate;
             _interviewService = interviewService;
+            _skillKnowledgeService = skillKnowledgeService;
         }
 
         // GET: api/<HRController>
         [HttpGet("GetAllCandidates")]
         public List<CandidateDTOForGetAll> Get()
         {
-            //var employee = GetEmployee();
             return candidateService.GetAllCandidatesWithStatuses();
         }
 
@@ -49,17 +52,29 @@ namespace UI.Controllers
         
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
-        public async Task Post([FromBody] HRInterviewResults hrInterviewresult) //it doesn't work correctly, need to change
+        public async Task Post([FromBody] HRInterviewResults hrInterviewResultsUI)
         {
-            HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewresult);
+            HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewResultsUI);
             var employee = await GetEmployee();
             hRInterview.EmployeeID = employee.Id;
-            _interviewService.AddHRInterview(hRInterview);
+            hRInterview.ID = _interviewService.AddHRInterview(hRInterview);
+
+            var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
+            _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
         }
 
         [HttpPost("InterviewResultsWithDeclineStatus")]
-        public void Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
-        { }
+        public async Task Post([FromBody] HRInterviewDTOWithDecline hrInterviewDTODecline)
+        {
+            HRInterviewDTOWithDecline hRInterviewWithDecline = _mapper.Map<HRInterviewDTOWithDecline>(hrInterviewDTODecline);
+            var employee = await GetEmployee();
+            hRInterviewWithDecline.EmployeeID = employee.Id;
+            //hRInterviewWithDecline.StatusID
+            hRInterviewWithDecline.ID = _interviewService.AddHRInterview(hRInterviewWithDecline);
+
+            var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterviewWithDecline);
+            _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
+        }
 
         // PUT api/<HRController>/5
         [HttpPut("{id}")]

@@ -8,6 +8,6 @@ namespace BLL.DTO
 {
   public  class HRInterviewDTOWithDecline : HRInterviewDTO
     {
-        public string Status { get; set; }
+        public int StatusID { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace BLL.Util
             services.AddTransient<ICandidateSandboxService, CandidateSandboxService>();
             services.AddScoped<IDirectoryService, DirectoryService>();
             services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
+            services.AddScoped<ISkillKnowledgeService, SkillKnowledgeService>();
             DIConfigurationDal.ConfigureServices(services);
         }
     }

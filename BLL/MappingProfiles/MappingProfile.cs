@@ -15,8 +15,8 @@ namespace BLL.MappingProfiles
         public MappingProfile()
         {
             CreateMap<Candidate, CandidateDTO>();
-              /*  .ForMember(cd => cd.ID,
-                 cd => cd.MapFrom(cd => cd.Id);*/
+            /*  .ForMember(cd => cd.ID,
+               cd => cd.MapFrom(cd => cd.Id);*/
             CreateMap<CandidateDTO, Candidate>();
 
 
@@ -65,11 +65,23 @@ namespace BLL.MappingProfiles
                 .ForMember(cd => cd.Id,
                            cd => cd.MapFrom(cd => cd.Id));
             CreateMap<EnglishLevelDTO, EnglishLevel>();
-
-            CreateMap<HRInterviewDTO, Interview>();
-            
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
+
+            CreateMap<HRInterviewDTO, Interview>();
+
+            CreateMap<InterviewMarksWithSkillIDDTO, SkillKnowledgeDTO>();
+            CreateMap<HRInterviewDTO, SkillKnowledgeDTO>();
+
+            CreateMap<SkillKnowledgeDTO, SkillKnowledge>();
+            CreateMap<HRInterviewDTO, InterviewMarksWithSkillIDDTO>();
+            CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
+                    .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledgeDTO
+                    {
+                        InterviewID = sourse.ID.HasValue ? sourse.ID.Value : null,
+                        Level = p.SkillLevel,
+                        SkillID = p.SkillID
+                    }));
 
             CreateMap<Status, StatusDTO>();
             CreateMap<StatusDTO, Status>();
@@ -77,5 +89,7 @@ namespace BLL.MappingProfiles
             CreateMap<CandidateDTO, CandidateDTOForGetAll>();
             CreateMap<CandidateDTO, CandidateForTechDTO>();
         }
+
     }
 }
+

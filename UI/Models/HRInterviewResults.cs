@@ -9,10 +9,7 @@ namespace UI.Models
     {
         public DateTimeOffset DateOfInterview { get; set; }
         public int CandidateID { get; set; }
-        public int EnglishLevelMark { get; set; }
-        public int CommunicationSkillsMark { get; set; }
-        public int AbilityToListenMark { get; set; }
-        public int SelfConfidenceMark { get; set; }
+        public List<InterviewMarksWithSkillID> Marks { get; set; }
         public string Comment { get; set; }
     }
 }

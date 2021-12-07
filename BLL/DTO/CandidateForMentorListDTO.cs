@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class CandidateForTechDTO
+    public class CandidateForMentorList
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Status { get; set; }
+        public int SandboxCount { get; set; }
     }
 }

@@ -12,6 +12,9 @@ namespace BLL.Interfaces
         IEnumerable<CandidateSandboxDTO> GetList();
         CandidateSandboxDTO GetCandidateSandboxById(int id);
         void AddGradeAndComment(CandidateSandboxDTO dto);
+
         public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTODecline);
+
+        CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId);
     }
 }

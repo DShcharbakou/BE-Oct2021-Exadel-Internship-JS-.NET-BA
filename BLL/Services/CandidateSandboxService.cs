@@ -25,7 +25,7 @@ namespace BLL.Services
 
         public IEnumerable<CandidateSandboxDTO> GetList()
         {
-            return _mapper.Map<IEnumerable<CandidateSandbox>, IEnumerable <CandidateSandboxDTO>>(_db.CandidatesSandboxes.GetAll());
+            return _mapper.Map<IEnumerable<CandidateSandbox>, IEnumerable<CandidateSandboxDTO>>(_db.CandidatesSandboxes.GetAll());
         }
 
         public CandidateSandboxDTO GetCandidateSandboxById(int id)
@@ -58,7 +58,10 @@ namespace BLL.Services
             }
             _db.CandidatesSandboxes.Save(cand);
             _db.Save();
-
+        }
+            public CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId)
+            {
+                return _mapper.Map<CandidateSandboxDTO>(_db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification()).Where(x => x.CandidateID == candidateId).FirstOrDefault());
+            }
         }
     }
-}

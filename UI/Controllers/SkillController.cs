@@ -33,7 +33,7 @@ namespace UI.Controllers
             return _skillService.GetSkillById(id);
         }
 
-        [HttpGet("{id}/get-soft-skills")]
+        [HttpGet("{id}/get-soft-skills-with-comment")]
         public SoftSkillsDTO GetSoftSkillsWithCommentsBy(int id)
         {
             var softSkills = _skillService.GetSoftSkills(id);

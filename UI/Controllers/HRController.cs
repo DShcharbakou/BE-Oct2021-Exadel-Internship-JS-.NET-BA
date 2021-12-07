@@ -59,13 +59,6 @@ namespace UI.Controllers
         public async Task Post([FromBody] HRInterviewResults hrInterviewResultsUI)
         {
             await SetInterviewAndSkillKnowledges(hrInterviewResultsUI);
-            //HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewResultsUI);
-            //var employee = await GetEmployee();
-            //hRInterview.EmployeeID = employee.Id;
-            //hRInterview.ID = _interviewService.AddHRInterview(hRInterview);
-
-            //var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
-            //_skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
         }
 
         [Authorize]
@@ -75,7 +68,6 @@ namespace UI.Controllers
             await SetInterviewAndSkillKnowledges(hrInterviewDTODecline);
             var hRInterviewWithStatus = _mapper.Map<HRInterviewDTOWithStatus>(hrInterviewDTODecline);
             _candidateSandboxService.SetStatus(hRInterviewWithStatus);
-
         }
 
         private async Task SetInterviewAndSkillKnowledges(HRInterviewResults hrInterviewResultsUI)

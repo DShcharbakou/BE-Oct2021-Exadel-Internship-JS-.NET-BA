@@ -87,6 +87,8 @@ namespace BLL.MappingProfiles
             CreateMap<CandidateDTO, CandidateForMentorList>();
             CreateMap<CandidateDTO, CandidateDTOForGetAll>();
             CreateMap<CandidateDTO, CandidateForTechDTO>();
+
+            CreateMap<CandidateDTO, CandidateSandbox>();
         }
 
     }

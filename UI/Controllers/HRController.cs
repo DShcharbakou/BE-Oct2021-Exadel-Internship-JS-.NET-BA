@@ -6,6 +6,7 @@ using BLL.Services;
 using DAL;
 using DAL.Models;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,10 +52,33 @@ namespace UI.Controllers
         {
             return candidateService.GetCandidateByIdWithStatuses(id);
         }
-        
+
+        [Authorize]
         // POST api/<HRController>
         [HttpPost("InterviewResults")]
         public async Task Post([FromBody] HRInterviewResults hrInterviewResultsUI)
+        {
+            await SetInterviewAndSkillKnowledges(hrInterviewResultsUI);
+            //HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewResultsUI);
+            //var employee = await GetEmployee();
+            //hRInterview.EmployeeID = employee.Id;
+            //hRInterview.ID = _interviewService.AddHRInterview(hRInterview);
+
+            //var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
+            //_skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
+        }
+
+        [Authorize]
+        [HttpPost("InterviewResultsWithDeclineStatus")]
+        public async Task Post([FromBody] HRInterviewResultsWithStatus hrInterviewDTODecline)
+        {
+            await SetInterviewAndSkillKnowledges(hrInterviewDTODecline);
+            var hRInterviewWithStatus = _mapper.Map<HRInterviewDTOWithStatus>(hrInterviewDTODecline);
+            _candidateSandboxService.SetStatus(hRInterviewWithStatus);
+
+        }
+
+        private async Task SetInterviewAndSkillKnowledges(HRInterviewResults hrInterviewResultsUI)
         {
             HRInterviewDTO hRInterview = _mapper.Map<HRInterviewDTO>(hrInterviewResultsUI);
             var employee = await GetEmployee();
@@ -63,14 +87,6 @@ namespace UI.Controllers
 
             var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
             _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
-        }
-
-        [HttpPost("InterviewResultsWithDeclineStatus")]
-        public async Task Post([FromBody] HRInterviewDTOWithStatus hrInterviewDTODecline)
-        {
-            await Post(hrInterviewDTODecline);
-            _candidateSandboxService.SetStatus(hrInterviewDTODecline);
-
         }
 
         // PUT api/<HRController>/5

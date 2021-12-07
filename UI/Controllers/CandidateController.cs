@@ -71,8 +71,10 @@ namespace UI.Controllers
         {
             if (_candidateService.FindCandidates(model.Email).Count() < 1)
             {
-                _candidateService.AddCandidate(model);
+                model.ID = _candidateService.AddCandidate(model);
+                _candidateSandboxService.AddCandidateSandbox(model);
                 return Ok();
+                
             }
             else
             {

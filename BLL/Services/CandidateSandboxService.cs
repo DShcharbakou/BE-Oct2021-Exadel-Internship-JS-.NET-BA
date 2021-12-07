@@ -43,25 +43,37 @@ namespace BLL.Services
             _db.Save();
         }
 
-        public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTODecline)
+        public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTOWithStatus)
         {
 
-            var candSand = _db.Interviews.FindWithSpecificationPattern(new InterviewStatusSpecification()).FirstOrDefault(x => x.CandidateID == hrInterviewDTODecline.CandidateID);
-            var cand = candSand.Candidate.CandidateSandboxes.FirstOrDefault(x => x.CandidateID == candSand.CandidateID);
+            var interview = _db.Interviews.FindWithSpecificationPattern(new InterviewStatusSpecification()).FirstOrDefault(x => x.CandidateID == hrInterviewDTOWithStatus.CandidateID);
+            var cand = interview.Candidate.CandidateSandboxes.FirstOrDefault(x => x.CandidateID == interview.CandidateID);
+            //var candSand = interview. 
+
             if (cand != null)
             {
-                cand.StatusID = hrInterviewDTODecline.StatusID;
+                cand.StatusID = hrInterviewDTOWithStatus.StatusID;
             }
             else
             {
-                candSand.Candidate.CandidateSandboxes.Add(cand);
+                interview.Candidate.CandidateSandboxes.Add(cand);
             }
             _db.CandidatesSandboxes.Save(cand);
             _db.Save();
         }
-            public CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId)
-            {
-                return _mapper.Map<CandidateSandboxDTO>(_db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification()).Where(x => x.CandidateID == candidateId).FirstOrDefault());
-            }
+        public CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId)
+         {
+           return _mapper.Map<CandidateSandboxDTO>(_db.CandidatesSandboxes.FindWithSpecificationPattern(new CandidateForHRSpecification()).Where(x => x.CandidateID == candidateId).FirstOrDefault());
+         }
+
+        public void AddCandidateSandbox(CandidateDTO candidateDto)
+        {
+            var sandbox = _mapper.Map<CandidateSandbox>(candidateDto);
+            sandbox.SandboxID = _db.Sandboxes.FindWithSpecificationPattern(new SandboxForCandidateSandboxSpecification()).FirstOrDefault().Id;
+            _db.CandidatesSandboxes.Save(sandbox);
+            _db.Save();
+            //FindWithSpecificationPattern(new SandboxForCandidateSandboxSpecification())
         }
+        
+    }
     }

@@ -16,5 +16,6 @@ namespace BLL.Interfaces
         public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTODecline);
 
         CandidateSandboxDTO GetCandidateSandboxByCandidateId(int candidateId);
+        public void AddCandidateSandbox(CandidateDTO candidateDto);
     }
 }

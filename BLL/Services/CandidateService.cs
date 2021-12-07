@@ -25,12 +25,14 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public void AddCandidate(CandidateDTO formData)
+        public int AddCandidate(CandidateDTO formData)
         {
             var candidate = _mapper.Map<Candidate>(formData);
             candidate.RegDate = DateTime.Now;
             _db.Candidates.Save(candidate);
             _db.Save();
+
+            return candidate.Id;
         }
 
         public void DeleteCandidate(int id)
@@ -52,7 +54,7 @@ namespace BLL.Services
             return _mapper.Map<List<Candidate>, List<CandidateDTO>>(_db.Candidates.GetAll().ToList());
         }
 
-        public CandidateDTO GetCandidateByIdWithStatuses(int id)
+        public CandidateDTO GetCandidateByIdWithStatuses(int? id)
         {
             var result = GetCandidatesWithStatusesInformation().FirstOrDefault(x => x.ID == id);
             result.SandboxCount = GetCountOfSandboxes(result.ID);
@@ -63,7 +65,7 @@ namespace BLL.Services
             return _mapper.Map<Candidate, CandidateDTO>(_db.Candidates.Get(id));
         }
 
-        private int GetCountOfSandboxes(int candidateID)
+        private int GetCountOfSandboxes(int? candidateID)
         {
             return _db.CandidatesSandboxes.GetAll().Where(x => x.CandidateID == candidateID).Count();
         }
@@ -87,6 +89,7 @@ namespace BLL.Services
                     Skype = x.Candidate.Skype,
                     SpecializationID = x.Candidate.SpecializationID,
                     CityID = x.Candidate.CityID,
+                    CountryID = x.Candidate.CountryID,
                     EnglishLevelID = x.Candidate.EnglishLevelID,
                     IsInterviewedByHR = x.Candidate.Interviews.Count() > 0,
                     IsInterviewedByTech = x.Candidate.Interviews.Count() > 1,

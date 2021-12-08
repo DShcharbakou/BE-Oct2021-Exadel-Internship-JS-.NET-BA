@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-  public  class HRInterviewDTOWithDecline : HRInterviewDTO
+    public class CandidateSandboxForSetDTO
     {
-        public string Status { get; set; }
+        public int CandidateID { get; set; }
+        public int? SandboxID { get; set; }
     }
 }

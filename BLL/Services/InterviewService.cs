@@ -5,6 +5,7 @@ using BLL.DTO;
 using AutoMapper;
 using DAL.Models;
 using System.Linq;
+using DAL.Repositories.Specifications;
 
 namespace BLL.Services
 {
@@ -42,11 +43,12 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<Interview>, List<InterviewDTO>>(_db.Interviews.GetAll());
         }
 
-        public void AddHRInterview(HRInterviewDTO hrInterviewDTO) //it doesn't work correctly, need to change
+        public int AddHRInterview(HRInterviewDTO hrInterviewDTO)
         {
             var interview = _mapper.Map<Interview>(hrInterviewDTO);
             _db.Interviews.Save(interview);
             _db.Save();
+            return interview.Id;
         }
 
         public void SaveCommentForTech(TechSkillsDTO model)

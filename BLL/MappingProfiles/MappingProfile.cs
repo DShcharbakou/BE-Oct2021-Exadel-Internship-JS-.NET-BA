@@ -15,10 +15,7 @@ namespace BLL.MappingProfiles
         public MappingProfile()
         {
             CreateMap<Candidate, CandidateDTO>();
-              /*  .ForMember(cd => cd.ID,
-                 cd => cd.MapFrom(cd => cd.Id);*/
             CreateMap<CandidateDTO, Candidate>();
-
 
             CreateMap<EmployeeDTO, Employee>();
             CreateMap<Employee, EmployeeDTO>();
@@ -65,17 +62,40 @@ namespace BLL.MappingProfiles
                 .ForMember(cd => cd.Id,
                            cd => cd.MapFrom(cd => cd.Id));
             CreateMap<EnglishLevelDTO, EnglishLevel>();
-
-            CreateMap<HRInterviewDTO, Interview>();
-            
             CreateMap<Specialization, SpecializationDTO>();
             CreateMap<SpecializationDTO, Specialization>();
 
+            CreateMap<HRInterviewDTO, Interview>();
+
+            CreateMap<InterviewMarksWithSkillIDDTO, SkillKnowledgeDTO>();
+            CreateMap<HRInterviewDTO, SkillKnowledgeDTO>();
+
+            CreateMap<SkillKnowledgeDTO, SkillKnowledge>();
+            CreateMap<HRInterviewDTO, InterviewMarksWithSkillIDDTO>();
+            CreateMap<HRInterviewDTO, IEnumerable<SkillKnowledgeDTO>>()
+                    .ConvertUsing(sourse => sourse.Marks.Select(p => new SkillKnowledgeDTO
+                    {
+                        InterviewID = sourse.ID.HasValue ? sourse.ID.Value : null,
+                        Level = p.SkillLevel,
+                        SkillID = p.SkillID
+                    }));
+
             CreateMap<Status, StatusDTO>();
             CreateMap<StatusDTO, Status>();
+
+            //CreateMap<HRInterviewDTOWithStatus, SkillKnowledgeDTO>();
             CreateMap<CandidateDTO, CandidateForMentorList>();
             CreateMap<CandidateDTO, CandidateDTOForGetAll>();
             CreateMap<CandidateDTO, CandidateForTechDTO>();
+
+            CreateMap<CandidateDTO, CandidateSandboxForSetDTO>()
+                .ForMember(dest => dest.CandidateID,
+                 opt => opt.MapFrom(src => src.ID));
+
+            CreateMap<CandidateSandboxForSetDTO, CandidateSandbox>();
+
         }
+
     }
 }
+

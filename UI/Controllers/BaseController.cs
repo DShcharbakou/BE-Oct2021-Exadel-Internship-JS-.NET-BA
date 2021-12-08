@@ -26,7 +26,6 @@ namespace UI.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
         protected async Task<EmployeeDTO> GetEmployee()
         {
             var user =  await _userManager.FindByNameAsync(User.Identity.Name);

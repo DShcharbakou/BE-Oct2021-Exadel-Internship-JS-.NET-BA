@@ -25,15 +25,18 @@ namespace UI.Controllers
         private readonly IUserService _userService;
         private readonly ICandidateService _candidateService;
         private readonly IDirectoryService _directoryService;
+        private readonly ICandidateSandboxService _candidateSandboxService;
 
         public AdminController(
             IUserService userService, 
             ICandidateService candidateService,
-            IDirectoryService directoryService)
+            IDirectoryService directoryService,
+            ICandidateSandboxService candidateSandboxService)
         {
             _userService = userService;
             _candidateService = candidateService;
             _directoryService = directoryService;
+            _candidateSandboxService = candidateSandboxService;
         }
 
         [HttpPost("searchCandidates")]
@@ -64,6 +67,11 @@ namespace UI.Controllers
         public void SaveAllSpecialization([FromBody] List<SpecializationDTO> specializations)
         {
             _directoryService.SaveSpecialization(specializations);
+        }
+        [HttpPost("SetCandidateStatus")]
+        public void SetCandidateStatus([FromBody] CandidateDTO candidateDTO, int statusID)
+        {
+            _candidateSandboxService.SetStatus(candidateDTO, statusID);
         }
     }
 }

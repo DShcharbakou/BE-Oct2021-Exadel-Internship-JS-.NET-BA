@@ -67,7 +67,7 @@ namespace UI.Controllers
         {
             await SetInterviewAndSkillKnowledges(hrInterviewDTODecline);
             var hRInterviewWithStatus = _mapper.Map<HRInterviewDTOWithStatus>(hrInterviewDTODecline);
-            _candidateSandboxService.SetStatus(hRInterviewWithStatus);
+            _candidateSandboxService.SetStatusAfterHrInterview(hRInterviewWithStatus);
         }
 
         private async Task SetInterviewAndSkillKnowledges(HRInterviewResults hrInterviewResultsUI)

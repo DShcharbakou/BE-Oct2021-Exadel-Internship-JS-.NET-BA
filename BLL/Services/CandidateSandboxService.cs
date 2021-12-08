@@ -45,18 +45,15 @@ namespace BLL.Services
 
         public void SetStatus(HRInterviewDTOWithStatus hrInterviewDTOWithStatus)
         {
-
             var interview = _db.Interviews.FindWithSpecificationPattern(new InterviewStatusSpecification()).FirstOrDefault(x => x.CandidateID == hrInterviewDTOWithStatus.CandidateID);
             var cand = interview.Candidate.CandidateSandboxes.FirstOrDefault(x => x.CandidateID == interview.CandidateID);
-            //var candSand = interview. 
-
-            if (cand != null)
+            if (cand.StatusID == null)
             {
                 cand.StatusID = hrInterviewDTOWithStatus.StatusID;
             }
             else
             {
-                interview.Candidate.CandidateSandboxes.Add(cand);
+
             }
             _db.CandidatesSandboxes.Save(cand);
             _db.Save();
@@ -68,11 +65,11 @@ namespace BLL.Services
 
         public void AddCandidateSandbox(CandidateDTO candidateDto)
         {
-            var sandbox = _mapper.Map<CandidateSandbox>(candidateDto);
-            sandbox.SandboxID = _db.Sandboxes.FindWithSpecificationPattern(new SandboxForCandidateSandboxSpecification()).FirstOrDefault().Id;
+            var sandboxDto = _mapper.Map<CandidateSandboxForSetDTO>(candidateDto);
+            sandboxDto.SandboxID = _db.Sandboxes.FindWithSpecificationPattern(new SandboxForCandidateSandboxSpecification()).FirstOrDefault().Id;
+            var sandbox = _mapper.Map<CandidateSandbox>(sandboxDto);
             _db.CandidatesSandboxes.Save(sandbox);
             _db.Save();
-            //FindWithSpecificationPattern(new SandboxForCandidateSandboxSpecification())
         }
         
     }

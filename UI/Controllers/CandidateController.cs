@@ -73,8 +73,7 @@ namespace UI.Controllers
             {
                 model.ID = _candidateService.AddCandidate(model);
                 _candidateSandboxService.AddCandidateSandbox(model);
-                return Ok();
-                
+                return Ok();  
             }
             else
             {

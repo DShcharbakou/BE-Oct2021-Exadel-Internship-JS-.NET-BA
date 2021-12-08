@@ -80,10 +80,5 @@ namespace UI.Controllers
             var skillKnowledgeDTOList = _mapper.Map<IEnumerable<SkillKnowledgeDTO>>(hRInterview);
             _skillKnowledgeService.AddSkillKnowledge(skillKnowledgeDTOList);
         }
-
-        // PUT api/<HRController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        { }
     }
 }

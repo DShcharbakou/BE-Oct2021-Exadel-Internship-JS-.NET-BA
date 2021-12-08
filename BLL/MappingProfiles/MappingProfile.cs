@@ -88,7 +88,12 @@ namespace BLL.MappingProfiles
             CreateMap<CandidateDTO, CandidateDTOForGetAll>();
             CreateMap<CandidateDTO, CandidateForTechDTO>();
 
-            CreateMap<CandidateDTO, CandidateSandbox>();
+            CreateMap<CandidateDTO, CandidateSandboxForSetDTO>()
+                .ForMember(dest => dest.CandidateID,
+                 opt => opt.MapFrom(src => src.ID));
+
+            CreateMap<CandidateSandboxForSetDTO, CandidateSandbox>();
+
         }
 
     }

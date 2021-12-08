@@ -11,7 +11,7 @@ namespace DAL.Models
     {
         public int CandidateID { get; set; }
         public int SandboxID { get; set; }
-        public int StatusID { get; set; }
+        public int? StatusID { get; set; }
         public int? Grade { get; set; }
         public string Comment { get; set; }
         public Candidate Candidate { get; set; }
